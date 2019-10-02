@@ -14,3 +14,15 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+//routing para permisos
+$router->get('/permiso',['uses'=>'PermisoController@index']);
+$router->post('/permiso',['uses'=>'PermisoController@createPermiso']);
+$router->put('/permiso',['uses'=>'PermisoController@updatePermiso']);
+
+//routing para usuario
+
+$router->get('/usuario',['uses'=>'UsuarioController@index']);
+$router->post('/usuario',['uses'=>'UsuarioController@createUsuario']);
+$router->put('/usuario',['uses'=>'UsuarioController@updateUsuario']);
