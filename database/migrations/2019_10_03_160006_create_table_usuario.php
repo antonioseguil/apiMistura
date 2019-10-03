@@ -14,13 +14,15 @@ class CreateTableUsuario extends Migration
     public function up()
     {
         Schema::create('usuario', function (Blueprint $table) {
-            $table->unsignedInteger('ncodusuario',true);
-            $table->string("cnombreusuario");
-            $table->string("cnombrepassword");
-            $table->string("cnombre");
-            $table->string("capellidopaterno");
-            $table->string("capellidomaterno");
-            $table->string("api_token",60);
+            $table->bigInteger('ncodusuario',true);
+            $table->string('cusuario');
+            $table->string('cpassword');
+            $table->string('cnombre');
+            $table->string('capellidopaterno');
+            $table->string('capellidomaterno');
+            $table->string('api_token',60);
+            $table->bigInteger('ncodtipousuario');
+            $table->foreign('ncodtipousuario')->references('ncodtipousuario')->on('tipousuario');
             $table->timestamps();
         });
     }

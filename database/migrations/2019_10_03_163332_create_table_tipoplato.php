@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTablePermisos extends Migration
+class CreateTableTipoplato extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateTablePermisos extends Migration
      */
     public function up()
     {
-        Schema::create('permiso', function (Blueprint $table) {
-            $table->bigInteger('ncodpermiso',true);
-            $table->string("cnombrepermiso",50);
+        Schema::create('tipoplato', function (Blueprint $table) {
+            $table->bigInteger('ncodtipoplato',true);
+            $table->string('cnombretipoplato');
             $table->timestamps();
         });
     }
@@ -27,6 +27,6 @@ class CreateTablePermisos extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('permiso');
+        Schema::dropIfExists('tipoplato');
     }
 }

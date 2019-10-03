@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableUsuariopermiso extends Migration
+class CreateTableTipousuariopermiso extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,11 @@ class CreateTableUsuariopermiso extends Migration
      */
     public function up()
     {
-        Schema::create('usuariopermisos', function (Blueprint $table) {
-            $table->unsignedInteger('ncodusuariopermiso',true);
-            $table->unsignedInteger('ncodusuario');
-            $table->unsignedInteger('ncodpermiso');
-            $table->foreign('ncodusuario')->references('ncodusuario')->on('usuario');
+        Schema::create('tipousuariopermiso', function (Blueprint $table) {
+            $table->bigInteger('ncodtipousuariopermiso',true);
+            $table->bigInteger('ncodtipousuario');
+            $table->bigInteger('ncodpermiso');
+            $table->foreign('ncodtipousuario')->references('ncodtipousuario')->on('tipousuario');
             $table->foreign('ncodpermiso')->references('ncodpermiso')->on('permiso');
             $table->timestamps();
         });
@@ -30,6 +30,6 @@ class CreateTableUsuariopermiso extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('usuariopermisos');
+        Schema::dropIfExists('tipousuariopermiso');
     }
 }
