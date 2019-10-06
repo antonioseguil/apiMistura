@@ -4,15 +4,14 @@
 namespace App\Http\Controllers;
 
 
-use App\Permiso;
+use App\TipoUsuario;
 use Illuminate\Http\Request;
 
-
-class PermisoController extends Controller
+class TipoUsuarioController extends Controller
 {
     function index(Request $request){
         if($request->isJson()){
-            $data = Permiso::all();
+            $data = TipoUsuario::all();
             return response()->json($data,200);
         }
         return response()->json(['error' => 'no autorizado'],402);
@@ -21,8 +20,8 @@ class PermisoController extends Controller
     function create(Request $request){
         if($request->isJson()){
             $data = $request->json()->all();
-            Permiso::create([
-                'cnombrepermiso' => $data['cnombrepermiso']
+            TipoUsuario::create([
+                'ctipousuario' => $data['ctipousuario']
             ]);
             return response()->json($data,201);
         }
@@ -32,10 +31,10 @@ class PermisoController extends Controller
     function update(Request $request){
         if($request->isJson()){
             $data = $request->json()->all();
-            $permiso = Permiso::where('ncodpermiso',$data['ncodpermiso'])->first();
-            $permiso->cnombrepermiso = $data['cnombrepermiso'];
-            $permiso->save();
-            return response()->json($permiso,200);
+            $tipousuario = TipoUsuario::where('ncodtipousuario',$data['ncodtipousuario'])->first();
+            $tipousuario->ctipousuario = $data['ctipousuario'];
+            $tipousuario->save();
+            return response()->json($tipousuario,200);
         }
         return response()->json(['error' => 'no autorizado'],402);
     }

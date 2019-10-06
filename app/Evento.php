@@ -17,4 +17,6 @@ class Evento extends Model
     protected $table = "evento";
     protected $primaryKey = "ncodevento";
 
+    protected $fillable = ['ncodusuario','cnombreevento','cnombredescripcion','dfechainicio','dfechafinal',
+                           'dhorainicio','dhorafinal','cdireccion','clongitud','clatitud'];
 }

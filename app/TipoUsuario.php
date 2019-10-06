@@ -10,4 +10,6 @@ class TipoUsuario extends Model
 {
     protected $table = "tipousuario";
     protected $primaryKey = "ncodtipousuario";
+
+    protected $fillable = ['ncodtipousuario','ctipousuario'];
 }

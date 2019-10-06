@@ -17,7 +17,7 @@ class CreateTablePlato extends Migration
             $table->bigInteger('ncodplato',true);
             $table->bigInteger('ncodtipoplato');
             $table->string('cnombreplato');
-            $table->string('cdescreseña');
+            $table->string('cdescresena');
             $table->string('curlimagen');
 
             $table->foreign('ncodtipoplato')->references('ncodtipoplato')->on('tipoplato');

@@ -4,15 +4,14 @@
 namespace App\Http\Controllers;
 
 
-use App\Permiso;
+use App\SeccionStand;
 use Illuminate\Http\Request;
 
-
-class PermisoController extends Controller
+class SeccionStandController extends Controller
 {
     function index(Request $request){
         if($request->isJson()){
-            $data = Permiso::all();
+            $data = SeccionStand::all();
             return response()->json($data,200);
         }
         return response()->json(['error' => 'no autorizado'],402);
@@ -21,8 +20,10 @@ class PermisoController extends Controller
     function create(Request $request){
         if($request->isJson()){
             $data = $request->json()->all();
-            Permiso::create([
-                'cnombrepermiso' => $data['cnombrepermiso']
+            SeccionStand::create([
+                'cnombredescripcion' => $data['cnombredescripcion'],
+                'ncantidadstand' => $data['ncantidadstand'],
+                'cestado' => $data['cestado']
             ]);
             return response()->json($data,201);
         }
@@ -32,10 +33,12 @@ class PermisoController extends Controller
     function update(Request $request){
         if($request->isJson()){
             $data = $request->json()->all();
-            $permiso = Permiso::where('ncodpermiso',$data['ncodpermiso'])->first();
-            $permiso->cnombrepermiso = $data['cnombrepermiso'];
-            $permiso->save();
-            return response()->json($permiso,200);
+            $seccionStand = SeccionStand::where('ncodseccionstand',$data['ncodseccionstand'])->first();
+            $seccionStand->cnombredescripcion = $data['cnombredescripcion'];
+            $seccionStand->ncantidadstand = $data['ncantidadstand'];
+            $seccionStand->cestado = $data['cestado'];
+            $seccionStand->save();
+            return response()->json($seccionStand,200);
         }
         return response()->json(['error' => 'no autorizado'],402);
     }

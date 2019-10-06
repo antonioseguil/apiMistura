@@ -4,15 +4,14 @@
 namespace App\Http\Controllers;
 
 
-use App\Permiso;
+use App\TipoPlato;
 use Illuminate\Http\Request;
 
-
-class PermisoController extends Controller
+class TipoPlatoController extends Controller
 {
     function index(Request $request){
         if($request->isJson()){
-            $data = Permiso::all();
+            $data = TipoPlato::all();
             return response()->json($data,200);
         }
         return response()->json(['error' => 'no autorizado'],402);
@@ -21,8 +20,8 @@ class PermisoController extends Controller
     function create(Request $request){
         if($request->isJson()){
             $data = $request->json()->all();
-            Permiso::create([
-                'cnombrepermiso' => $data['cnombrepermiso']
+            TipoPlato::create([
+                'cnombretipoplato' => $data['cnombretipoplato']
             ]);
             return response()->json($data,201);
         }
@@ -32,10 +31,10 @@ class PermisoController extends Controller
     function update(Request $request){
         if($request->isJson()){
             $data = $request->json()->all();
-            $permiso = Permiso::where('ncodpermiso',$data['ncodpermiso'])->first();
-            $permiso->cnombrepermiso = $data['cnombrepermiso'];
-            $permiso->save();
-            return response()->json($permiso,200);
+            $tipoplato = TipoPlato::where('ncodtipoplato',$data['ncodtipoplato'])->first();
+            $tipoplato->cnombretipoplato = $data['cnombretipoplato'];
+            $tipoplato->save();
+            return response()->json($tipoplato,200);
         }
         return response()->json(['error' => 'no autorizado'],402);
     }
