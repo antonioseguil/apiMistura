@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\TipoPlato;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TipoPlatoController extends Controller
 {
@@ -38,4 +39,15 @@ class TipoPlatoController extends Controller
         }
         return response()->json(['error' => 'no autorizado'],402);
     }
+/*
+ * funcion que usa el store procedure de mysql
+ *  function spPrueba(Request $request){
+        if($request->isJson()){
+            $data = DB::select('call sp_prueba()');
+            return response()->json($data,200);
+        }
+    }
+
+ */
+
 }

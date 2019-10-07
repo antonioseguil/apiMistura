@@ -5,18 +5,25 @@ namespace App\Http\Controllers;
 
 
 use App\User;
+use http\Env\Response;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use mysql_xdevapi\Exception;
 
 class UsuarioController extends Controller
 {
     function index(Request $request){
-        if($request->isJson()){
-            $data = User::all();
-            return response()->json($data,200);
-        }
-        return response()->json(['error' => 'no autorizado'],402);
+//        if($request->isJson()){
+//            $data = User::all();
+//            return response()->json($data,200);
+//        }
+//        return response()->json(['error' => 'no autorizado'],402);
+
+        $data = User::all();
+        return response()->json($data,200);
+
     }
 
     function create(Request $request){
@@ -50,7 +57,20 @@ class UsuarioController extends Controller
         return response()->json(['error' => 'no autorizado'],403);
     }
 
-    function loginUsuario(Request $request){
-
+    function getToken(Request $request){
+        if($request->isJson()){
+            try{
+                $data = $request->json()->all();
+                $user = User::where('cusuario',$data['cusuario'])->first();
+                if($user && Hash::check($data['cpassword'],$user->cpassword)){
+                    return response()->json($user,200);
+                }/*else{
+                    return response()->json(['error'=>'no content'],406);
+                }*/
+            }catch (ModelNotFoundException $exception){
+                return response()->json(['error'=>'no content'],406);
+            }
+        }
+        return response()->json(['error' => 'no autorizado'],403);
     }
 }
