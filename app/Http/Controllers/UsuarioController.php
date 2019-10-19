@@ -15,33 +15,22 @@ use mysql_xdevapi\Exception;
 class UsuarioController extends Controller
 {
     function index(Request $request){
-//        if($request->isJson()){
-//            $data = User::all();
-//            return response()->json($data,200);
-//        }
-//        return response()->json(['error' => 'no autorizado'],402);
-
         $data = User::all();
         return response()->json($data,200);
-
     }
 
     function create(Request $request){
-        if($request->isJson()){
-            $data = $request->json()->all();
-            User::create([
-                'cusuario' => $data['cusuario'],
-                'cpassword' => Hash::make($data['cpassword']),
-                'cnombre' => $data['cnombre'],
-                'capellidopaterno' => $data['capellidopaterno'],
-                'capellidomaterno' => $data['capellidomaterno'],
-                'api_token' => Str::random(60),
-                'ncodtipousuario' => $data['ncodtipousuario']
-            ]);
-            return response()->json($data,201);
-        }
-        return response()->json(['error' => 'no autorizado'],402);
-
+        $data = $request->json()->all();
+        User::create([
+            'cusuario' => $data['cusuario'],
+            'cpassword' => Hash::make($data['cpassword']),
+            'cnombre' => $data['cnombre'],
+            'capellidopaterno' => $data['capellidopaterno'],
+            'capellidomaterno' => $data['capellidomaterno'],
+            'api_token' => Str::random(60),
+            'ncodtipousuario' => $data['ncodtipousuario']
+        ]);
+        return response()->json($data,201);
     }
 
     function update(Request $request){

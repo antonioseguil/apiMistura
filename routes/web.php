@@ -54,7 +54,8 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
     //funcional
     $router->get('/negocio',['uses'=>'NegocioController@index']);
     $router->post('/negocio',['uses'=>'NegocioController@create']);
-    //TODO EL ENCARGADO DE ACTUALIZAR LOS DATOS DEL NEGOCIO ES EL ENCARGADO DEL NEGOCIO, MOMENTANIO
+
+    //TODO -- EL ENCARGADO DE ACTUALIZAR LOS DATOS DEL NEGOCIO ES EL ENCARGADO DEL NEGOCIO, MOMENTANIO
     $router->put('/negocio',['uses'=>'NegocioController@update']);
 
     //CRUD de tabla SECCIONSTAND
@@ -62,6 +63,13 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
     $router->get('/seccionstand',['uses'=>'SeccionStandController@index']);
     $router->post('/seccionstand',['uses'=>'SeccionStandController@create']);
     $router->put('/seccionstand',['uses'=>'SeccionStandController@update']);
+
+    //CRUD de tabla UsuarioTipoPermiso
+    //funcinal
+    //TODO * falta agregar funcion para eliminar.
+    $router->get('/tipopermiso',['uses'=>'UsuarioTipoPermisoController@index']);
+    $router->post('/tipopermiso',['uses'=>'UsuarioTipoPermisoController@create']);
+    $router->put('/tipopermiso',['uses'=>'UsuarioTipoPermisoController@update']);
 
 });
 
@@ -84,8 +92,11 @@ $router->put('/stand',['uses'=>'StandController@update']);
  * $router->get('/tipoplato/sp',['uses'=>'TipoPlatoController@spPrueba']);
  */
 
-// TODO* falta terminar las tablas cigotes, de stand-plato y permiso-tipo usuario
+// TODO* falta terminar las tabla pigote, de stand-plato.
+// TODO* agregar idstandplato a la TABLA standplato. SIN CONFIRMAR
+// TODO* comienza en la tabla LISTAPRECIO
 
-// ejemplo para el uso restricciones
+
+
 
 

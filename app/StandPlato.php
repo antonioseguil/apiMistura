@@ -9,5 +9,5 @@ use Illuminate\Database\Eloquent\Model;
 class StandPlato extends Model
 {
     protected $table = "standplato";
-    protected $primaryKey = "";
+    protected $fillable = ['ncodstand','ncodplato'];
 }
