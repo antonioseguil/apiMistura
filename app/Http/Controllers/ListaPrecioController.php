@@ -20,6 +20,7 @@ class ListaPrecioController extends Controller
     function create(Request $request){
         $data = $request->json()->all();
         ListaPrecio::create([
+            'ncodstand' => $data['ncodstand'],
             'cnombrelista' => $data['cnombrelista'],
             'cespecificaciones' => $data['cespecificaciones']
         ]);
@@ -29,6 +30,7 @@ class ListaPrecioController extends Controller
     function update(Request $request){
         $data = $request->json()->all();
         $listaprecio = ListaPrecio::where('ncodlistaprecio',$data['ncodlistaprecio'])->first();
+        $listaprecio->ncodstand = $data['ncodstand'];
         $listaprecio->cnombrelista = $data['cnombrelista'];
         $listaprecio->cespecificaciones = $data['cespecificaciones'];
         $listaprecio->save();

@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class DetListaPrecio extends Model
 {
     protected $table = "detlistaprecio";
-    protected $primaryKey = "ncodsetlistaprecio";
+    protected $primaryKey = "ncoddetlistaprecio";
     protected $fillable = ['ncodlistaprecio','ncodplato','cprecio'];
 }

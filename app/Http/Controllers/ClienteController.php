@@ -25,7 +25,7 @@ class ClienteController extends Controller
             'cnombre' => $data['cnombre'],
             'capellidopaterno' => $data['capellidopaterno'],
             'capellidomaterno' => $data['capellidomaterno'],
-            'ccdni' => Hash::make(($data['ccdni'])),
+            'cdni' => $data['cdni'],
             'ccorreo' => $data['ccorreo'],
             'api_token' => Str::random(60)
         ]);

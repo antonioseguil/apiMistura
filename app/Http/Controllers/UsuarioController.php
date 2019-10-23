@@ -47,19 +47,14 @@ class UsuarioController extends Controller
     }
 
     function getToken(Request $request){
-        if($request->isJson()){
             try{
                 $data = $request->json()->all();
                 $user = User::where('cusuario',$data['cusuario'])->first();
                 if($user && Hash::check($data['cpassword'],$user->cpassword)){
                     return response()->json($user,200);
-                }/*else{
-                    return response()->json(['error'=>'no content'],406);
-                }*/
+                }
             }catch (ModelNotFoundException $exception){
                 return response()->json(['error'=>'no content'],406);
             }
-        }
-        return response()->json(['error' => 'no autorizado'],403);
     }
 }

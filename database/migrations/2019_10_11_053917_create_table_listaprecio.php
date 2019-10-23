@@ -15,9 +15,12 @@ class CreateTableListaprecio extends Migration
     {
         Schema::create('listaprecio', function (Blueprint $table) {
             $table->bigInteger('ncodlistaprecio',true);
+            $table->bigInteger('ncodstand');
             $table->string('cnombrelista');
             $table->string('cespecificaciones');
             $table->timestamps();
+
+            $table->foreign('ncodstand')->references('ncodstand')->on('stand');
         });
     }
 
