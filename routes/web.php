@@ -17,7 +17,7 @@ $router->get('/', function () use ($router) {
 //funcion anonima, donde todos pueden entrar
 $router->post('/usuario/login',['uses' => 'UsuarioController@getToken']);
 
-//routing para cliente
+//routing para la TABLA CLIENTES
 //funcional
 $router->get('/cliente',['uses'=>'ClienteController@index']);
 $router->post('/cliente',['uses'=>'ClienteController@create']);
@@ -27,37 +27,37 @@ $router->put('/cliente',['uses'=>'ClienteController@update']);
 $router->group(['middleware' => ['auth','json']],function () use ($router){
 
     //CRUD de tabla TIPOUSUARIO
-//funcional
+    //funcional
     $router->get('/tipousuario',['uses'=>'TipoUsuarioController@index']);
     $router->post('/tipousuario',['uses'=>'TipoUsuarioController@create']);
     $router->put('/tipousuario',['uses'=>'TipoUsuarioController@update']);
 
     //routing para permisos
-//funcional
+    //funcional
     $router->get('/permiso',['uses'=>'PermisoController@index']);
     $router->post('/permiso',['uses'=>'PermisoController@create']);
     $router->put('/permiso',['uses'=>'PermisoController@update']);
 
     //CRUD de tabla USUARIO
-//funcional
+    //funcional
     $router->get('/usuario',['uses'=>'UsuarioController@index']);
     $router->post('/usuario',['uses'=>'UsuarioController@create']);
     $router->put('/usuario',['uses'=>'UsuarioController@update']);
 
     //CRUD de tabla EVENTO
-//funcional
+    //funcional
     $router->get('/evento',['uses'=>'EventoController@index']);
     $router->post('/evento',['uses'=>'EventoController@create']);
     $router->put('/evento',['uses'=>'EventoController@update']);
 
     //CRUD de tabla TIPOPLATO
-//funcional
+    //funcional
     $router->get('/tipoplato',['uses'=>'TipoPlatoController@index']);
     $router->post('/tipoplato',['uses'=>'TipoPlatoController@create']);
     $router->put('/tipoplato',['uses'=>'TipoPlatoController@update']);
 
     //CRUD de tabla NEGOCIO
-//funcional
+    //funcional
     $router->get('/negocio',['uses'=>'NegocioController@index']);
     $router->post('/negocio',['uses'=>'NegocioController@create']);
 
@@ -65,13 +65,13 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
     $router->put('/negocio',['uses'=>'NegocioController@update']);
 
     //CRUD de tabla SECCIONSTAND
-//funcional
+    //funcional
     $router->get('/seccionstand',['uses'=>'SeccionStandController@index']);
     $router->post('/seccionstand',['uses'=>'SeccionStandController@create']);
     $router->put('/seccionstand',['uses'=>'SeccionStandController@update']);
 
     //CRUD de tabla UsuarioTipoPermiso
-//funcional
+    //funcional
     //TODO * falta agregar funcion para eliminar.
     $router->get('/tipopermiso',['uses'=>'UsuarioTipoPermisoController@index']);
     $router->post('/tipopermiso',['uses'=>'UsuarioTipoPermisoController@create']);
@@ -113,3 +113,18 @@ $router->put('/listaprecio',['uses'=>'ListaPrecioController@update']);
 $router->get('/detlistaprecio',['uses'=>'DetListaPrecioController@index']);
 $router->post('/detlistaprecio',['uses'=>'DetListaPrecioController@create']);
 $router->put('/detlistaprecio',['uses'=>'DetListaPrecioController@update']);
+
+
+//TODO * FALTA REVISAR EN LA BD
+
+//routing para tabla RESERVA
+//
+$router->get('/reserva',['uses'=>'ReservaController@index']);
+$router->post('/reserva',['uses'=>'ReservaController@create']);
+$router->put('/reserva',['uses'=>'ReservaController@update']);
+
+//routing para tabla DETRESERVA
+//
+$router->get('/detreserva',['uses'=>'DetReservaController@index']);
+$router->post('/detreserva',['uses'=>'DetReservaController@create']);
+$router->put('/detreserva',['uses'=>'DetReservaController@update']);
