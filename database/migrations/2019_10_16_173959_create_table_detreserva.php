@@ -18,7 +18,6 @@ class CreateTableDetreserva extends Migration
             $table->bigInteger('ncoddetlistaprecio');
             $table->bigInteger('ncodreserva');
             $table->Integer('ncantidad');
-            $table->double('nprecio');
             $table->timestamps();
 
             $table->foreign('ncoddetlistaprecio')->references('ncoddetlistaprecio')->on('detlistaprecio');

@@ -16,10 +16,12 @@ class ReservaController extends Controller
 
     function create(Request $request){
         $data = $request->json()->all();
+        //INSTANCIA PARA LA FECHA
+        $time = new \DateTime();
         Reserva::create([
             'ncodcliente' => $data['ncodcliente'],
             'ncantidadtotal' => $data['ncantidadtotal'],
-            'dfechareserva' => $data['dfechareserva']
+            'dfechareserva' => $time->format('Y-m-d')
         ]);
         return response()->json($data,201);
     }
@@ -29,9 +31,7 @@ class ReservaController extends Controller
         $reserva = Reserva::where('ncodreserva',$data['ncodreserva'])->first();
         $reserva->ncodcliente = $data['ncodcliente'];
         $reserva->ncantidadtotal = $data['ncantidadtotal'];
-        $reserva->dfechareserva = $data['dfechareserva'];
         $reserva->save();
         return response()->json($reserva,200);
     }
-
 }

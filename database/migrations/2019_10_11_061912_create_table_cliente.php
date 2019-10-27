@@ -21,7 +21,7 @@ class CreateTableCliente extends Migration
             $table->string('capellidopaterno');
             $table->string('capellidomaterno');
             $table->string('cdni',8);
-            $table->string('ccorreo',8);
+            $table->string('ccorreo');
             $table->string('api_token',60);
 
             $table->timestamps();

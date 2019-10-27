@@ -16,7 +16,7 @@ class CreateTableReserva extends Migration
         Schema::create('reserva', function (Blueprint $table) {
             $table->bigInteger('ncodreserva',true);
             $table->bigInteger('ncodcliente');
-            $table->integer('ncantidadtoal');
+            $table->integer('ncantidadtotal');
             $table->date('dfechareserva');
             $table->timestamps();
 

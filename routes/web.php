@@ -23,6 +23,8 @@ $router->get('/cliente',['uses'=>'ClienteController@index']);
 $router->post('/cliente',['uses'=>'ClienteController@create']);
 $router->put('/cliente',['uses'=>'ClienteController@update']);
 
+
+
 //grupo de rutas para WEB, uso para web
 $router->group(['middleware' => ['auth','json']],function () use ($router){
 
@@ -98,8 +100,8 @@ $router->put('/stand',['uses'=>'StandController@update']);
  * $router->get('/tipoplato/sp',['uses'=>'TipoPlatoController@spPrueba']);
  */
 
-// TODO* comienza en la tabla LISTAPRECIO
-
+// TODO* comienzo de la revison
+// TODO* falta agregar los parametros de seguridad
 
 
 //routing para LISTA PRECIO
@@ -118,13 +120,13 @@ $router->put('/detlistaprecio',['uses'=>'DetListaPrecioController@update']);
 //TODO * FALTA REVISAR EN LA BD
 
 //routing para tabla RESERVA
-//
+//funcional
 $router->get('/reserva',['uses'=>'ReservaController@index']);
 $router->post('/reserva',['uses'=>'ReservaController@create']);
 $router->put('/reserva',['uses'=>'ReservaController@update']);
 
 //routing para tabla DETRESERVA
-//
+//funcional
 $router->get('/detreserva',['uses'=>'DetReservaController@index']);
 $router->post('/detreserva',['uses'=>'DetReservaController@create']);
 $router->put('/detreserva',['uses'=>'DetReservaController@update']);
