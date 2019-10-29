@@ -55,7 +55,6 @@ class ClienteController extends Controller
 
     //TODO * función para loguear al sistema, retorna la lista de reserva que el usuario haya hecho.
     function getToken(Request $request){
-
          try{
             //TODO * Agregar la busqueda de reserva del cliente, crear SP para busqueda de reserva por cliente
 
@@ -80,4 +79,12 @@ class ClienteController extends Controller
             }
     }
 
+    //funcion para buscar cliente por id, enviado por el path de la url
+    function searchCliente($idCliente){
+        //busqueda de cliente por idcliente
+        $cliente = Cliente::where('ncodcliente',$idCliente)->first();
+        //devolviendo datos
+        return response()->json(['rpta' => '1','cliente' => $cliente]);
+
+    }
 }
