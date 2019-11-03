@@ -9,6 +9,9 @@ use Illuminate\Http\Request;
 
 class EventoController extends Controller
 {
+    //TODO * FALTA VERIFICAR EL CAMPO DE "CESTADO" EN LOS CONTROLADORES
+
+    //función para regresar todos lo datos de la tabla
     function index(Request $request){
         $data = Evento::all();
         return response()->json($data,200);
@@ -46,4 +49,6 @@ class EventoController extends Controller
         $evento->save();
         return response()->json($evento,200);
     }
+
+    //TODO * AGREGAR FUNCIÓNES PARA BUSCAR EVENTOS
 }

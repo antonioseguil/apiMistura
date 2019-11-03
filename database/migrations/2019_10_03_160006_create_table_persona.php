@@ -26,7 +26,7 @@ class CreateTablePersona extends Migration
             $table->string('api_token',60); //autogenerado
             $table->string('imei_phone')->unique();
             $table->string('ckeypersona',6)->unique(); //autogenerado
-            $table->string('cusuario');
+            $table->string('cusuario')->unique();
             $table->string('cpassword');
             //TODO * A = "ACTIVO", D = "DESABILITADO"
             $table->string('cestado')->default("a");

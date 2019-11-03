@@ -11,9 +11,9 @@ class Negocio extends Model
     protected $table = "negocio";
     protected $primaryKey = "ncodnegocio";
 
-    protected $fillable = ['ncodnegocio','cnombrenegocio','cnombredescripcion','cdireccion',
-                           'cnombreusuario','cpassword','ncantidadusuarios'];
+    protected $fillable = ['crazonsocial','cnombredescripcion','cdireccion',
+                           'cruc','cestado'];
 
-    protected $hidden = ['cpassword'];
+    protected $hidden = ['cruc'];
 
 }

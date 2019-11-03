@@ -18,5 +18,5 @@ class Evento extends Model
     protected $primaryKey = "ncodevento";
 
     protected $fillable = ['ncodusuario','cnombreevento','cnombredescripcion','dfechainicio','dfechafinal',
-                           'dhorainicio','dhorafinal','cdireccion','clongitud','clatitud'];
+                           'dhorainicio','dhorafinal','cdireccion','clongitud','clatitud'.'cestado'];
 }

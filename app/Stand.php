@@ -12,5 +12,5 @@ class Stand extends Model
     protected $primaryKey = "ncodstand";
 
     protected $fillable = ['ncodstand','ncodevento','ncodnegocio','ncodseccionstand',
-                           'cnumerosstand','ccalificacion','clongitud','clatitud'];
+                           'cnumerosstand','ccalificacion','clongitud','clatitud'.'cestado'];
 }

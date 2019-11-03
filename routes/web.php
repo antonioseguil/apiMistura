@@ -14,16 +14,31 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
-//funcion anonima, donde todos pueden entrar
-$router->post('/usuario/login',['uses' => 'UsuarioController@getToken']);
 
+//TODO * ENTORNO DE PRUEBA PARA LOGUEO Y REGISTRO DE USUARIO
+$router->group(['middleware'=>['json']],function () use ($router){
+    //funcion anonima para INGRESO DE USUARIO(PERSONAS)
+    $router->post('/usuario/login',['uses' => 'UsuarioController@getLoginUser']);
+
+    //path para CREACIÓN DE USUARIO
+        $router->post('/usuario',['uses'=>'UsuarioController@create']);
+    //todavia no se utiliza
+    //$router->get('/usuario',['uses'=>'UsuarioController@index']);
+    //$router->put('/usuario',['uses'=>'UsuarioController@update']);
+
+});
+
+
+
+
+// ------------------------------------------------------------------------------------------------
 //routing para la TABLA CLIENTES
 //funcional
 $router->get('/cliente',['uses'=>'ClienteController@index']);
 $router->post('/cliente',['uses'=>'ClienteController@create']);
 $router->put('/cliente',['uses'=>'ClienteController@update']);
 
-
+//TODO * ARREGLANDO API REST, NO SE VA UTILIZAR LOS MIDDLEWARE POR EL MOMENTO
 
 //grupo de rutas para WEB, uso para web
 $router->group(['middleware' => ['auth','json']],function () use ($router){
@@ -40,11 +55,7 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
     $router->post('/permiso',['uses'=>'PermisoController@create']);
     $router->put('/permiso',['uses'=>'PermisoController@update']);
 
-    //CRUD de tabla USUARIO
-    //funcional
-    $router->get('/usuario',['uses'=>'UsuarioController@index']);
-    $router->post('/usuario',['uses'=>'UsuarioController@create']);
-    $router->put('/usuario',['uses'=>'UsuarioController@update']);
+
 
     //CRUD de tabla EVENTO
     //funcional
@@ -90,7 +101,7 @@ $router->post('/plato',['uses'=>'PlatoController@create']);
 $router->put('/plato',['uses'=>'PlatoController@update']);
 
 //routing para stand
-//funcionall
+//funcional
 $router->get('/stand',['uses'=>'StandController@index']);
 $router->post('/stand',['uses'=>'StandController@create']);
 $router->put('/stand',['uses'=>'StandController@update']);

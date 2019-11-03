@@ -5,34 +5,40 @@ namespace App\Http\Controllers;
 
 
 use App\User;
-use http\Env\Response;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
-use mysql_xdevapi\Exception;
+
 
 class UsuarioController extends Controller
 {
+    //función para devolver los usuarios
     function index(Request $request){
         $data = User::all();
         return response()->json($data,200);
     }
 
+    //Función para crear una nueva persona (usuario)
     function create(Request $request){
         $data = $request->json()->all();
         User::create([
-            'cusuario' => $data['cusuario'],
-            'cpassword' => Hash::make($data['cpassword']),
             'cnombre' => $data['cnombre'],
             'capellidopaterno' => $data['capellidopaterno'],
             'capellidomaterno' => $data['capellidomaterno'],
+            'cdni' => $data['cdni'],
+            'cemail' => $data['cemail'],
             'api_token' => Str::random(60),
+            'imei_phone' => $data['cimei_phone'],
+            'ckeypersona' => Str::random(6),
+            'cusuario' => $data['cusuario'],
+            'cpassword' => Hash::make($data['cpassword']),
             'ncodtipousuario' => $data['ncodtipousuario']
         ]);
         return response()->json($data,201);
     }
 
+    //función para actualizar la persona
     function update(Request $request){
         if($request->isJson()){
             $data = $request->json()->all();
@@ -46,15 +52,40 @@ class UsuarioController extends Controller
         return response()->json(['error' => 'no autorizado'],403);
     }
 
-    function getToken(Request $request){
-            try{
-                $data = $request->json()->all();
-                $user = User::where('cusuario',$data['cusuario'])->first();
-                if($user && Hash::check($data['cpassword'],$user->cpassword)){
-                    return response()->json($user,200);
+    function getLoginUser(Request $request){
+        //recuperando los datos enviados
+        $data = $request->json()->all();
+        //buscando persona por su usuario, el usuario es unico
+        $user = User::where('cusuario',$data['cusuario'])->first();
+        //comprobando si existe, y si existe se compara su password
+        if($user && Hash::check($data['cpassword'],$user->cpassword)){
+            //RECUPERANDO PERMISOS
+            //buscando permisos del usuario
+            $tipoUsuario = $user->ncodtipousuario;
+            //llamando al store procedure
+            $listaPermiso = DB::select('call sp_getPermisosUser(?)',[$tipoUsuario]);
+
+            //AGREGANDO LOS PERMISOS
+            //definimos un array donde se guardara los permisos
+            $permisos = array();
+            //recorremos los datos traidos anteriormente
+            foreach ($listaPermiso as $key =>$value){
+                //en los datos cada espacio es otro arreglo, asi que se recorre una segunda vez
+                foreach ($value as $valor){
+                    //finalmente se agrega el valor
+                    array_push($permisos, $valor);
                 }
-            }catch (ModelNotFoundException $exception){
-                return response()->json(['error'=>'no content'],406);
             }
+            //ENVIANDO RESPUESTA
+            //datos de respuesta
+            $responseData = array("rpta" => 1,"datos" => $user,"permiso" => $permisos);
+            //enviando respuesta
+            return response()->json($responseData,200);
+        }else{
+            //agregando respuesta de error
+            $responseData = array("rpta" => 0,"error" => "not content","message" => "revise su usuario y contraseña",
+                "datos" => []);
+            return response()->json($responseData,406);
+        }
     }
 }

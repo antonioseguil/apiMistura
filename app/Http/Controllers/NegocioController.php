@@ -6,24 +6,24 @@ namespace App\Http\Controllers;
 
 use App\Negocio;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 
 class NegocioController extends Controller
 {
+
+    //función para devolver todos los datos de la tabla
     function index(Request $request){
         $data = Negocio::all();
         return response()->json($data,200);
     }
 
+    //función que crea un nuevo negocio
     function create(Request $request){
         $data = $request->json()->all();
         Negocio::create([
-            'cnombrenegocio' => $data['cnombrenegocio'],
+            'crazonsocial' => $data['crazonsocial'],
             'cnombredescripcion' => $data['cnombredescripcion'],
             'cdireccion' => $data['cdireccion'],
-            'cnombreusuario' => $data['cnombreusuario'],
-            'cpassword' => Hash::make(($data['cpassword'])),
-            'ncantidadusuarios' => $data['ncantidadusuarios']
+            'cruc' => $data['cruc']
         ]);
         return response()->json($data,201);
     }
@@ -37,4 +37,6 @@ class NegocioController extends Controller
         $negocio->save();
         return response()->json($negocio,200);
     }
+
+    //TODO* FALTA FUNCTION PARA CAMBIAR EL ESTADO DE UN NEGOCIO
 }
