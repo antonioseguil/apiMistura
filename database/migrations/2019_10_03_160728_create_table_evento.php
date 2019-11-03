@@ -14,8 +14,11 @@ class CreateTableEvento extends Migration
     public function up()
     {
         Schema::create('evento', function (Blueprint $table) {
+
+            //PK
             $table->bigInteger('ncodevento',true);
-            $table->bigInteger('ncodusuario');
+            //ATRIBUTOS DE LA TABLA
+            $table->bigInteger('ncodpersona');
             $table->string('cnombreevento');
             $table->string('cnombredescripcion');
             $table->date('dfechainicio');
@@ -25,7 +28,9 @@ class CreateTableEvento extends Migration
             $table->string('cdireccion');
             $table->string('clongitud');
             $table->string('clatitud');
-            $table->foreign('ncodusuario')->references('ncodusuario')->on('usuario');
+            $table->string('cestado');
+            //REFERENCIAS DE LAS FK DE LAS TABLAS
+            $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');
             $table->timestamps();
         });
     }

@@ -1,0 +1,6 @@
+- se ha eliminado la tabla "CLIENTE", agregado de la tabla "PERSONA", que sera cambiada por la tabla "USUARIO"
+- agregado de nuevos compos en la tabla persona.
+
+- tabla "EVENTO" cambio de la referencia usuario hacia la tabla "PERSONA"
+
+- Creación de tabla "USUARIO NEGOCIO" tabla de unión entre "NEGOCIO" y "PERSONA"

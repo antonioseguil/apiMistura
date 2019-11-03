@@ -14,13 +14,15 @@ class CreateTableNegocio extends Migration
     public function up()
     {
         Schema::create('negocio', function (Blueprint $table) {
+            //PK
             $table->bigInteger('ncodnegocio',true);
-            $table->string('cnombrenegocio');
+            //CAMPOS DE LA TABLA
+            $table->string('crazonsocial');
             $table->string('cnombredescripcion');
             $table->string('cdireccion');
-            $table->string('cnombreusuario');
-            $table->string('cpassword');
-            $table->integer('ncantidadusuarios');
+            $table->string('cruc',11);
+            //TODO* A = "ACTIVO", "D" = "DESABILITADO"
+            $table->string('cestado',1)->default("a");
             $table->timestamps();
         });
     }

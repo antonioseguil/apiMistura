@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTableReserva extends Migration
+class CreateTableUsuarionegocio extends Migration
 {
     /**
      * Run the migrations.
@@ -13,16 +13,17 @@ class CreateTableReserva extends Migration
      */
     public function up()
     {
-        Schema::create('reserva', function (Blueprint $table) {
-            $table->bigInteger('ncodreserva',true);
+        Schema::create('usuario_negocio', function (Blueprint $table) {
+            //PK
+            $table->bigInteger('ncodusuarionegocio',true);
+            //CAMPOS DE LA TABLA
             $table->bigInteger('ncodpersona');
-            $table->integer('ncantidadtotal');
-            $table->date('dfechareserva');
-            //TODO* ESTADOS: E = "ENTREGADO, "C" = CONFIRMADO
-            $table->string('cestado',1)->default("c");
-            $table->timestamps();
+            $table->bigInteger('ncodnegocio');
 
+            //REFERENCIAS DE LAS FK
             $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');
+            $table->foreign('ncodnegocio')->references('ncodnegocio')->on('negocio');
+            $table->timestamps();
         });
     }
 
@@ -33,6 +34,6 @@ class CreateTableReserva extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('reserva');
+        Schema::dropIfExists('usuario_negocio');
     }
 }

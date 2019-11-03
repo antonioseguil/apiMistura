@@ -14,7 +14,9 @@ class CreateTableStand extends Migration
     public function up()
     {
         Schema::create('stand', function (Blueprint $table) {
+            //PK
             $table->bigInteger('ncodstand',true);
+            //CAMPOS DE LAS TABLAS
             $table->bigInteger('ncodevento');
             $table->bigInteger('ncodnegocio');
             $table->bigInteger('ncodseccionstand');
@@ -22,7 +24,11 @@ class CreateTableStand extends Migration
             $table->string('ccalificacion');
             $table->string('clongitud');
             $table->string('clatitud');
+            //TODO* A = "ACTIVO", "D" = "DESABILITADO"
+            $table->string('cestado',1)->default("a");
 
+
+            //REFERENCIAS DE LA FK DE LAS TABLAS
             $table->foreign('ncodevento')->references('ncodevento')->on('evento');
             $table->foreign('ncodnegocio')->references('ncodnegocio')->on('negocio');
             $table->foreign('ncodseccionstand')->references('ncodseccionstand')->on('seccionstand');
