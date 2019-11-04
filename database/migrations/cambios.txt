@@ -4,3 +4,5 @@
 - tabla "EVENTO" cambio de la referencia usuario hacia la tabla "PERSONA"
 
 - Creación de tabla "USUARIO NEGOCIO" tabla de unión entre "NEGOCIO" y "PERSONA"
+
+- CAMBIOS EN LA TABLA RESERVA, AGREGANDO OTRO ESTADO, CAMBIO DE ESTADO DEFAULT A "R" = RESERVADO.
