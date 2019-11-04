@@ -21,7 +21,7 @@ $router->group(['middleware'=>['json']],function () use ($router){
     $router->post('/usuario/login',['uses' => 'UsuarioController@getLoginUser']);
 
     //path para CREACIÓN DE USUARIO
-        $router->post('/usuario',['uses'=>'UsuarioController@create']);
+    $router->post('/usuario',['uses'=>'UsuarioController@create']);
     //todavia no se utiliza
     //$router->get('/usuario',['uses'=>'UsuarioController@index']);
     //$router->put('/usuario',['uses'=>'UsuarioController@update']);
