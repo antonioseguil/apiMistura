@@ -16,7 +16,7 @@ class CreateTablePersona extends Migration
         Schema::create('persona', function (Blueprint $table) {
             $table->bigInteger('ncodpersona',true);
             //tipo de usuario
-            $table->bigInteger('ncodtipousuario');
+            $table->bigInteger('ncodtipousuario')->default(1);
             //demas campos de la tabla
             $table->string('cnombre',60);
             $table->string('capellidopaterno',50);

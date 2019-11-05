@@ -390,7 +390,6 @@ class ComposerStaticInitca537d3526bedb275c37fe6c089e66b0
     );
 
     public static $classMap = array (
-        'App\\Cliente' => __DIR__ . '/../..' . '/app/Cliente.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\DetListaPrecio' => __DIR__ . '/../..' . '/app/DetListaPrecio.php',
         'App\\DetReserva' => __DIR__ . '/../..' . '/app/DetReserva.php',
@@ -398,7 +397,6 @@ class ComposerStaticInitca537d3526bedb275c37fe6c089e66b0
         'App\\Events\\Event' => __DIR__ . '/../..' . '/app/Events/Event.php',
         'App\\Events\\ExampleEvent' => __DIR__ . '/../..' . '/app/Events/ExampleEvent.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
-        'App\\Http\\Controllers\\ClienteController' => __DIR__ . '/../..' . '/app/Http/Controllers/ClienteController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Http\\Controllers\\DetListaPrecioController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetListaPrecioController.php',
         'App\\Http\\Controllers\\DetReservaController' => __DIR__ . '/../..' . '/app/Http/Controllers/DetReservaController.php',
@@ -419,6 +417,7 @@ class ComposerStaticInitca537d3526bedb275c37fe6c089e66b0
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',
         'App\\Http\\Middleware\\ExampleMiddleware' => __DIR__ . '/../..' . '/app/Http/Middleware/ExampleMiddleware.php',
         'App\\Http\\Middleware\\HeaderJson' => __DIR__ . '/../..' . '/app/Http/Middleware/HeaderJson.php',
+        'App\\Http\\Middleware\\jsonNotNull' => __DIR__ . '/../..' . '/app/Http/Middleware/jsonNotNull.php',
         'App\\Jobs\\ExampleJob' => __DIR__ . '/../..' . '/app/Jobs/ExampleJob.php',
         'App\\Jobs\\Job' => __DIR__ . '/../..' . '/app/Jobs/Job.php',
         'App\\ListaPrecio' => __DIR__ . '/../..' . '/app/ListaPrecio.php',
@@ -435,6 +434,7 @@ class ComposerStaticInitca537d3526bedb275c37fe6c089e66b0
         'App\\TipoPlato' => __DIR__ . '/../..' . '/app/TipoPlato.php',
         'App\\TipoUsuario' => __DIR__ . '/../..' . '/app/TipoUsuario.php',
         'App\\User' => __DIR__ . '/../..' . '/app/User.php',
+        'App\\UsuarioNegocio' => __DIR__ . '/../..' . '/app/UsuarioNegocio.php',
         'App\\UsuarioPermiso' => __DIR__ . '/../..' . '/app/UsuarioPermiso.php',
         'App\\UsuarioTipoPermiso' => __DIR__ . '/../..' . '/app/UsuarioTipoPermiso.php',
         'App\\Venta' => __DIR__ . '/../..' . '/app/Venta.php',
@@ -2364,6 +2364,7 @@ class ComposerStaticInitca537d3526bedb275c37fe6c089e66b0
         'PHP_Token_XOR_EQUAL' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
         'PHP_Token_YIELD_FROM' => __DIR__ . '/..' . '/phpunit/php-token-stream/src/Token.php',
+        'PermisoSeeder' => __DIR__ . '/../..' . '/database/seeds/PermisoSeeder.php',
         'PharIo\\Manifest\\Application' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Application.php',
         'PharIo\\Manifest\\ApplicationName' => __DIR__ . '/..' . '/phar-io/manifest/src/values/ApplicationName.php',
         'PharIo\\Manifest\\Author' => __DIR__ . '/..' . '/phar-io/manifest/src/values/Author.php',

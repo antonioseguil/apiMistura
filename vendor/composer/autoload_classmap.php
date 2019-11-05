@@ -6,7 +6,6 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'App\\Cliente' => $baseDir . '/app/Cliente.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\DetListaPrecio' => $baseDir . '/app/DetListaPrecio.php',
     'App\\DetReserva' => $baseDir . '/app/DetReserva.php',
@@ -14,7 +13,6 @@ return array(
     'App\\Events\\Event' => $baseDir . '/app/Events/Event.php',
     'App\\Events\\ExampleEvent' => $baseDir . '/app/Events/ExampleEvent.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
-    'App\\Http\\Controllers\\ClienteController' => $baseDir . '/app/Http/Controllers/ClienteController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Http\\Controllers\\DetListaPrecioController' => $baseDir . '/app/Http/Controllers/DetListaPrecioController.php',
     'App\\Http\\Controllers\\DetReservaController' => $baseDir . '/app/Http/Controllers/DetReservaController.php',
@@ -35,6 +33,7 @@ return array(
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',
     'App\\Http\\Middleware\\ExampleMiddleware' => $baseDir . '/app/Http/Middleware/ExampleMiddleware.php',
     'App\\Http\\Middleware\\HeaderJson' => $baseDir . '/app/Http/Middleware/HeaderJson.php',
+    'App\\Http\\Middleware\\jsonNotNull' => $baseDir . '/app/Http/Middleware/jsonNotNull.php',
     'App\\Jobs\\ExampleJob' => $baseDir . '/app/Jobs/ExampleJob.php',
     'App\\Jobs\\Job' => $baseDir . '/app/Jobs/Job.php',
     'App\\ListaPrecio' => $baseDir . '/app/ListaPrecio.php',
@@ -51,6 +50,7 @@ return array(
     'App\\TipoPlato' => $baseDir . '/app/TipoPlato.php',
     'App\\TipoUsuario' => $baseDir . '/app/TipoUsuario.php',
     'App\\User' => $baseDir . '/app/User.php',
+    'App\\UsuarioNegocio' => $baseDir . '/app/UsuarioNegocio.php',
     'App\\UsuarioPermiso' => $baseDir . '/app/UsuarioPermiso.php',
     'App\\UsuarioTipoPermiso' => $baseDir . '/app/UsuarioTipoPermiso.php',
     'App\\Venta' => $baseDir . '/app/Venta.php',
@@ -1980,6 +1980,7 @@ return array(
     'PHP_Token_XOR_EQUAL' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
     'PHP_Token_YIELD_FROM' => $vendorDir . '/phpunit/php-token-stream/src/Token.php',
+    'PermisoSeeder' => $baseDir . '/database/seeds/PermisoSeeder.php',
     'PharIo\\Manifest\\Application' => $vendorDir . '/phar-io/manifest/src/values/Application.php',
     'PharIo\\Manifest\\ApplicationName' => $vendorDir . '/phar-io/manifest/src/values/ApplicationName.php',
     'PharIo\\Manifest\\Author' => $vendorDir . '/phar-io/manifest/src/values/Author.php',
