@@ -27,7 +27,7 @@ class CreateTablePersona extends Migration
             $table->string('imei_phone',120)->unique();
             $table->string('ckeypersona',6)->unique(); //autogenerado
             $table->string('cusuario',30)->unique();
-            $table->string('cpassword',30);
+            $table->string('cpassword',70);
             //TODO * A = "ACTIVO", D = "DESABILITADO"
             $table->string('cestado',1)->default("a");
             //referencia de la tabla externa
