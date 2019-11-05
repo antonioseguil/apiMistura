@@ -18,18 +18,18 @@ class CreateTablePersona extends Migration
             //tipo de usuario
             $table->bigInteger('ncodtipousuario');
             //demas campos de la tabla
-            $table->string('cnombre');
-            $table->string('capellidopaterno');
-            $table->string('capellidomaterno');
+            $table->string('cnombre',60);
+            $table->string('capellidopaterno',50);
+            $table->string('capellidomaterno',50);
             $table->string('cdni',8)->unique();
-            $table->string('cemail')->unique();
+            $table->string('cemail',30)->unique();
             $table->string('api_token',60); //autogenerado
-            $table->string('imei_phone')->unique();
+            $table->string('imei_phone',120)->unique();
             $table->string('ckeypersona',6)->unique(); //autogenerado
-            $table->string('cusuario')->unique();
-            $table->string('cpassword');
+            $table->string('cusuario',30)->unique();
+            $table->string('cpassword',30);
             //TODO * A = "ACTIVO", D = "DESABILITADO"
-            $table->string('cestado')->default("a");
+            $table->string('cestado',1)->default("a");
             //referencia de la tabla externa
             $table->foreign('ncodtipousuario')->references('ncodtipousuario')->on('tipousuario');
             $table->timestamps();
