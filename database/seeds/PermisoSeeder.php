@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use Illuminate\Support\DB;
+use Illuminate\Support\Facades\DB;
+
 
 class PermisoSeeder extends Seeder
 {
@@ -14,7 +15,16 @@ class PermisoSeeder extends Seeder
     {
         //insertando datos en la BD usando elonqued
         DB::table('permiso')->insert([
-            'cnombrepermiso' => 'Cliente',
+            'cnombrepermiso' => 'Reservas',
         ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Negocios',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Secciones',
+        ]);
+
     }
 }
