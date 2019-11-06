@@ -55,7 +55,8 @@ class UsuarioController extends Controller
                 'ncodtipousuario' => $data['ncodtipousuario'],
             ]);
         }
-        return response()->json(["rpta"=> "1","persona" => $data],201);
+        $registrado= User::where('cemail',$data['cemail'])->first();
+        return response()->json(["rpta"=> "1","persona" => $registrado],201);
     }
 
     //función para actualizar la persona
