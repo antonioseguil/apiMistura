@@ -14,28 +14,48 @@ use Illuminate\Support\Str;
 class UsuarioController extends Controller
 {
     //función para devolver los usuarios
-    function index(Request $request){
+    function index(){
         $data = User::all();
         return response()->json($data,200);
     }
 
     //Función para crear una nueva persona (usuario)
     function create(Request $request){
+        //recogiendo los datos enviados por el request
         $data = $request->json()->all();
-        User::create([
-            'cnombre' => $data['cnombre'],
-            'capellidopaterno' => $data['capellidopaterno'],
-            'capellidomaterno' => $data['capellidomaterno'],
-            'cdni' => $data['cdni'],
-            'cemail' => $data['cemail'],
-            'api_token' => Str::random(60),
-            'imei_phone' => $data['cimei_phone'],
-            'ckeypersona' => Str::random(6),
-            'cusuario' => $data['cusuario'],
-            'cpassword' => Hash::make($data['cpassword']),
-            'ncodtipousuario' => $data['ncodtipousuario']
-        ]);
-        return response()->json($data,201);
+
+        //verificando la existencia de datos
+        if(!$request->exists('ncodtipousuario')){
+            //si el dato verificado es nulo, se pondra por defecto = CLIENTE = 1
+            User::create([
+                'cnombre' => $data['cnombre'],
+                'capellidopaterno' => $data['capellidopaterno'],
+                'capellidomaterno' => $data['capellidomaterno'],
+                'cdni' => $data['cdni'],
+                'cemail' => $data['cemail'],
+                'api_token' => Str::random(60),
+                'imei_phone' => $data['cimei_phone'],
+                'ckeypersona' => Str::random(6),
+                'cusuario' => $data['cusuario'],
+                'cpassword' => Hash::make($data['cpassword']),
+            ]);
+        }else{
+            //caso contrario agregara el tipo que se indique
+            User::create([
+                'cnombre' => $data['cnombre'],
+                'capellidopaterno' => $data['capellidopaterno'],
+                'capellidomaterno' => $data['capellidomaterno'],
+                'cdni' => $data['cdni'],
+                'cemail' => $data['cemail'],
+                'api_token' => Str::random(60),
+                'imei_phone' => $data['cimei_phone'],
+                'ckeypersona' => Str::random(6),
+                'cusuario' => $data['cusuario'],
+                'cpassword' => Hash::make($data['cpassword']),
+                'ncodtipousuario' => $data['ncodtipousuario'],
+            ]);
+        }
+        return response()->json(["rpta"=> "1","persona" => $data],201);
     }
 
     //función para actualizar la persona

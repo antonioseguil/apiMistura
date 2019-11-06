@@ -16,7 +16,7 @@ $router->get('/', function () use ($router) {
 });
 
 //TODO * ENTORNO DE PRUEBA PARA LOGUEO Y REGISTRO DE USUARIO
-$router->group(['middleware'=>['json']],function () use ($router){
+$router->group(['middleware'=>['json','notNull']],function () use ($router){
     //funcion anonima para INGRESO DE USUARIO(PERSONAS)
     $router->post('/usuario/login',['uses' => 'UsuarioController@getLoginUser']);
 
