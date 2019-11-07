@@ -13,17 +13,57 @@ class PermisoSeeder extends Seeder
      */
     public function run()
     {
-        //insertando datos en la BD usando elonqued
+        //insertando datos en la DB
         DB::table('permiso')->insert([
-            'cnombrepermiso' => 'Reservas',
+            'cnombrepermiso' => 'Dashboard',
         ]);
 
         DB::table('permiso')->insert([
-            'cnombrepermiso' => 'Negocios',
+            'cnombrepermiso' => 'Mantenimientos',
         ]);
 
         DB::table('permiso')->insert([
-            'cnombrepermiso' => 'Secciones',
+            'cnombrepermiso' => 'Evento',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Sección',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Negocio',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Usuario',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Tipo plato',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Plato',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Listado de precios',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Distribución de stand',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Generar tarjeta',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Consultas',
+        ]);
+
+        DB::table('permiso')->insert([
+            'cnombrepermiso' => 'Reportes',
         ]);
 
     }
