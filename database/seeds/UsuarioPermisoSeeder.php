@@ -27,6 +27,85 @@ class UsuarioPermisoSeeder extends Seeder
             'ncodpermiso' => '2'
         ]);
 
-        //TODO * AUN FALTA LOS TIPOS USUARIO RESTANTES
+        //TODO * AGREGAND PERMISOS PARA ADMINISTRADOR EVENTO
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '1',
+            'ncodpermiso' => '1'
+        ]);
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '1',
+            'ncodpermiso' => '2'
+        ]);
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '1',
+            'ncodpermiso' => '3'
+        ]);
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '2',
+            'ncodpermiso' => '4'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '2',
+            'ncodpermiso' => '5'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '2',
+            'ncodpermiso' => '6'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '2',
+            'ncodpermiso' => '7'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '2',
+            'ncodpermiso' => '8'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '2',
+            'ncodpermiso' => '9'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '2',
+            'ncodpermiso' => '10'
+        ]);
+
+        //TODO * ADMINISTRADOR DE EVENTO
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '3',
+            'ncodpermiso' => '10'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '3',
+            'ncodpermiso' => '11'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '3',
+            'ncodpermiso' => '13'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '3',
+            'ncodpermiso' => '9'
+        ]);
+
+        DB::table("tipousuariopermiso")->insert([
+            'ncodtipousuario' => '3',
+            'ncodpermiso' => '7'
+        ]);
+
+
+        //TODO * AUN FALTA LOS TIPOS USUARIO RESTANTE
+
+
+
     }
 }

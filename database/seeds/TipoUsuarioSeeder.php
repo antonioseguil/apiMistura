@@ -18,7 +18,7 @@ class TipoUsuarioSeeder extends Seeder
         ]);
         //administrador -> el que genera los eventos, secciones, agrega negocios,etc...
         DB::table("tipousuario")->insert([
-            'ctipousuario' => 'Administrador'
+            'ctipousuario' => 'Administrador Evento'
         ]);
         //administrador negocio -> el encargado de un negocio
         DB::table("tipousuario")->insert([
