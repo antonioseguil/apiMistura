@@ -16,7 +16,10 @@ $router->get('/', function () use ($router) {
 });
 
 //TODO * ENTORNO DE PRUEBA PARA LOGUEO Y REGISTRO DE USUARIO
+//TODO * ARREGLANDO API REST, NO SE VA UTILIZAR LOS MIDDLEWARE POR EL MOMENTO
+//se esta usando los permisos de tipo json y que no sea nulo lo datos enviados
 $router->group(['middleware'=>['json','notNull']],function () use ($router){
+
     //funcion anonima para INGRESO DE USUARIO(PERSONAS)
     $router->post('/usuario/login',['uses' => 'UsuarioController@getLoginUser']);
 
@@ -28,20 +31,12 @@ $router->group(['middleware'=>['json','notNull']],function () use ($router){
 
 });
 
-
-
-
 // ------------------------------------------------------------------------------------------------
-//routing para la TABLA CLIENTES
-//funcional
-$router->get('/cliente',['uses'=>'ClienteController@index']);
-$router->post('/cliente',['uses'=>'ClienteController@create']);
-$router->put('/cliente',['uses'=>'ClienteController@update']);
 
-//TODO * ARREGLANDO API REST, NO SE VA UTILIZAR LOS MIDDLEWARE POR EL MOMENTO
+//TODO * entorno para usuario validados,
 
 //grupo de rutas para WEB, uso para web
-$router->group(['middleware' => ['auth','json']],function () use ($router){
+$router->group(['middleware' => ['auth','json','notNull']],function () use ($router){
 
     //CRUD de tabla TIPOUSUARIO
     //funcional
@@ -73,7 +68,6 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
     //funcional
     $router->get('/negocio',['uses'=>'NegocioController@index']);
     $router->post('/negocio',['uses'=>'NegocioController@create']);
-
     //TODO -- EL ENCARGADO DE ACTUALIZAR LOS DATOS DEL NEGOCIO ES EL ENCARGADO DEL NEGOCIO, MOMENTANIO
     $router->put('/negocio',['uses'=>'NegocioController@update']);
 
@@ -90,21 +84,48 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
     $router->post('/tipopermiso',['uses'=>'UsuarioTipoPermisoController@create']);
     $router->put('/tipopermiso',['uses'=>'UsuarioTipoPermisoController@update']);
 
+
+    // TODO - CREACION DE MIDDLEWARE PARA LOGUEO DE NEGOCIO
+
+    //routing para plato
+    //funcional
+    $router->get('/plato',['uses'=>'PlatoController@index']);
+    $router->post('/plato',['uses'=>'PlatoController@create']);
+    $router->put('/plato',['uses'=>'PlatoController@update']);
+
+    //routing para stand
+    //funcional
+    $router->get('/stand',['uses'=>'StandController@index']);
+    $router->post('/stand',['uses'=>'StandController@create']);
+    $router->put('/stand',['uses'=>'StandController@update']);
+
+    //routing para LISTA PRECIO
+    //funcional
+    $router->get('/listaprecio',['uses'=>'ListaPrecioController@index']);
+    $router->post('/listaprecio',['uses'=>'ListaPrecioController@create']);
+    $router->put('/listaprecio',['uses'=>'ListaPrecioController@update']);
+
+    //routing para DETALLE LISTA PRECIO
+    //funcional
+    $router->get('/detlistaprecio',['uses'=>'DetListaPrecioController@index']);
+    $router->post('/detlistaprecio',['uses'=>'DetListaPrecioController@create']);
+    $router->put('/detlistaprecio',['uses'=>'DetListaPrecioController@update']);
+
+
+    //routing para tabla RESERVA
+    //funcional
+    $router->get('/reserva',['uses'=>'ReservaController@index']);
+    $router->post('/reserva',['uses'=>'ReservaController@create']);
+    $router->put('/reserva',['uses'=>'ReservaController@update']);
+
+    //routing para tabla DETRESERVA
+    //funcional
+    $router->get('/detreserva',['uses'=>'DetReservaController@index']);
+    $router->post('/detreserva',['uses'=>'DetReservaController@create']);
+    $router->put('/detreserva',['uses'=>'DetReservaController@update']);
 });
 
-// TODO - CREACION DE MIDDLEWARE PARA LOGUEO DE NEGOCIO
 
-//routing para plato
-//funcional
-$router->get('/plato',['uses'=>'PlatoController@index']);
-$router->post('/plato',['uses'=>'PlatoController@create']);
-$router->put('/plato',['uses'=>'PlatoController@update']);
-
-//routing para stand
-//funcional
-$router->get('/stand',['uses'=>'StandController@index']);
-$router->post('/stand',['uses'=>'StandController@create']);
-$router->put('/stand',['uses'=>'StandController@update']);
 
 /*
  * Prueba de store procedure con laravel lumen
@@ -112,32 +133,6 @@ $router->put('/stand',['uses'=>'StandController@update']);
  */
 
 // TODO* comienzo de la revison
-// TODO* falta agregar los parametros de seguridad
 
 
-//routing para LISTA PRECIO
-//funcional
-$router->get('/listaprecio',['uses'=>'ListaPrecioController@index']);
-$router->post('/listaprecio',['uses'=>'ListaPrecioController@create']);
-$router->put('/listaprecio',['uses'=>'ListaPrecioController@update']);
 
-//routing para DETALLE LISTA PRECIO
-//funcional
-$router->get('/detlistaprecio',['uses'=>'DetListaPrecioController@index']);
-$router->post('/detlistaprecio',['uses'=>'DetListaPrecioController@create']);
-$router->put('/detlistaprecio',['uses'=>'DetListaPrecioController@update']);
-
-
-//TODO * FALTA REVISAR EN LA BD
-
-//routing para tabla RESERVA
-//funcional
-$router->get('/reserva',['uses'=>'ReservaController@index']);
-$router->post('/reserva',['uses'=>'ReservaController@create']);
-$router->put('/reserva',['uses'=>'ReservaController@update']);
-
-//routing para tabla DETRESERVA
-//funcional
-$router->get('/detreserva',['uses'=>'DetReservaController@index']);
-$router->post('/detreserva',['uses'=>'DetReservaController@create']);
-$router->put('/detreserva',['uses'=>'DetReservaController@update']);
