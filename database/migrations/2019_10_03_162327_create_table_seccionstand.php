@@ -15,9 +15,8 @@ class CreateTableSeccionstand extends Migration
     {
         Schema::create('seccionstand', function (Blueprint $table) {
             $table->bigInteger('ncodseccionstand',true);
-            $table->string('cnombredescripcion');
-            $table->integer('ncantidadstand');
-            $table->string('cestado');
+            $table->string('cseccion');
+            $table->string('cdescripcion');
             $table->timestamps();
         });
     }

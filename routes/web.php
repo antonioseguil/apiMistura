@@ -27,7 +27,7 @@ $router->group(['middleware'=>['json','notNull']],function () use ($router){
     $router->post('/usuario',['uses'=>'UsuarioController@create']);
     //todavia no se utiliza
     //$router->get('/usuario',['uses'=>'UsuarioController@index']);
-    //$router->put('/usuario',['uses'=>'UsuarioController@update']);
+
 
 });
 
@@ -38,44 +38,112 @@ $router->group(['middleware'=>['json','notNull']],function () use ($router){
 //grupo de rutas para WEB, uso para web
 $router->group(['middleware' => ['auth','json','notNull']],function () use ($router){
 
-    //CRUD de tabla TIPOUSUARIO
-    //funcional
-    $router->get('/tipousuario',['uses'=>'TipoUsuarioController@index']);
+    //SE VA NECESTIAR ESTAR AUTENTICADO PARA ACTUALIZAR TUS DATOS
+    //CRUD de la tabla USUARIO
+    $router->put('/update/usuario',['uses'=>'UsuarioController@update']);
+
+    // --------------------------------------------------------
+
+    //CRUD DE LA TABLA TIPO USUARIO
+
+    //traer lista de tipo de usuario
+    $router->get('/lista/tipousuario',['uses'=>'TipoUsuarioController@index']);
+    //CREACION DE TIPO USUARIO
     $router->post('/tipousuario',['uses'=>'TipoUsuarioController@create']);
-    $router->put('/tipousuario',['uses'=>'TipoUsuarioController@update']);
+    //ACTUALIZACIÓN DEL TIPO DE USUARIO
+    $router->put('/update/tipousuario',['uses'=>'TipoUsuarioController@update']);
+    //AGREGADO DE UN SOLO PERMISO PARA USUARIO
+    $router->post('/tipousuario/one/permiso',['uses'=>'TipoUsuarioController@setPermisoUsuario']);
+    //AGREGADO DE MUCHOS PERMISOS PARA UN SOLO USUARIO
+    $router->post('/tipousuario/more/permiso',['uses'=>'TipoUsuarioController@setMorePermisoUsuario']);
 
-    //routing para permisos
-    //funcional
-    $router->get('/permiso',['uses'=>'PermisoController@index']);
+    //----------------------------------------------------------------
+
+    //CRUD PARA LA TABLA PERMISO
+
+    //Traer una lista de los permisos
+    $router->get('/lista/permiso',['uses'=>'PermisoController@index']);
+    //Creación de permiso
     $router->post('/permiso',['uses'=>'PermisoController@create']);
-    $router->put('/permiso',['uses'=>'PermisoController@update']);
+    //Actualización de permiso
+    $router->put('/update/permiso',['uses'=>'PermisoController@update']);
 
+    // ---------------------------------------------------------------
 
+    //CRUD PARA LA TABLA NEGOCIO
 
-    //CRUD de tabla EVENTO
-    //funcional
-    $router->get('/evento',['uses'=>'EventoController@index']);
+    //Trae una lista de los negocios
+    $router->get('/lista/negocio',['uses'=>'NegocioController@index']);
+    //Crea un negocio
+    $router->post('/negocio',['uses'=>'NegocioController@create']);
+    //Actualiza el negocio
+    $router->put('/update/negocio',['uses'=>'NegocioController@update']);
+
+    //TABLA USUARIO NEGOCIO
+    //Agregar usuario al negocio
+    $router->post('/negocio/usuario/add',['uses'=>'UsuarioNegocioController@create']);
+    //TODO * Falta agregar el cambio de estado al negocio
+
+    // ----------------------------------------------------------------
+
+    //CRUD PARA LA TABLA EVENTO
+
+    //trear los eventos
+    $router->get('/lista/evento',['uses'=>'EventoController@index']);
+    //crear un evento
     $router->post('/evento',['uses'=>'EventoController@create']);
-    $router->put('/evento',['uses'=>'EventoController@update']);
+    //actualizar un evento
+    $router->put('/update/evento',['uses'=>'EventoController@update']);
+
+    //METODOS PARA AGREGAR LAS SECCIONES A LOS EVENTOS
+    //Para agregar una seccion, sola una
+    $router->post('/evento/one/seccion',['uses'=>'EventoController@setSeccionEvento']);
+    //Para agregar varias secciones en una sola petición
+    $router->post('/evento/more/seccion',['uses'=>'EventoController@setMoreSeccionEvento']);
+
+    //TODO FALTA AGREGAR LAS BUSQUEDAS DE EVENTOS
+    //TODO FALTA AGREGAR LOS CAMBIOS DE ESTADO EN LA TABLA SECCION EVENTO
+    //TODO FALTA AGREGAR EL WHERE EN GET DE LISTA PARA QUE APARESCAN SOLO CON LAS DE "p"
+
+    // -------------------------------------------------------------------
+
+    //CRUD DE LA TABLA SECCION STAND
+    //lista de seccion de stand
+    $router->get('/lista/seccionstand',['uses'=>'SeccionStandController@index']);
+    //crear un seccion
+    $router->post('/seccionstand',['uses'=>'SeccionStandController@create']);
+    //actualizar una seccion
+    $router->put('/update/seccionstand',['uses'=>'SeccionStandController@update']);
+
+    // -------------------------------------------------------------------
+
+    //CRUD DE LA TABLA SECCION STAND
+    $router->get('/lista/stand',['uses'=>'StandController@index']);
+    $router->post('/stand',['uses'=>'StandController@create']);
+    $router->put('/update/stand',['uses'=>'StandController@update']);
+
+    // --------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
 
     //CRUD de tabla TIPOPLATO
     //funcional
-    $router->get('/tipoplato',['uses'=>'TipoPlatoController@index']);
+    //traer platos
+    $router->get('/lista/tipoplato',['uses'=>'TipoPlatoController@index']);
+    //crear plato
     $router->post('/tipoplato',['uses'=>'TipoPlatoController@create']);
-    $router->put('/tipoplato',['uses'=>'TipoPlatoController@update']);
+    //actualizar plato
+    $router->put('/update/tipoplato',['uses'=>'TipoPlatoController@update']);
 
-    //CRUD de tabla NEGOCIO
-    //funcional
-    $router->get('/negocio',['uses'=>'NegocioController@index']);
-    $router->post('/negocio',['uses'=>'NegocioController@create']);
-    //TODO -- EL ENCARGADO DE ACTUALIZAR LOS DATOS DEL NEGOCIO ES EL ENCARGADO DEL NEGOCIO, MOMENTANIO
-    $router->put('/negocio',['uses'=>'NegocioController@update']);
 
-    //CRUD de tabla SECCIONSTAND
-    //funcional
-    $router->get('/seccionstand',['uses'=>'SeccionStandController@index']);
-    $router->post('/seccionstand',['uses'=>'SeccionStandController@create']);
-    $router->put('/seccionstand',['uses'=>'SeccionStandController@update']);
+
 
     //CRUD de tabla UsuarioTipoPermiso
     //funcional
@@ -92,12 +160,6 @@ $router->group(['middleware' => ['auth','json','notNull']],function () use ($rou
     $router->get('/plato',['uses'=>'PlatoController@index']);
     $router->post('/plato',['uses'=>'PlatoController@create']);
     $router->put('/plato',['uses'=>'PlatoController@update']);
-
-    //routing para stand
-    //funcional
-    $router->get('/stand',['uses'=>'StandController@index']);
-    $router->post('/stand',['uses'=>'StandController@create']);
-    $router->put('/stand',['uses'=>'StandController@update']);
 
     //routing para LISTA PRECIO
     //funcional

@@ -28,7 +28,8 @@ class CreateTableEvento extends Migration
             $table->string('cdireccion');
             $table->string('clongitud');
             $table->string('clatitud');
-            $table->string('cestado');
+            //TODO * P = "PROCESO" F = "FINALIZADO"
+            $table->string('cestado')->default("p");
             //REFERENCIAS DE LAS FK DE LAS TABLAS
             $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');
             $table->timestamps();

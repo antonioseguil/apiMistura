@@ -21,7 +21,7 @@ class CreateTableStand extends Migration
             $table->bigInteger('ncodnegocio');
             $table->bigInteger('ncodseccionstand');
             $table->string('cnumerosstand');
-            $table->string('ccalificacion');
+            $table->string('ccalificacion')->nullable(true); // acepta nulos
             $table->string('clongitud');
             $table->string('clatitud');
             //TODO* A = "ACTIVO", "D" = "DESABILITADO"

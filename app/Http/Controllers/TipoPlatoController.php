@@ -6,7 +6,6 @@ namespace App\Http\Controllers;
 
 use App\TipoPlato;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class TipoPlatoController extends Controller
 {

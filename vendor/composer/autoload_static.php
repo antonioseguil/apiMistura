@@ -412,6 +412,7 @@ class ComposerStaticInitca537d3526bedb275c37fe6c089e66b0
         'App\\Http\\Controllers\\TipoPlatoController' => __DIR__ . '/../..' . '/app/Http/Controllers/TipoPlatoController.php',
         'App\\Http\\Controllers\\TipoUsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/TipoUsuarioController.php',
         'App\\Http\\Controllers\\UsuarioController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsuarioController.php',
+        'App\\Http\\Controllers\\UsuarioNegocioController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsuarioNegocioController.php',
         'App\\Http\\Controllers\\UsuarioTipoPermisoController' => __DIR__ . '/../..' . '/app/Http/Controllers/UsuarioTipoPermisoController.php',
         'App\\Http\\Controllers\\VentaController' => __DIR__ . '/../..' . '/app/Http/Controllers/VentaController.php',
         'App\\Http\\Middleware\\Authenticate' => __DIR__ . '/../..' . '/app/Http/Middleware/Authenticate.php',

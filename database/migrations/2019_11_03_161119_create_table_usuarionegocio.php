@@ -19,6 +19,8 @@ class CreateTableUsuarionegocio extends Migration
             //CAMPOS DE LA TABLA
             $table->bigInteger('ncodpersona');
             $table->bigInteger('ncodnegocio');
+            //TODO * A = "ACTIVO", D = "DESABILITADO"
+            $table->string('cestado',1)->default("a");
 
             //REFERENCIAS DE LAS FK
             $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');

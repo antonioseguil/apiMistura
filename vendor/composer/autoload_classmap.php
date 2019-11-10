@@ -28,6 +28,7 @@ return array(
     'App\\Http\\Controllers\\TipoPlatoController' => $baseDir . '/app/Http/Controllers/TipoPlatoController.php',
     'App\\Http\\Controllers\\TipoUsuarioController' => $baseDir . '/app/Http/Controllers/TipoUsuarioController.php',
     'App\\Http\\Controllers\\UsuarioController' => $baseDir . '/app/Http/Controllers/UsuarioController.php',
+    'App\\Http\\Controllers\\UsuarioNegocioController' => $baseDir . '/app/Http/Controllers/UsuarioNegocioController.php',
     'App\\Http\\Controllers\\UsuarioTipoPermisoController' => $baseDir . '/app/Http/Controllers/UsuarioTipoPermisoController.php',
     'App\\Http\\Controllers\\VentaController' => $baseDir . '/app/Http/Controllers/VentaController.php',
     'App\\Http\\Middleware\\Authenticate' => $baseDir . '/app/Http/Middleware/Authenticate.php',

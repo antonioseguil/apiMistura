@@ -35,7 +35,6 @@ class UsuarioController extends Controller
                 'cemail' => $data['cemail'],
                 'api_token' => Str::random(60),
                 'imei_phone' => $data['cimei_phone'],
-                'ckeypersona' => Str::random(6),
                 'cusuario' => $data['cusuario'],
                 'cpassword' => Hash::make($data['cpassword']),
             ]);
@@ -49,7 +48,6 @@ class UsuarioController extends Controller
                 'cemail' => $data['cemail'],
                 'api_token' => Str::random(60),
                 'imei_phone' => $data['cimei_phone'],
-                'ckeypersona' => Str::random(6),
                 'cusuario' => $data['cusuario'],
                 'cpassword' => Hash::make($data['cpassword']),
                 'ncodtipousuario' => $data['ncodtipousuario'],
@@ -61,18 +59,21 @@ class UsuarioController extends Controller
 
     //función para actualizar la persona
     function update(Request $request){
-        if($request->isJson()){
-            $data = $request->json()->all();
-            $usuario = User::where('ncodusuario',$data['ncodusuario'])->first();
-            $usuario->cnombre = $data['cnombre'];
-            $usuario->capellidopaterno = $data['capellidopaterno'];
-            $usuario->capellidomaterno = $data['capellidomaterno'];
-            $usuario->save();
-            return response()->json($usuario,200);
-        }
-        return response()->json(['error' => 'no autorizado'],403);
+        $data = $request->json()->all();
+        //dato que se usa para buscar al usuario
+        $usuario = User::where('ncodpersona',$data['ncodpersona'])->first();
+        //datos a modificar
+        $usuario->cnombre = $data['cnombre'];
+        $usuario->capellidopaterno = $data['capellidopaterno'];
+        $usuario->capellidomaterno = $data['capellidomaterno'];
+        //$usuario->ckeypersona = $data['ckeypersona']; TODO * SE CREARA UN PATH EXCLUSVIO PARA ELLO
+        $usuario->cdni = $data['cdni'];
+        $usuario->save();
+        return response()->json($usuario,200);
     }
 
+
+    // Función para validar los datos de un usuario al tratar de loguearse
     function getLoginUser(Request $request){
         //recuperando los datos enviados
         $data = $request->json()->all();
@@ -109,4 +110,6 @@ class UsuarioController extends Controller
             return response()->json($responseData,406);
         }
     }
+
+    //TODO * CREAR FUNCIÓN PARA ACTUALIZAR LA KEY PERSONA Y BUSCAR UNA KEY PERSONA
 }

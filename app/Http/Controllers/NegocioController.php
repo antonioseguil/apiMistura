@@ -16,7 +16,7 @@ class NegocioController extends Controller
         return response()->json($data,200);
     }
 
-    //función que crea un nuevo negocio
+    //Función que crea un nuevo negocio
     function create(Request $request){
         $data = $request->json()->all();
         Negocio::create([
@@ -25,18 +25,22 @@ class NegocioController extends Controller
             'cdireccion' => $data['cdireccion'],
             'cruc' => $data['cruc']
         ]);
-        return response()->json($data,201);
+        $dataRequest = array("rpta" => "1","msg"=>"creado correctamente","objeto" => $data);
+        return response()->json($dataRequest,201);
     }
 
+    //Función actualizar un negocio
     function update(Request $request){
         $data = $request->json()->all();
         $negocio = Negocio::where('ncodnegocio',$data['ncodnegocio'])->first();
-        $negocio->cnombrenegocio = $data['cnombrenegocio'];
+        $negocio->crazonsocial = $data['crazonsocial'];
         $negocio->cnombredescripcion = $data['cnombredescripcion'];
         $negocio->cdireccion = $data['cdireccion'];
         $negocio->save();
-        return response()->json($negocio,200);
+        $dataRequest = array("rpta" => "1","msg"=>"actualizado correctamente", "objeto" => $negocio);
+        return response()->json($dataRequest,200);
     }
+    //TODO* AGREGAR FUNCIÓN PARA AGREGAR USUARIO_NEGOCIO
 
     //TODO* FALTA FUNCTION PARA CAMBIAR EL ESTADO DE UN NEGOCIO
 }
