@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\Evento;
 use App\EventoSeccion;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class EventoController extends Controller
 {
@@ -81,4 +82,9 @@ class EventoController extends Controller
     }
 
     //TODO * AGREGAR FUNCIÓNES PARA BUSCAR EVENTOS
+
+    function  setEventoSeccion($ncodseccion){
+        $data = DB::select("call sp_getEventoSeccion(?)",[$ncodseccion]);
+        return response()->json($data,200);
+    }
 }

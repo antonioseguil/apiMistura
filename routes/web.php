@@ -137,8 +137,14 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
     //Trae una lista de los negocios
     $router->get('/lista/negocio',['uses'=>'NegocioController@index']);
 
+    //------------------------------------------------
+
     //trear los eventos
     $router->get('/lista/evento',['uses'=>'EventoController@index']);
+    // TODO EVENTO BUSQUEDA DE EVENTO POR ID DE SECCION
+    $router->get('/lista/evento/{ncodseccion}',['uses'=>'EventoController@setEventoSeccion']);
+
+    //---------------------------------------------
 
     //lista de seccion de stand
     $router->get('/lista/seccionstand',['uses'=>'SeccionStandController@index']);
@@ -229,8 +235,6 @@ $router->group(['middleware' => ['auth','json']],function () use ($router){
  * Prueba de store procedure con laravel lumen
  * $router->get('/tipoplato/sp',['uses'=>'TipoPlatoController@spPrueba']);
  */
-
-// TODO* comienzo de la revison
 
 
 

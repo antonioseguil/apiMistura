@@ -22,7 +22,7 @@ class SeccionStandController extends Controller
             'cseccion' => $data['cseccion'],
             'cdescripcion' => $data['cdescripcion']
         ]);
-        $dataRequest = array("rpta" => "1","msg"=>"actualizado correctamente","objeto" => $data);
+        $dataRequest = array("rpta" => "1","msg"=>"agregado correctamente","objeto" => $data);
         return response()->json($dataRequest,201);
     }
 
