@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\TipoPlato;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 class TipoPlatoController extends Controller
@@ -15,11 +16,14 @@ class TipoPlatoController extends Controller
     }
 
     function create(Request $request){
+        //recuperamos datos
         $data = $request->json()->all();
-        TipoPlato::create([
+        //creamos el nuevo dato en la bd y lo guardamos en un variable
+        $create = TipoPlato::create([
             'cnombretipoplato' => $data['cnombretipoplato']
         ]);
-        return response()->json($data,201);
+        //retornando datos correpondientes
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
     function update(Request $request){
@@ -27,7 +31,7 @@ class TipoPlatoController extends Controller
         $tipoplato = TipoPlato::where('ncodtipoplato',$data['ncodtipoplato'])->first();
         $tipoplato->cnombretipoplato = $data['cnombretipoplato'];
         $tipoplato->save();
-        return response()->json($tipoplato,200);
+        return response()->json(Utilitarios::messageOKU($tipoplato),200);
     }
 /*
  * funcion que usa el store procedure de mysql

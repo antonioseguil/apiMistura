@@ -84,7 +84,40 @@ class EventoController extends Controller
     //TODO * AGREGAR FUNCIÓNES PARA BUSCAR EVENTOS
 
     function  setEventoSeccion($ncodseccion){
-        $data = DB::select("call sp_getEventoSeccion(?)",[$ncodseccion]);
+        function  setEventoSeccion($ncodseccion){
+            //creacion de variable que contendra los datos
+            $returnData = array();
+            //creaacion de lista de codigo
+            $listaCodigo = array();
+            //lista de plato
+            $prueba = null;
+            //recuperando lista de evento
+            $dataEvento = DB::select("call sp_getEventoSeccion(?)",[$ncodseccion]);
+
+            //recuperamos los codigos de evento
+            foreach($dataEvento as $codigo){
+                array_push($listaCodigo,$codigo->ncodevento);
+            }
+
+            foreach($dataEvento as $evento){
+
+                $prueba = array("ncodevento" => $evento->ncodevento,
+                    "cnombreevento" => $evento->cnombreevento,
+                    "cnombredescripcion" => $evento->cnombredescripcion,
+                    "dfechainicio" => $evento->dfechainicio,
+                    "dfechafinal" => $evento->dfechafinal,
+                    "dhorainicio" => $evento->dhorainicio,
+                    "dhorafinal" => $evento->dhorafinal,
+                    "cdireccion" => $evento->cdireccion,
+                    "objPlato" => DB::select("call sp_getStandPrecioM(?,?)",[$evento->ncodevento,$ncodseccion]));
+                array_push($returnData,$prueba);
+            }
+            return response()->json($returnData,200);
+        }
+    }
+
+    function  setSecciones($codevento){
+        $data = DB::select("call sp_getSeccionEvento(?)",[$codevento]);
         return response()->json($data,200);
     }
 }
