@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 
 use App\DetReserva;
+use App\Reserva;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 class DetReservaController extends Controller
@@ -15,25 +17,34 @@ class DetReservaController extends Controller
         return response()->json($data,200);
     }
 
+    //función para crear una nueva reserva
     function create(Request $request){
         $data = $request->json()->all();
-        DetReserva::create([
+        //buscamos la reserva al cual se le va actualizar el dato
+        $reserva = Reserva::where('ncodreserva',$data['ncodreserva'])->first();
+        //variable que contara la cantidad total que se esta registrando
+        $cantidadTotal = $reserva->ncantidadtotal;
+        $create = DetReserva::create([
             'ncoddetlistaprecio' => $data['ncoddetlistaprecio'],
             'ncodreserva' => $data['ncodreserva'],
             'ncantidad' => $data['ncantidad']
         ]);
-        return response()->json($data,201);
+        $cantidadTotal = $cantidadTotal + $data['ncantidad'];
+        //actualizamos la nueva cantidad total
+        $reserva->ncantidadtotal = $cantidadTotal;
+        //guarda los cambios
+        $reserva->save();
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
-    //TODO* falta revision de update
+    //función para actualizar el detalle de una reserva
     function update(Request $request){
         $data = $request->json()->all();
         $detreserva = DetReserva::where('ncoddetreserva',$data['ncoddetreserva'])->first();
         $detreserva->ncoddetlistaprecio = $data['ncoddetlistaprecio'];
-        $detreserva->ncodreserva = $data['ncodreserva'];
         $detreserva->ncantidad = $data['ncantidad'];
         $detreserva->save();
-        return response()->json($detreserva,200);
+        return response()->json(Utilitarios::messageOKU($detreserva),200);
     }
 
 }

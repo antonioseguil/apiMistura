@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Negocio;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 class NegocioController extends Controller
@@ -19,14 +20,13 @@ class NegocioController extends Controller
     //Función que crea un nuevo negocio
     function create(Request $request){
         $data = $request->json()->all();
-        Negocio::create([
+        $create = Negocio::create([
             'crazonsocial' => $data['crazonsocial'],
             'cnombredescripcion' => $data['cnombredescripcion'],
             'cdireccion' => $data['cdireccion'],
             'cruc' => $data['cruc']
         ]);
-        $dataRequest = array("rpta" => "1","msg"=>"creado correctamente","objeto" => $data);
-        return response()->json($dataRequest,201);
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
     //Función actualizar un negocio
@@ -37,10 +37,9 @@ class NegocioController extends Controller
         $negocio->cnombredescripcion = $data['cnombredescripcion'];
         $negocio->cdireccion = $data['cdireccion'];
         $negocio->save();
-        $dataRequest = array("rpta" => "1","msg"=>"actualizado correctamente", "objeto" => $negocio);
-        return response()->json($dataRequest,200);
+        return response()->json(Utilitarios::messageOKU($negocio),200);
     }
-    //TODO* AGREGAR FUNCIÓN PARA AGREGAR USUARIO_NEGOCIO
+    // -- la función para agregar un usuario al negocio esta en un controlador aparte...
 
     //TODO* FALTA FUNCTION PARA CAMBIAR EL ESTADO DE UN NEGOCIO
 }

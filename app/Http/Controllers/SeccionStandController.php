@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\SeccionStand;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 class SeccionStandController extends Controller
@@ -18,12 +19,11 @@ class SeccionStandController extends Controller
     //función para crear una nueva seccion
     function create(Request $request){
         $data = $request->json()->all();
-        SeccionStand::create([
+        $create = SeccionStand::create([
             'cseccion' => $data['cseccion'],
             'cdescripcion' => $data['cdescripcion']
         ]);
-        $dataRequest = array("rpta" => "1","msg"=>"agregado correctamente","objeto" => $data);
-        return response()->json($dataRequest,201);
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
     //Actualizar datos de la seccion
@@ -33,7 +33,6 @@ class SeccionStandController extends Controller
         $seccionStand->cseccion = $data['cseccion'];
         $seccionStand->cdescripcion = $data['cdescripcion'];
         $seccionStand->save();
-        $dataRequest = array("rpta" => "1","msg"=>"actualizado correctamente","objeto" => $seccionStand);
-        return response()->json($dataRequest,200);
+        return response()->json(Utilitarios::messageOKU($seccionStand),200);
     }
 }

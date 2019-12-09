@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Reserva;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 class ReservaController extends Controller
@@ -18,20 +19,22 @@ class ReservaController extends Controller
         $data = $request->json()->all();
         //INSTANCIA PARA LA FECHA
         $time = new \DateTime();
-        Reserva::create([
-            'ncodcliente' => $data['ncodcliente'],
+        $create = Reserva::create([
+            'ncodpersona' => $data['ncodpersona'],
             'ncantidadtotal' => $data['ncantidadtotal'],
             'dfechareserva' => $time->format('Y-m-d')
         ]);
-        return response()->json($data,201);
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
+    //función para actializar la cantidad total
     function update(Request $request){
         $data = $request->json()->all();
         $reserva = Reserva::where('ncodreserva',$data['ncodreserva'])->first();
-        $reserva->ncodcliente = $data['ncodcliente'];
         $reserva->ncantidadtotal = $data['ncantidadtotal'];
         $reserva->save();
-        return response()->json($reserva,200);
+        return response()->json(Utilitarios::messageOKU($reserva),200);
     }
+
+    //falta function para cambiar el estado de la reserva
 }

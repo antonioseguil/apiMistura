@@ -4,7 +4,9 @@
 namespace App\Http\Controllers;
 
 
+use App\Evento;
 use App\User;
+use App\Utilitarios;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -23,11 +25,10 @@ class UsuarioController extends Controller
     function create(Request $request){
         //recogiendo los datos enviados por el request
         $data = $request->json()->all();
-
         //verificando la existencia de datos
         if(!$request->exists('ncodtipousuario')){
             //si el dato verificado es nulo, se pondra por defecto = CLIENTE = 1
-            User::create([
+                User::create([
                 'cnombre' => $data['cnombre'],
                 'capellidopaterno' => $data['capellidopaterno'],
                 'capellidomaterno' => $data['capellidomaterno'],
@@ -40,7 +41,7 @@ class UsuarioController extends Controller
             ]);
         }else{
             //caso contrario agregara el tipo que se indique
-            User::create([
+                User::create([
                 'cnombre' => $data['cnombre'],
                 'capellidopaterno' => $data['capellidopaterno'],
                 'capellidomaterno' => $data['capellidomaterno'],
@@ -54,7 +55,7 @@ class UsuarioController extends Controller
             ]);
         }
         $registrado= User::where('cemail',$data['cemail'])->first();
-        return response()->json(["rpta"=> "1","persona" => $registrado],201);
+        return response()->json(Utilitarios::messageOKC($registrado),201);
     }
 
     //función para actualizar la persona
@@ -69,7 +70,7 @@ class UsuarioController extends Controller
         //$usuario->ckeypersona = $data['ckeypersona']; TODO * SE CREARA UN PATH EXCLUSVIO PARA ELLO
         $usuario->cdni = $data['cdni'];
         $usuario->save();
-        return response()->json($usuario,200);
+        return response()->json(Utilitarios::messageOKU($usuario),200);
     }
 
 
@@ -109,6 +110,12 @@ class UsuarioController extends Controller
                 "datos" => []);
             return response()->json($responseData,406);
         }
+    }
+
+    //function para ver los eventos creados por una persona
+    function getPersonaEvento($codpersona){
+        $data = Evento::where('ncodpersona',$codpersona)->get();
+        return response()->json(Utilitarios::messageOK($data),200);
     }
 
     //TODO * CREAR FUNCIÓN PARA ACTUALIZAR LA KEY PERSONA Y BUSCAR UNA KEY PERSONA

@@ -31,4 +31,10 @@ class Utilitarios
         return $returnData;
     }
 
+    //función para retornar mensajes de respuesta generico
+    public static function messageOK($dataReponse = array()){
+        $returnData = array('rpta' => '1', 'msg' => 'Se realizo la consulta','obj' => $dataReponse);
+        return $returnData;
+    }
+
 }

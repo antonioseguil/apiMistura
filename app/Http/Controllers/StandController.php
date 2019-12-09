@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 
 use App\Stand;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 class StandController extends Controller
@@ -22,7 +23,7 @@ class StandController extends Controller
     //función para agregar un nuevo stand, recibe dato json
     function create(Request $request){
         $data = $request->json()->all();
-        Stand::create([
+        $create = Stand::create([
             'ncodevento' => $data['ncodevento'],
             'ncodnegocio' => $data['ncodnegocio'],
             'ncodseccionstand' => $data['ncodseccionstand'],
@@ -30,8 +31,7 @@ class StandController extends Controller
             'clongitud' => $data['clongitud'],
             'clatitud' => $data['clatitud']
         ]);
-        $dataRequest = array("rpta" => "1","msg"=>"creado correctamente", "objeto" => $data);
-        return response()->json($dataRequest,201);
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
     //función para actualizar
@@ -42,8 +42,7 @@ class StandController extends Controller
         $stand->clongitud = $data['clongitud'];
         $stand->clatitud = $data['clatitud'];
         $stand->save();
-        $dataRequest = array("rpta" => "1","msg"=>"actualizado correctamente", "objeto" => $stand);
-        return response()->json($dataRequest,200);
+        return response()->json(Utilitarios::messageOKU($stand),200);
     }
 
     //TODO FALTA FUNCION PARA CAMBIAR EL ESTADO DEL STAND

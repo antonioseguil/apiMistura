@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\TipoUsuario;
 use App\UsuarioTipoPermiso;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -18,12 +19,10 @@ class TipoUsuarioController extends Controller
 
     function create(Request $request){
         $data = $request->json()->all();
-        TipoUsuario::create([
+        $create = TipoUsuario::create([
             'ctipousuario' => $data['ctipousuario']
         ]);
-        //cuerp de la respuesta a devolver
-        $dataRequest = array("rpta" => "1","msg"=>"dato creado correctamente","object" => $data);
-        return response()->json($dataRequest,201);
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
     function update(Request $request){
@@ -35,31 +34,31 @@ class TipoUsuarioController extends Controller
         $tipousuario->ctipousuario = $data['ctipousuario'];
         //guardando
         $tipousuario->save();
-        $dataRequest = array("rpta" => "1","msg"=>"dato actualizado correctamente","object" => $tipousuario);
-        return response()->json($dataRequest,200);
+        return response()->json(Utilitarios::messageOKU($tipousuario),200);
     }
 
     //funcion para agregar permiso a un usuario, un solo permiso
     function setPermisoUsuario(Request $request){
         $data = $request->json()->all();
-        UsuarioTipoPermiso::create([
+        $create = UsuarioTipoPermiso::create([
             'ncodtipousuario' => $data['ncodtipousuario'],
             'ncodpermiso' => $data['ncodpermiso']
             ]);
-        $dataRequest = array("rpta" => "1","msg"=>"permiso agregado correctamente","cantidad" => "one");
-        return response()->json($dataRequest,200);
+        return response()->json(Utilitarios::messageMoreData($create),200);
     }
 
     //Función para agregar muchos permisos, para un usuario
     function setMorePermisoUsuario(Request $request){
         $datos = $request->json()->all();
+        //variables que contiene los datos creados
+        $returnData = array();
         foreach ($datos as $data){
-            UsuarioTipoPermiso::create([
+            $create = UsuarioTipoPermiso::create([
                 'ncodtipousuario' => $data['ncodtipousuario'],
                 'ncodpermiso' => $data['ncodpermiso']
             ]);
+            array_push($returnData,$create);
         }
-        $dataRequest = array("rpta" => "1","msg"=>"permisos agregado correctamente", "cantidad" => "much");
-        return response()->json($dataRequest,200);
+        return response()->json(Utilitarios::messageMoreData($returnData,count($returnData)),200);
     }
 }

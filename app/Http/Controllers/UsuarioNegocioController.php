@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\UsuarioNegocio;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 class UsuarioNegocioController extends Controller
@@ -16,12 +17,11 @@ class UsuarioNegocioController extends Controller
 
     function create(Request $request){
         $data = $request->json()->all();
-        UsuarioNegocio::create([
+        $create = UsuarioNegocio::create([
             'ncodpersona' => $data['ncodpersona'],
             'ncodnegocio' => $data['ncodnegocio']
         ]);
-        $dataRequest = array("rpta" => "1","msg"=>"creado correctamente", "objeto" => $data);
-        return response()->json($dataRequest,201);
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
     /*function update(Request $request){

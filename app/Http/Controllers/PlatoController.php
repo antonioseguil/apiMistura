@@ -44,4 +44,16 @@ class PlatoController extends Controller
         $data = DB::select("call sp_getPlatosSeccionEvento(?,?)",[$codevento,$codseccion]);
         return response()->json($data,200);
     }
+
+    //función para traer el detalle del plato
+    function getDetallePlato(){
+        $data = DB::select("call sp_getDetallePlato(?,?)",[]);
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    //function para traer todos los platos en un order ascendente segun la seccion enviada
+    function getAllPlatosAsc($codseccion){
+        $data = DB::select("call sp_getPlatos(?)",[$codseccion]);
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
 }

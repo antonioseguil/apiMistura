@@ -149,10 +149,23 @@ $router->group(['middleware' => ['json']],function () use ($router){
         $router->put('/update/listaprecio',['uses'=>'ListaPrecioController@update']);
         //falta buscar la lista de precio por plato
 
+        // --------------------------------------------------------------------
+
+        //CRUD de tabla RESERVA
+        //creación de reserva
+        $router->post('/reserva',['uses'=>'ReservaController@create']);
+        //actualizar una reserva
+        $router->put('/update/reserva',['uses'=>'ReservaController@update']);
+        //agregar detalle de reserva
+        $router->post('/detreserva',['uses'=>'DetReservaController@create']);
+
     });
     //TODO -- METODOS GET, NO NECESITAN TENER UN BODY
 
-    //TABLA TIPO USUARIO LISTA
+    //trae todos los eventos creados por una usuario [tipo usuario => administrador]
+    $router->get('/persona/evento/{codpersona}',['uses'=>'UsuarioController@getPersonaEvento']);
+    // ------------------------------------------------
+
     //traer lista de tipo de usuario
     $router->get('/lista/tipousuario',['uses'=>'TipoUsuarioController@index']);
 
@@ -191,6 +204,10 @@ $router->group(['middleware' => ['json']],function () use ($router){
     $router->get('/lista/plato',['uses'=>'PlatoController@index']);
     //TODO * LISTA DE TODOS LOS PLATOS SEGUN EVENTO Y SECCION DEL EVENTO
     $router->get('/lista/platos/{codevento}/{ncodseccion}',['uses'=>'PlatoController@setEventoSeccion']);
+    //busqueda de detalle de un plato
+    $router->get('/detalle/platos/{codplato}/{codlistaprecio}',['uses'=>'PlatoController@getDetallePlato']);
+    //lista de todos los platos segun seccion en orden asc
+    $router->get('/lista/platos/{codseccion}/asc',['uses'=>'PlatoController@getAllPlatosAsc']);
     //-----------------------------------------------------------
 
     //traer tipo platos
@@ -239,30 +256,12 @@ $router->group(['middleware' => ['json']],function () use ($router){
     $router->put('/update/tipopermiso',['uses'=>'UsuarioTipoPermisoController@update']);
 
 
-    // TODO - CREACION DE MIDDLEWARE PARA LOGUEO DE NEGOCIO
-
-
-
-
-
-    //routing para DETALLE LISTA PRECIO
-    //funcional
-    $router->get('/lista/detlistaprecio',['uses'=>'DetListaPrecioController@index']);
-    $router->post('/detlistaprecio',['uses'=>'DetListaPrecioController@create']);
-    $router->put('/update/detlistaprecio',['uses'=>'DetListaPrecioController@update']);
-
-
-    //routing para tabla RESERVA
-    //funcional
-    $router->get('/lista/reserva',['uses'=>'ReservaController@index']);
-    $router->post('/reserva',['uses'=>'ReservaController@create']);
-    $router->put('/update/reserva',['uses'=>'ReservaController@update']);
 
     //routing para tabla DETRESERVA
     //funcional
-    $router->get('/lista/detreserva',['uses'=>'DetReservaController@index']);
-    $router->post('/detreserva',['uses'=>'DetReservaController@create']);
-    $router->put('/update/detreserva',['uses'=>'DetReservaController@update']);
+    //$router->get('/lista/detreserva',['uses'=>'DetReservaController@index']); innecesario..
+
+    //$router->put('/update/detreserva',['uses'=>'DetReservaController@update']);
 });
 
 

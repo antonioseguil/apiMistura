@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 
 
 use App\Permiso;
+use App\Utilitarios;
 use Illuminate\Http\Request;
 
 
@@ -20,11 +21,10 @@ class PermisoController extends Controller
     //CREACION DE PERMISO
     function create(Request $request){
         $data = $request->json()->all();
-        Permiso::create([
+        $create = Permiso::create([
             'cnombrepermiso' => $data['cnombrepermiso']
         ]);
-        $dataRequest = array("rpta" => "1","msg"=>"creado correctamente", "objeto" => $data);
-        return response()->json($dataRequest,201);
+        return response()->json(Utilitarios::messageOKC($create),201);
     }
 
     //ACTUALIZACIÓN DE PERMISO
@@ -33,7 +33,6 @@ class PermisoController extends Controller
         $permiso = Permiso::where('ncodpermiso',$data['ncodpermiso'])->first();
         $permiso->cnombrepermiso = $data['cnombrepermiso'];
         $permiso->save();
-        $dataRequest = array("rpta" => "1","msg"=>"actualizado correctamente", "objeto" => $data);
-        return response()->json($dataRequest,200);
+        return response()->json(Utilitarios::messageOKU($permiso),200);
     }
 }
