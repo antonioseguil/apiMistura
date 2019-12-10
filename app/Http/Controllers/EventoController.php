@@ -13,10 +13,12 @@ use Illuminate\Support\Facades\DB;
 class EventoController extends Controller
 {
     //TODO * FALTA VERIFICAR EL CAMPO DE "CESTADO" EN LOS CONTROLADORES
+    //TODO * FALTA AGRGAR UN FUNCIÓN QUE REGRESE SOLO LOS EVENTOS ACTIVOS, Y OTRO QUE DEVUELVA TODOS
 
     //función para regresar todos lo datos de la tabla
     function index(){
-        $data = Evento::all();
+      //falta agregar el filtro de que el evento este activo
+        $data = Evento::all();//->where();
         return response()->json($data,200);
     }
 
@@ -52,6 +54,13 @@ class EventoController extends Controller
         $evento->clatitud = $data['clatitud'];
         $evento->save();
         return response()->json(Utilitarios::messageOKU($evento),200);
+    }
+
+    //función para cambiar de estado al evento
+    function delete($codevento){
+      $evento = Evento::where('ncodevento',$codevento)->first();
+      $evento->cestado = 'T';
+      return response()->json(Utilitarios::messageOKU($evento),200);
     }
 
     //función para agregar las secciones a los eventos
