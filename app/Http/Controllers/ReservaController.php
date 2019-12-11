@@ -21,7 +21,7 @@ class ReservaController extends Controller
         $time = new \DateTime();
         $create = Reserva::create([
             'ncodpersona' => $data['ncodpersona'],
-            'ncantidadtotal' => $data['ncantidadtotal'],
+            'ncantidadtotal' => '0',
             'dfechareserva' => $time->format('Y-m-d')
         ]);
         return response()->json(Utilitarios::messageOKC($create),201);

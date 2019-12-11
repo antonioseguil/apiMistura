@@ -14,6 +14,4 @@ class Negocio extends Model
     protected $fillable = ['crazonsocial','cnombredescripcion','cdireccion',
                            'cruc','cestado'];
 
-    protected $hidden = ['cruc'];
-
 }

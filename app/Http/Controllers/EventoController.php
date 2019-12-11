@@ -12,17 +12,26 @@ use Illuminate\Support\Facades\DB;
 
 class EventoController extends Controller
 {
+    //TODO * FALTA VALIDACIÓN DE DATOS
     //TODO * FALTA VERIFICAR EL CAMPO DE "CESTADO" EN LOS CONTROLADORES
+    //TODO * FALTA AGRGAR UN FUNCIÓN QUE REGRESE SOLO LOS EVENTOS ACTIVOS, Y OTRO QUE DEVUELVA TODOS
 
     //función para regresar todos lo datos de la tabla
     function index(){
-        $data = Evento::all();
+      //falta agregar el filtro de que el evento este activo
+        $data = Evento::all();//->where();
         return response()->json($data,200);
     }
 
     //FUNCION PARA CREAR UN NUEVO EVENTO
     function create(Request $request){
+        //recuperando datos
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'ncodpersona' => 'required',
+        ]);
+
         $create = Evento::create([
             'ncodpersona' => $data['ncodpersona'],
             'cnombreevento' => $data['cnombreevento'],
@@ -38,6 +47,7 @@ class EventoController extends Controller
         return response()->json(Utilitarios::messageOKC($create),201);
     }
 
+    //función para actualizar un evento
     function update(Request $request){
         $data = $request->json()->all();
         $evento = Evento::where('ncodevento',$data['ncodevento'])->first();
@@ -52,6 +62,13 @@ class EventoController extends Controller
         $evento->clatitud = $data['clatitud'];
         $evento->save();
         return response()->json(Utilitarios::messageOKU($evento),200);
+    }
+
+    //función para cambiar de estado al evento
+    function delete($codevento){
+      $evento = Evento::where('ncodevento',$codevento)->first();
+      $evento->cestado = 'T';
+      return response()->json(Utilitarios::messageOKU($evento),200);
     }
 
     //función para agregar las secciones a los eventos
@@ -82,8 +99,8 @@ class EventoController extends Controller
     }
 
     //TODO * AGREGAR FUNCIÓNES PARA BUSCAR EVENTOS
-    //funcion para buscar todos los eventos que contegan una sección, ademas de traer el plato mas barato.
 
+    //funcion para buscar todos los eventos que contegan una sección, ademas de traer el plato mas barato.
     function  setEventoSeccion($ncodseccion){
             //creacion de variable que contendra los datos
             $returnData = array();

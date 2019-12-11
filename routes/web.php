@@ -11,6 +11,12 @@
 |
 */
 
+/*
+|
+| Iniciar el servidor de laravel:
+| php -S localhost:8000 -t public
+*/
+
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
