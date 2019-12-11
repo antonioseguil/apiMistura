@@ -205,9 +205,9 @@ $router->group(['middleware' => ['json']],function () use ($router){
     //TODO * LISTA DE TODOS LOS PLATOS SEGUN EVENTO Y SECCION DEL EVENTO
     $router->get('/lista/platos/{codevento}/{ncodseccion}',['uses'=>'PlatoController@setEventoSeccion']);
     //busqueda de detalle de un plato
-    $router->get('/detalle/platos/{codplato}/{codlistaprecio}',['uses'=>'PlatoController@getDetallePlato']);
+    $router->get('/detalle/plato/{codplato}/{codlistaprecio}',['uses'=>'PlatoController@getDetallePlato']);
     //lista de todos los platos segun seccion en orden asc
-    $router->get('/lista/platos/{codseccion}/asc',['uses'=>'PlatoController@getAllPlatosAsc']);
+    $router->get('/all/platos/{codseccion}/asc',['uses'=>'PlatoController@getAllPlatosAsc']);
     //-----------------------------------------------------------
 
     //traer tipo platos

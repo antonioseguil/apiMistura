@@ -46,8 +46,8 @@ class PlatoController extends Controller
     }
 
     //función para traer el detalle del plato
-    function getDetallePlato(){
-        $data = DB::select("call sp_getDetallePlato(?,?)",[]);
+    function getDetallePlato($codplato,$codlistaprecio){
+        $data = DB::select("call sp_getDetallePlato(?,?)",[$codplato,$codlistaprecio]);
         return response()->json(Utilitarios::messageOK($data),200);
     }
 
