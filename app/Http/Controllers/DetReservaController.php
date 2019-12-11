@@ -12,6 +12,8 @@ use Illuminate\Http\Request;
 class DetReservaController extends Controller
 {
 
+    //TODO* FALTA CREAR METODO PARA AGREGAR VARIOS DETALLES DE UNA RESERVA
+
     function index(){
         $data = DetReserva::all();
         return response()->json($data,200);

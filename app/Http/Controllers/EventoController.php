@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class EventoController extends Controller
 {
+    //TODO * FALTA VALIDACIÓN DE DATOS
     //TODO * FALTA VERIFICAR EL CAMPO DE "CESTADO" EN LOS CONTROLADORES
     //TODO * FALTA AGRGAR UN FUNCIÓN QUE REGRESE SOLO LOS EVENTOS ACTIVOS, Y OTRO QUE DEVUELVA TODOS
 
@@ -24,7 +25,13 @@ class EventoController extends Controller
 
     //FUNCION PARA CREAR UN NUEVO EVENTO
     function create(Request $request){
+        //recuperando datos
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'ncodpersona' => 'required',
+        ]);
+
         $create = Evento::create([
             'ncodpersona' => $data['ncodpersona'],
             'cnombreevento' => $data['cnombreevento'],
@@ -40,6 +47,7 @@ class EventoController extends Controller
         return response()->json(Utilitarios::messageOKC($create),201);
     }
 
+    //función para actualizar un evento
     function update(Request $request){
         $data = $request->json()->all();
         $evento = Evento::where('ncodevento',$data['ncodevento'])->first();
@@ -91,8 +99,8 @@ class EventoController extends Controller
     }
 
     //TODO * AGREGAR FUNCIÓNES PARA BUSCAR EVENTOS
-    //funcion para buscar todos los eventos que contegan una sección, ademas de traer el plato mas barato.
 
+    //funcion para buscar todos los eventos que contegan una sección, ademas de traer el plato mas barato.
     function  setEventoSeccion($ncodseccion){
             //creacion de variable que contendra los datos
             $returnData = array();
