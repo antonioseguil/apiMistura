@@ -22,7 +22,19 @@ class StandController extends Controller
 
     //función para agregar un nuevo stand, recibe dato json
     function create(Request $request){
+        //recogiendo la data
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'ncodevento' => 'required',
+            'ncodnegocio' => 'required',
+            'ncodseccionstand' => 'required',
+            'cnumerosstand' => 'required',
+            'clongitud' => 'required',
+            'clatitud' => 'required',
+        ]);
+
+        //creano el stand nuevo
         $create = Stand::create([
             'ncodevento' => $data['ncodevento'],
             'ncodnegocio' => $data['ncodnegocio'],
@@ -37,6 +49,12 @@ class StandController extends Controller
     //función para actualizar
     function update(Request $request){
         $data = $request->json()->all();
+        $this->validate($request,[
+            'ncodstands' => 'required',
+            'cnumerosstand' => 'required',
+            'clongitud' => 'required',
+            'clatitud' => 'required',
+        ]);
         $stand = Stand::where('ncodstand',$data['ncodstand'])->first();
         $stand->cnumerosstand = $data['cnumerosstand'];
         $stand->clongitud = $data['clongitud'];

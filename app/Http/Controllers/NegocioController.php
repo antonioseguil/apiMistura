@@ -19,7 +19,16 @@ class NegocioController extends Controller
 
     //Función que crea un nuevo negocio
     function create(Request $request){
+        //se recuperan los datos
         $data = $request->json()->all();
+        //validamos los datos 
+        $this->validate($request,[
+            'crazonsocial' => 'required',
+            'cnombredescripcion' => 'required',
+            'cdirecion' => 'required',
+            'cruc' => 'required'
+        ]);
+        //creamos el negocio
         $create = Negocio::create([
             'crazonsocial' => $data['crazonsocial'],
             'cnombredescripcion' => $data['cnombredescripcion'],
@@ -31,7 +40,16 @@ class NegocioController extends Controller
 
     //Función actualizar un negocio
     function update(Request $request){
+        //obtenemos los datoss
         $data = $request->json()->all();
+        //validamos datos
+        $this->validate($request,[
+            'ncodnegocio' => 'required',
+            'crazonsocial' => 'required',
+            'cnombredescripcion' => 'required',
+            'cdirecion' => 'required'
+        ]);
+        //actualizando los datos
         $negocio = Negocio::where('ncodnegocio',$data['ncodnegocio'])->first();
         $negocio->crazonsocial = $data['crazonsocial'];
         $negocio->cnombredescripcion = $data['cnombredescripcion'];
