@@ -19,7 +19,7 @@ class CreateTableReserva extends Migration
             $table->integer('ncantidadtotal');
             $table->date('dfechareserva');
             //TODO* ESTADOS: E = "ENTREGADO, "R" = RESERVADO, "C"=CANCELADO
-            $table->string('cestado',1)->default("r");
+            $table->string('cestado',1)->default("R");
             $table->timestamps();
 
             $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');

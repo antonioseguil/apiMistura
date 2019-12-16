@@ -36,5 +36,23 @@ class ReservaController extends Controller
         return response()->json(Utilitarios::messageOKU($reserva),200);
     }
 
-    //falta function para cambiar el estado de la reserva
+    //funcion para cambiar de estado de la reserva
+    /*
+     * ESTADOS DE LA RESERVA
+     * R = RESERVADO
+     * E = ENTREGADO
+     * C = CANCELADO
+     * */
+    function reservaStatusEntregado($codreserva){
+        $reserva = Reserva::where('ncodreserva',$codreserva)->first();
+        $reserva->cestado = 'E';
+        return response()->json(Utilitarios::messageOK($reserva),200);
+    }
+
+    function reservaStatusCancelado($codreserva){
+        $reserva = Reserva::where('ncodreserva',$codreserva)->first();
+        $reserva->cestado = 'C';
+
+        return response()->json(Utilitarios::messageOK($reserva),200);
+    }
 }

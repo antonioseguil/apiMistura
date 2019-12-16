@@ -25,7 +25,7 @@ class CreateTableStand extends Migration
             $table->string('clongitud');
             $table->string('clatitud');
             //TODO* A = "ACTIVO", "D" = "DESABILITADO"
-            $table->string('cestado',1)->default("a");
+            $table->string('cestado',1)->default("A");
 
 
             //REFERENCIAS DE LA FK DE LAS TABLAS

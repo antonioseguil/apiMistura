@@ -14,11 +14,20 @@ class StandController extends Controller
     //TODO * falta agregar las consultas
     //TODO* FALTA FILTRAR EL INDEX PARA QUE DEVUELVA LOS DATOS DE ESTADO = a
 
+    //FUNCIONES PARA DEVOLVER DATOS
     //función que devuelve todos los datos del stand
-    function index(Request $request){
+    function index(){
         $data = Stand::all();
         return response()->json($data,200);
     }
+
+    //Función para regresar todos los STAND segun su estado
+    function getStandStatus($status){
+        $data = Stand::where('cestado',strtoupper($status))->get();
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    //-----------------------------------------------------------
 
     //función para agregar un nuevo stand, recibe dato json
     function create(Request $request){
@@ -63,5 +72,16 @@ class StandController extends Controller
         return response()->json(Utilitarios::messageOKU($stand),200);
     }
 
-    //TODO FALTA FUNCION PARA CAMBIAR EL ESTADO DEL STAND
+    //funcion para cambiar de estado al stand
+    /*
+     * ESTADOS DEL STAND
+     * A = ACTIVO, QUE ESTA FUNCIONANDO
+     * D = DESABILITADO
+     * */
+    function standDelete($ncodstand){
+        $stand = Stand::where('ncodstand',$ncodstand)->first();
+        $stand->cestado = 'D';
+        $stand->save();
+        return response()->json(Utilitarios::messageOK($stand),200);
+    }
 }

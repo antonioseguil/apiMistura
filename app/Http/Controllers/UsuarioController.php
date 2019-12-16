@@ -15,11 +15,17 @@ use Illuminate\Support\Str;
 
 class UsuarioController extends Controller
 {
+
+    //FUNCION PARA TRAER DATOS DE LOS USUARIOS
     //función para devolver los usuarios
     function index(){
         $data = User::all();
         return response()->json($data,200);
     }
+
+    //FUNCTION PARA VER LA LISTA DE PERSONAS SEGUN TIPO Y ESTADO
+
+    //----------------------------------
 
     //Función para crear una nueva persona (usuario)
     function create(Request $request){
@@ -81,7 +87,7 @@ class UsuarioController extends Controller
         //buscando persona por su usuario, el usuario es unico
         $user = User::where('cusuario',$data['cusuario'])->first();
         //comprobando si existe, y si existe se compara su password
-        if($user && Hash::check($data['cpassword'],$user->cpassword)){
+        if($user && Hash::check($data['cpassword'],$user->cpassword) && $user->cestado == 'A'){
             //RECUPERANDO PERMISOS
             //buscando permisos del usuario
             $tipoUsuario = $user->ncodtipousuario;
@@ -122,6 +128,19 @@ class UsuarioController extends Controller
     function getPersona($codpersona){
         $data = User::where('ncodpersona',$codpersona)->get();
         return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    //funcion para cambiar de estado a la persona
+    /*
+     * ESTADOS DEL STAND
+     * A = ACTIVO, QUE ESTA FUNCIONANDO
+     * D = DESABILITADO
+     * */
+    function personaDelete($codpersona){
+        $persona = User::where('ncodpersona',$codpersona)->first();
+        $persona->cestado = 'D';
+        $persona->save();
+        return response()->json(Utilitarios::messageOK($persona),200);
     }
 
     //TODO * CREAR FUNCIÓN PARA ACTUALIZAR LA KEY PERSONA Y BUSCAR UNA KEY PERSONA

@@ -29,7 +29,7 @@ class CreateTablePersona extends Migration
             $table->string('cusuario',30)->unique();
             $table->string('cpassword',70);
             //TODO * A = "ACTIVO", D = "DESABILITADO"
-            $table->string('cestado',1)->default("a");
+            $table->string('cestado',1)->default("A");
             //referencia de la tabla externa
             $table->foreign('ncodtipousuario')->references('ncodtipousuario')->on('tipousuario');
             $table->timestamps();

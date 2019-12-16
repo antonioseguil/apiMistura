@@ -54,6 +54,8 @@ $router->group(['middleware' => ['json']],function () use ($router){
         //SE VA NECESTIAR ESTAR AUTENTICADO PARA ACTUALIZAR TUS DATOS
         //CRUD de la tabla USUARIO
         $router->put('/update/usuario',['uses'=>'UsuarioController@update']);
+        //cambio de estado para un usuario
+        $router->delete('/status/usuario',['uses'=>'UsuarioController@personaDelete']);
 
         // --------------------------------------------------------
 
@@ -82,6 +84,8 @@ $router->group(['middleware' => ['json']],function () use ($router){
         $router->post('/negocio',['uses'=>'NegocioController@create']);
         //Actualiza el negocio
         $router->put('/update/negocio',['uses'=>'NegocioController@update']);
+        //'eliminar' negocio
+        $router->delete('/status/negocio/{codnegocio}',['uses'=>'NegocioController@negocioDelete']);
 
         // ----------------------------------------------------------------
 
@@ -97,6 +101,9 @@ $router->group(['middleware' => ['json']],function () use ($router){
         $router->post('/evento',['uses'=>'EventoController@create']);
         //actualizar un evento
         $router->put('/update/evento',['uses'=>'EventoController@update']);
+        // 'eliminar' un evento
+        $router->delete('/status/evento/{codevento}',['uses'=>'EventoController@eventoTerminar']);
+
 
         //METODOS PARA AGREGAR LAS SECCIONES A LOS EVENTOS
         //Para agregar una seccion, sola una
@@ -123,6 +130,8 @@ $router->group(['middleware' => ['json']],function () use ($router){
         $router->post('/stand',['uses'=>'StandController@create']);
         //actualizar un stand
         $router->put('/update/stand',['uses'=>'StandController@update']);
+        //'eliminar' un stand
+        $router->delete('/status/stand',['uses'=>'StandController@standDelete']);
 
         // --------------------------------------------------------------------
 
@@ -162,8 +171,16 @@ $router->group(['middleware' => ['json']],function () use ($router){
         $router->post('/reserva',['uses'=>'ReservaController@create']);
         //actualizar una reserva
         $router->put('/update/reserva',['uses'=>'ReservaController@update']);
+        //cambiar estado a una reserva a 'ENTREGADO'
+        $router->post('/status/reserva/e',['uses'=>'DetReservaController@reservaStatusEntregado']);
+        //cambiar estado a una reserva a 'CANCELADO'
+        $router->post('/status/reserva/c',['uses'=>'DetReservaController@reservaStatusCancelado']);
+
+        //Fucniones para los detalles de la reserva
         //agregar detalle de reserva
         $router->post('/detreserva',['uses'=>'DetReservaController@create']);
+        //TODO* falta agregar muchos detalles en una sola operación
+
 
     });
     //TODO -- METODOS GET, NO NECESITAN TENER UN BODY
@@ -189,11 +206,15 @@ $router->group(['middleware' => ['json']],function () use ($router){
 
     //Trae una lista de los negocios
     $router->get('/lista/negocio',['uses'=>'NegocioController@index']);
+    //Trae una lista de los negocios segun su estatus
+    $router->get('/lista/negocio/status/{status}',['uses'=>'NegocioController@getNegocioStatus']);
 
     //------------------------------------------------
 
     //trear los eventos
     $router->get('/lista/evento',['uses'=>'EventoController@index']);
+    //traer eventos segun el estado del evento
+    $router->get('/lista/evento/status/{status}',['uses'=>'EventoController@getEventoStatus']);
     // TODO EVENTO BUSQUEDA DE EVENTO POR ID DE SECCION
     $router->get('/lista/evento/{ncodseccion}',['uses'=>'EventoController@setEventoSeccion']);
     // TODO BUSQUEDA DE SECCIONES DE LOS EVENTOS

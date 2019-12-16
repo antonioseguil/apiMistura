@@ -16,13 +16,21 @@ class EventoController extends Controller
     //TODO * FALTA VERIFICAR EL CAMPO DE "CESTADO" EN LOS CONTROLADORES
     //TODO * FALTA AGRGAR UN FUNCIÓN QUE REGRESE SOLO LOS EVENTOS ACTIVOS, Y OTRO QUE DEVUELVA TODOS
 
-    //función para regresar todos lo datos de la tabla
+    //FUNCION QUE DEVUELVEN DATOS
+
+    //Función para regresar todos lo datos de la tabla
     function index(){
-      //falta agregar el filtro de que el evento este activo
         $data = Evento::all();//->where();
         return response()->json($data,200);
     }
 
+    //Función para regresar todos los eventos segun su estado
+    function getEventoStatus($status){
+        $data = Evento::where('cestado',strtoupper($status))->get();
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    //----------------------------------------------------
     //FUNCION PARA CREAR UN NUEVO EVENTO
     function create(Request $request){
         //recuperando datos
@@ -30,8 +38,18 @@ class EventoController extends Controller
         //validando datos
         $this->validate($request,[
             'ncodpersona' => 'required',
-        ]);
+            'cnombreevento' => 'required',
+            'cnombredescripcion' => 'required',
+            'dfechainicio' => 'required',
+            'dfechafinal' => 'required',
+            'dhorainicio' => 'required',
+            'dhorafinal' => 'required',
+            'cdireccion' => 'required',
+            'clongitud' => 'required',
+            'clatitud' => 'required',
 
+        ]);
+        //creación del evento
         $create = Evento::create([
             'ncodpersona' => $data['ncodpersona'],
             'cnombreevento' => $data['cnombreevento'],
@@ -49,8 +67,26 @@ class EventoController extends Controller
 
     //función para actualizar un evento
     function update(Request $request){
+        //validando datos
+        $this->validate($request,[
+            'ncodpersona' => 'required',
+            'cnombreevento' => 'required',
+            'cnombredescripcion' => 'required',
+            'dfechainicio' => 'required',
+            'dfechafinal' => 'required',
+            'dhorainicio' => 'required',
+            'dhorafinal' => 'required',
+            'cdireccion' => 'required',
+            'clongitud' => 'required',
+            'clatitud' => 'required',
+
+        ]);
+        //recuperando los datos enviados por el http
         $data = $request->json()->all();
+        //buscando los datos que se van a modificar
+        //el termino "first" indica que solo agarra el primero
         $evento = Evento::where('ncodevento',$data['ncodevento'])->first();
+        //actualizando los datos
         $evento->cnombreevento = $data['cnombreevento'];
         $evento->cnombredescripcion = $data['cnombredescripcion'];
         $evento->dfechainicio = $data['dfechainicio'];
@@ -60,15 +96,10 @@ class EventoController extends Controller
         $evento->cdireccion = $data['cdireccion'];
         $evento->clongitud = $data['clongitud'];
         $evento->clatitud = $data['clatitud'];
+        //guardando los datos cambiados
         $evento->save();
+        //datos que se van a retornar
         return response()->json(Utilitarios::messageOKU($evento),200);
-    }
-
-    //función para cambiar de estado al evento
-    function delete($codevento){
-      $evento = Evento::where('ncodevento',$codevento)->first();
-      $evento->cestado = 'T';
-      return response()->json(Utilitarios::messageOKU($evento),200);
     }
 
     //función para agregar las secciones a los eventos
@@ -97,8 +128,6 @@ class EventoController extends Controller
         }
         return response()->json(Utilitarios::messageMoreData($returnData,count($returnData)),200);
     }
-
-    //TODO * AGREGAR FUNCIÓNES PARA BUSCAR EVENTOS
 
     //funcion para buscar todos los eventos que contegan una sección, ademas de traer el plato mas barato.
     function  setEventoSeccion($ncodseccion){
@@ -143,5 +172,19 @@ class EventoController extends Controller
     function  getSeccionesPersona($codpersona){
         $data = DB::select("call sp_getSeccionEventoPersona(?)",[$codpersona]);
         return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    //función para cambiar el estado de los eventos
+    /*
+     * ESTADO DEL EVENTO
+     * P = EN PROCESO O CURSO
+     * T = TERMINADO
+     * E = ESPERA(POR SI AUN NO EMPIEZA EL EVENTO)
+     * */
+    function eventoTerminar($codevento){
+        $evento = Evento::where('ncodevento',$codevento)->first();
+        $evento->cestado = 'T';
+        $evento->save();
+        return response()->json(Utilitarios::messageOK($evento),200);
     }
 }
