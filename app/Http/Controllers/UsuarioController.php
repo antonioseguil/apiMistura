@@ -118,5 +118,11 @@ class UsuarioController extends Controller
         return response()->json(Utilitarios::messageOK($data),200);
     }
 
+    //functión para buscar los datos de una persona por codigo
+    function getPersona($codpersona){
+        $data = User::where('ncodpersona',$codpersona)->get();
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
     //TODO * CREAR FUNCIÓN PARA ACTUALIZAR LA KEY PERSONA Y BUSCAR UNA KEY PERSONA
 }

@@ -168,8 +168,13 @@ $router->group(['middleware' => ['json']],function () use ($router){
     });
     //TODO -- METODOS GET, NO NECESITAN TENER UN BODY
 
+
+    //busqueda de persona por codigo
+    $router->get('/persona/{codpersona}',['uses'=>'UsuarioController@getPersona']);
     //trae todos los eventos creados por una usuario [tipo usuario => administrador]
     $router->get('/persona/evento/{codpersona}',['uses'=>'UsuarioController@getPersonaEvento']);
+    //trae todos los eventos creados por una usuario y sus detalle correspondiente [tipo usuario => administrador]
+    $router->get('/persona/evento/detalle/{codpersona}',['uses'=>'EventoController@getSeccionesPersona']);
     // ------------------------------------------------
 
     //traer lista de tipo de usuario

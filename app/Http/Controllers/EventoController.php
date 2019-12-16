@@ -138,4 +138,10 @@ class EventoController extends Controller
         $data = DB::select("call sp_getSeccionEvento(?)",[$codevento]);
         return response()->json($data,200);
     }
+
+    //function para ver las seccion que tiene un evento de un usuario  en especifico que creo el evento
+    function  getSeccionesPersona($codpersona){
+        $data = DB::select("call sp_getSeccionEventoPersona(?)",[$codpersona]);
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
 }
