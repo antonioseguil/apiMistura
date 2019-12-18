@@ -15,6 +15,7 @@ class ReservaController extends Controller
         return response()->json($data,200);
     }
 
+    //funcion para crear una reserva
     function create(Request $request){
         $data = $request->json()->all();
         //INSTANCIA PARA LA FECHA
@@ -27,7 +28,7 @@ class ReservaController extends Controller
         return response()->json(Utilitarios::messageOKC($create),201);
     }
 
-    //función para actializar la cantidad total
+    //función para actualizar la cantidad total
     function update(Request $request){
         $data = $request->json()->all();
         $reserva = Reserva::where('ncodreserva',$data['ncodreserva'])->first();

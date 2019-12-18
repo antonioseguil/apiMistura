@@ -78,8 +78,8 @@ class StandController extends Controller
      * A = ACTIVO, QUE ESTA FUNCIONANDO
      * D = DESABILITADO
      * */
-    function standDelete($ncodstand){
-        $stand = Stand::where('ncodstand',$ncodstand)->first();
+    function standDelete($codstand){
+        $stand = Stand::where('ncodstand',$codstand)->first();
         $stand->cestado = 'D';
         $stand->save();
         return response()->json(Utilitarios::messageOK($stand),200);

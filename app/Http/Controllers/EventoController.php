@@ -155,6 +155,8 @@ class EventoController extends Controller
                     "dhorainicio" => $evento->dhorainicio,
                     "dhorafinal" => $evento->dhorafinal,
                     "cdireccion" => $evento->cdireccion,
+                    "clongitud" => $evento->clongitud,
+                    "clatitud" => $evento->clatitud,
                     "objPlato" => DB::select("call sp_getStandPrecioM(?,?)",[$evento->ncodevento,$ncodseccion]));
                 array_push($returnData,$prueba);
             }

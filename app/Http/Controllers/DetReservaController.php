@@ -19,7 +19,7 @@ class DetReservaController extends Controller
         return response()->json($data,200);
     }
 
-    //función para crear una nueva reserva
+    //función para crear una nuevo detalle de reserva
     function create(Request $request){
         $data = $request->json()->all();
         //buscamos la reserva al cual se le va actualizar el dato
@@ -32,6 +32,31 @@ class DetReservaController extends Controller
             'ncantidad' => $data['ncantidad']
         ]);
         $cantidadTotal = $cantidadTotal + $data['ncantidad'];
+        //actualizamos la nueva cantidad total
+        $reserva->ncantidadtotal = $cantidadTotal;
+        //guarda los cambios
+        $reserva->save();
+        return response()->json(Utilitarios::messageOKC($create),201);
+    }
+
+    //función para crear varios detalles en la reserva
+    function moreCreate(Request $request){
+        $datos = $request->json()->all();
+        //buscamos la reserva al cual se le va actualizar el dato
+        $reserva = Reserva::where('ncodreserva',$datos['ncodreserva'])->first();
+        //variable que contara la cantidad total que se esta registrando
+        $cantidadTotal = $reserva->ncantidadtotal;
+
+        //recorremos todos los datos en un foreach
+        foreach ($datos as $data){
+            $create = DetReserva::create([
+                'ncoddetlistaprecio' => $data['ncoddetlistaprecio'],
+                'ncodreserva' => $data['ncodreserva'],
+                'ncantidad' => $data['ncantidad']
+            ]);
+            //sumamos la nueva cantidad
+            $cantidadTotal = $cantidadTotal + $data['ncantidad'];
+        }
         //actualizamos la nueva cantidad total
         $reserva->ncantidadtotal = $cantidadTotal;
         //guarda los cambios

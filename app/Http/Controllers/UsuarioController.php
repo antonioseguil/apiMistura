@@ -25,6 +25,11 @@ class UsuarioController extends Controller
 
     //FUNCTION PARA VER LA LISTA DE PERSONAS SEGUN TIPO Y ESTADO
 
+    function searchUsuario($estado,$tipousuario){
+        $data = DB::select('call sp_getSearchPersona(?,?)',[$estado,$tipousuario]);
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
     //----------------------------------
 
     //Función para crear una nueva persona (usuario)
@@ -87,7 +92,7 @@ class UsuarioController extends Controller
         //buscando persona por su usuario, el usuario es unico
         $user = User::where('cusuario',$data['cusuario'])->first();
         //comprobando si existe, y si existe se compara su password
-        if($user && Hash::check($data['cpassword'],$user->cpassword) && $user->cestado == 'A'){
+        if($user && Hash::check($data['cpassword'],$user->cpassword) && strtoupper($user->cestado) == 'A'){
             //RECUPERANDO PERMISOS
             //buscando permisos del usuario
             $tipoUsuario = $user->ncodtipousuario;
