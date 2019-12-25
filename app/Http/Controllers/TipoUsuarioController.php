@@ -18,6 +18,10 @@ class TipoUsuarioController extends Controller
     }
 
     function create(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ctipousuario' => 'required',
+        ]);
         $data = $request->json()->all();
         $create = TipoUsuario::create([
             'ctipousuario' => $data['ctipousuario']
@@ -26,6 +30,11 @@ class TipoUsuarioController extends Controller
     }
 
     function update(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodtipousuario' => 'required',
+            'ctipousuario' => 'required',
+        ]);
         //recuperando datos del array
         $data = $request->json()->all();
         //buscando por el id, para ver si existe
@@ -39,6 +48,11 @@ class TipoUsuarioController extends Controller
 
     //funcion para agregar permiso a un usuario, un solo permiso
     function setPermisoUsuario(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodtipousuario' => 'required',
+            'ncodpermiso' => 'required',
+        ]);
         $data = $request->json()->all();
         $create = UsuarioTipoPermiso::create([
             'ncodtipousuario' => $data['ncodtipousuario'],

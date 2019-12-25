@@ -18,6 +18,11 @@ class SeccionStandController extends Controller
 
     //función para crear una nueva seccion
     function create(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'cseccion' => 'required',
+            'cdescripcion' => 'required',
+        ]);
         $data = $request->json()->all();
         $create = SeccionStand::create([
             'cseccion' => $data['cseccion'],
@@ -28,6 +33,12 @@ class SeccionStandController extends Controller
 
     //Actualizar datos de la seccion
     function update(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodseccionstand' => 'required',
+            'cseccion' => 'required',
+            'cdescripcion' => 'required',
+        ]);
         $data = $request->json()->all();
         $seccionStand = SeccionStand::where('ncodseccionstand',$data['ncodseccionstand'])->first();
         $seccionStand->cseccion = $data['cseccion'];

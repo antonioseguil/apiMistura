@@ -19,6 +19,13 @@ class ListaPrecioController extends Controller
     }
 
     function create(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodstand' => 'required',
+            'cnombrelista' => 'required',
+            'cespecificaciones' => 'required'
+
+        ]);
         $data = $request->json()->all();
         $create = ListaPrecio::create([
             'ncodstand' => $data['ncodstand'],
@@ -29,6 +36,13 @@ class ListaPrecioController extends Controller
     }
 
     function update(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodlistaprecio' => 'required',
+            'ncodstand' => 'required',
+            'cnombrelista' => 'required',
+            'cespecificaciones' => 'required'
+        ]);
         $data = $request->json()->all();
         $listaprecio = ListaPrecio::where('ncodlistaprecio',$data['ncodlistaprecio'])->first();
         $listaprecio->ncodstand = $data['ncodstand'];

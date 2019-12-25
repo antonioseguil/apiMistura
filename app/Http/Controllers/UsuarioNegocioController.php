@@ -16,6 +16,11 @@ class UsuarioNegocioController extends Controller
     }*/
 
     function create(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodpersona' => 'required',
+            'ncodnegocio' => 'required',
+        ]);
         $data = $request->json()->all();
         $create = UsuarioNegocio::create([
             'ncodpersona' => $data['ncodpersona'],

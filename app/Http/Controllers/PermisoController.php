@@ -20,6 +20,10 @@ class PermisoController extends Controller
 
     //CREACION DE PERMISO
     function create(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'cnombrepermiso' => 'required'
+        ]);
         $data = $request->json()->all();
         $create = Permiso::create([
             'cnombrepermiso' => $data['cnombrepermiso']
@@ -29,6 +33,11 @@ class PermisoController extends Controller
 
     //ACTUALIZACIÓN DE PERMISO
     function update(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodpermiso' => 'required',
+            'cnombrepermiso' => 'required'
+        ]);
         $data = $request->json()->all();
         $permiso = Permiso::where('ncodpermiso',$data['ncodpermiso'])->first();
         $permiso->cnombrepermiso = $data['cnombrepermiso'];

@@ -20,7 +20,7 @@ class CreateTableLoginrequest extends Migration
             $table->string('cimei',90)->unique();
             $table->date('dfecha_ultimo');
             // ESTADOS-> E=ESPERANDO, A=ACEPTADO , R=RECHAZADO
-            $table->string('cestado',1)->default('e');
+            $table->string('cestado',1)->default('E');
 
             $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');
 

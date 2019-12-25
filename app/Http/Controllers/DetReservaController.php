@@ -8,6 +8,7 @@ use App\DetReserva;
 use App\Reserva;
 use App\Utilitarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DetReservaController extends Controller
 {
@@ -72,6 +73,12 @@ class DetReservaController extends Controller
         $detreserva->ncantidad = $data['ncantidad'];
         $detreserva->save();
         return response()->json(Utilitarios::messageOKU($detreserva),200);
+    }
+
+    //función para ver las el detalle de una reservas
+    function detalleReserva($codreserva){
+        $data = DB::select('call sp_getDetReserva(?)', [$codreserva]);
+        return response()->json(Utilitarios::messageOK($data),200);
     }
 
 }

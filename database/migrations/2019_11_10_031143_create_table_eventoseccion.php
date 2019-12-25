@@ -19,7 +19,7 @@ class CreateTableEventoseccion extends Migration
             $table->bigInteger('ncodevento');
             $table->bigInteger('ncantidadstand');
             //TODO C = CERRADO, A=ABIERTO
-            $table->string('cestado',1)->default('a');
+            $table->string('cestado',1)->default('A');
             $table->timestamps();
 
             $table->foreign('ncodevento')->references('ncodevento')->on('evento');

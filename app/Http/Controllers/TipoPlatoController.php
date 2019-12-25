@@ -16,6 +16,10 @@ class TipoPlatoController extends Controller
     }
 
     function create(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'cnombretipoplato' => 'required',
+        ]);
         //recuperamos datos
         $data = $request->json()->all();
         //creamos el nuevo dato en la bd y lo guardamos en un variable
@@ -27,20 +31,15 @@ class TipoPlatoController extends Controller
     }
 
     function update(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodtipoplato' => 'required',
+            'cnombretipoplato' => 'required',
+        ]);
         $data = $request->json()->all();
         $tipoplato = TipoPlato::where('ncodtipoplato',$data['ncodtipoplato'])->first();
         $tipoplato->cnombretipoplato = $data['cnombretipoplato'];
         $tipoplato->save();
         return response()->json(Utilitarios::messageOKU($tipoplato),200);
     }
-/*
- * funcion que usa el store procedure de mysql
- *  function spPrueba(Request $request){
-        if($request->isJson()){
-            $data = DB::select('call sp_prueba()');
-            return response()->json($data,200);
-        }
-    }
-
- */
 }

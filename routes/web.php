@@ -242,10 +242,18 @@ $router->group(['middleware' => ['json']],function () use ($router){
     //cambiar estado a una reserva a 'CANCELADO'
     $router->post('/status/reserva/c',['uses'=>'DetReservaController@reservaStatusCancelado']);
 
-    //Fucniones para los detalles de la reserva
+    //Fuciones para los detalles de la reserva
     //agregar detalle de reserva
     $router->post('/detreserva',['uses'=>'DetReservaController@create']);
-    //TODO* falta agregar muchos detalles en una sola operación
+    //agregar muchos detalles a la reserva
+    $router->post('/detreserva/more',['uses'=>'DetReservaController@moreCreate']);
+
+    /***************************************************/
+
+    //función para ver las reservas de un cliente
+    $router->get('/reserva/cliente/{codcliente}',['uses'=>'ResevaController@reservasCliente']);
+    //función para ver los detalles de una reserva
+    $router->get('/reserva/detalle/{codreserva}',['uses'=>'DetReservaController@detalleReserva']);
 
 
 

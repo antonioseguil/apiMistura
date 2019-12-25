@@ -17,6 +17,13 @@ class PlatoController extends Controller
     }
 
     function create(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodtipoplato' => 'required',
+            'cnombreplato' => 'required',
+            'cdescresena' => 'required',
+            'curlimagen' => 'required',
+        ]);
         $data = $request->json()->all();
         $create = Plato::create([
             'ncodtipoplato' => $data['ncodtipoplato'],
@@ -28,6 +35,14 @@ class PlatoController extends Controller
     }
 
     function update(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodplato' => 'required',
+            'ncodtipoplato' => 'required',
+            'cnombreplato' => 'required',
+            'cdescresena' => 'required',
+            'curlimagen' => 'required',
+        ]);
         $data = $request->json()->all();
         $plato = Plato::where('ncodplato',$data['ncodplato'])->first();
         $plato->ncodtipoplato = $data['ncodtipoplato'];

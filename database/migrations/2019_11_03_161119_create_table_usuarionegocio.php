@@ -20,7 +20,7 @@ class CreateTableUsuarionegocio extends Migration
             $table->bigInteger('ncodpersona');
             $table->bigInteger('ncodnegocio');
             //TODO * A = "ACTIVO", D = "DESABILITADO"
-            $table->string('cestado',1)->default("a");
+            $table->string('cestado',1)->default("A");
 
             //REFERENCIAS DE LAS FK
             $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');

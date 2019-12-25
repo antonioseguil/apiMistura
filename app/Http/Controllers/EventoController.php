@@ -12,10 +12,6 @@ use Illuminate\Support\Facades\DB;
 
 class EventoController extends Controller
 {
-    //TODO * FALTA VALIDACIÓN DE DATOS
-    //TODO * FALTA VERIFICAR EL CAMPO DE "CESTADO" EN LOS CONTROLADORES
-    //TODO * FALTA AGRGAR UN FUNCIÓN QUE REGRESE SOLO LOS EVENTOS ACTIVOS, Y OTRO QUE DEVUELVA TODOS
-
     //FUNCION QUE DEVUELVEN DATOS
 
     //Función para regresar todos lo datos de la tabla
@@ -37,7 +33,7 @@ class EventoController extends Controller
         $data = $request->json()->all();
         //validando datos
         $this->validate($request,[
-            'ncodpersona' => 'required',
+            'ncodpersona' => 'required|numeric',
             'cnombreevento' => 'required',
             'cnombredescripcion' => 'required',
             'dfechainicio' => 'required',
@@ -104,6 +100,14 @@ class EventoController extends Controller
 
     //función para agregar las secciones a los eventos
     function setSeccionEvento(Request $request){
+        //validación de datos
+        $this->validate($request,[
+            'ncodseccionstand' => 'required',
+            'ncodevento' => 'required',
+            'ncantidadstand' => 'required'
+
+        ]);
+        //capturar todos los datos
         $data = $request->json()->all();
         $create = EventoSeccion::create([
             'ncodseccionstand' => $data['ncodseccionstand'],
