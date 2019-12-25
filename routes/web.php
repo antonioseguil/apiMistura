@@ -94,7 +94,7 @@ $router->group(['middleware' => ['json']],function () use ($router){
      /***************************/
 
     //Traer una lista de los permisos
-    $router->get('/lista/permiso',['uses'=>'PermisoController@index']);
+    //$router->get('/lista/permiso',['uses'=>'PermisoController@index']);
 
     // ------------------------------------------------
 
@@ -307,6 +307,10 @@ $router->group(['middleware' => ['json']],function () use ($router){
  * Prueba de store procedure con laravel lumen
  * $router->get('/tipoplato/sp',['uses'=>'TipoPlatoController@spPrueba']);
  */
+
+$router->group(['middleware'=>['json','auth']],function () use ($router){
+    $router->get('/lista/permiso',['uses'=>'PermisoController@index']);
+});
 
 
 
