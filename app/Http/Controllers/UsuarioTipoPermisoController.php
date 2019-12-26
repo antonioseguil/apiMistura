@@ -17,8 +17,8 @@ class UsuarioTipoPermisoController extends Controller
     function create(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodtipousuario' => 'required',
-            'ncodpermiso' => 'required',
+            'ncodtipousuario' => 'required|exists:tipousuario',
+            'ncodpermiso' => 'required|exists:permiso',
         ]);
         $data = $request->json()->all();
         UsuarioTipoPermiso::create([
@@ -31,8 +31,8 @@ class UsuarioTipoPermisoController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodtipousuariopermiso' => 'required',
-            'ncodpermiso' => 'required',
+            'ncodtipousuariopermiso' => 'required|exist:tipousuariopermiso',
+            'ncodpermiso' => 'required|exists:permiso',
         ]);
         $data = $request->json()->all();
         $usuarioTipoPermiso = UsuarioTipoPermiso::where('ncodtipousuariopermiso',$data['ncodtipousuariopermiso'])->first();

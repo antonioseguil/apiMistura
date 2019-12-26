@@ -238,9 +238,7 @@ $router->group(['middleware' => ['json']],function () use ($router){
     //actualizar una reserva
     $router->put('/update/reserva',['uses'=>'ReservaController@update']);
     //cambiar estado a una reserva a 'ENTREGADO'
-    $router->post('/status/reserva/e',['uses'=>'DetReservaController@reservaStatusEntregado']);
-    //cambiar estado a una reserva a 'CANCELADO'
-    $router->post('/status/reserva/c',['uses'=>'DetReservaController@reservaStatusCancelado']);
+    $router->delete('/reserva/status/{codreserva}/{estatus}',['uses'=>'ReservaController@reservaStatus']);
 
     //Fuciones para los detalles de la reserva
     //agregar detalle de reserva

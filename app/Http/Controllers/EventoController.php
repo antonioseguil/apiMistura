@@ -33,11 +33,11 @@ class EventoController extends Controller
         $data = $request->json()->all();
         //validando datos
         $this->validate($request,[
-            'ncodpersona' => 'required|numeric',
+            'ncodpersona' => 'required|exists:persona,ncodpersona|integer',
             'cnombreevento' => 'required',
             'cnombredescripcion' => 'required',
-            'dfechainicio' => 'required',
-            'dfechafinal' => 'required',
+            'dfechainicio' => 'required|date|after:tomorrow',
+            'dfechafinal' => 'required|date|after:dfechainicio',
             'dhorainicio' => 'required',
             'dhorafinal' => 'required',
             'cdireccion' => 'required',
@@ -65,17 +65,14 @@ class EventoController extends Controller
     function update(Request $request){
         //validando datos
         $this->validate($request,[
-            'ncodpersona' => 'required',
+            'ncodevento' => 'required|exists:evento,ncodevento|integer',
             'cnombreevento' => 'required',
             'cnombredescripcion' => 'required',
-            'dfechainicio' => 'required',
-            'dfechafinal' => 'required',
             'dhorainicio' => 'required',
             'dhorafinal' => 'required',
             'cdireccion' => 'required',
             'clongitud' => 'required',
             'clatitud' => 'required',
-
         ]);
         //recuperando los datos enviados por el http
         $data = $request->json()->all();
@@ -102,10 +99,9 @@ class EventoController extends Controller
     function setSeccionEvento(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodseccionstand' => 'required',
-            'ncodevento' => 'required',
-            'ncantidadstand' => 'required'
-
+            'ncodseccionstand' => 'required|exists:seccionstand|integer',
+            'ncodevento' => 'required|exists:evento|integer',
+            'ncantidadstand' => 'required|integer'
         ]);
         //capturar todos los datos
         $data = $request->json()->all();

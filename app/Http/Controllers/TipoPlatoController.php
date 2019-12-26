@@ -33,7 +33,7 @@ class TipoPlatoController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodtipoplato' => 'required',
+            'ncodtipoplato' => 'required|exists:tipoplato',
             'cnombretipoplato' => 'required',
         ]);
         $data = $request->json()->all();

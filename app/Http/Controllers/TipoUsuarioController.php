@@ -32,7 +32,7 @@ class TipoUsuarioController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodtipousuario' => 'required',
+            'ncodtipousuario' => 'required|exists:tipousuario',
             'ctipousuario' => 'required',
         ]);
         //recuperando datos del array
@@ -50,8 +50,8 @@ class TipoUsuarioController extends Controller
     function setPermisoUsuario(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodtipousuario' => 'required',
-            'ncodpermiso' => 'required',
+            'ncodtipousuario' => 'required|exists:tipousuario',
+            'ncodpermiso' => 'required:exists:permiso',
         ]);
         $data = $request->json()->all();
         $create = UsuarioTipoPermiso::create([

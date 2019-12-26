@@ -21,7 +21,7 @@ class ListaPrecioController extends Controller
     function create(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodstand' => 'required',
+            'ncodstand' => 'required|exists:stand',
             'cnombrelista' => 'required',
             'cespecificaciones' => 'required'
 
@@ -38,8 +38,8 @@ class ListaPrecioController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodlistaprecio' => 'required',
-            'ncodstand' => 'required',
+            'ncodlistaprecio' => 'required|exists:listaprecio',
+            'ncodstand' => 'required|exists:stand',
             'cnombrelista' => 'required',
             'cespecificaciones' => 'required'
         ]);
@@ -51,7 +51,5 @@ class ListaPrecioController extends Controller
         $listaprecio->save();
         return response()->json(Utilitarios::messageOKU($listaprecio),200);
     }
-
-    //TODO* Falta función que busque la lista de precio de un plato
 
 }

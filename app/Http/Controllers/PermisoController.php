@@ -35,7 +35,7 @@ class PermisoController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodpermiso' => 'required',
+            'ncodpermiso' => 'required|exists:permiso',
             'cnombrepermiso' => 'required'
         ]);
         $data = $request->json()->all();

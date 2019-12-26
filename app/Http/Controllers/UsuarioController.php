@@ -36,6 +36,18 @@ class UsuarioController extends Controller
     function create(Request $request){
         //recogiendo los datos enviados por el request
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'cnombre' => 'required|string',
+            'capellidopaterno' => 'required|string',
+            'capellidomaterno' => 'required|string',
+            'cdni' => 'required|unique:persona,cdni',
+            'cemail' => 'required|unique:persona,cemail',
+            'cimei_phone' => 'nullable',
+            'cusuario' => 'required|unique:persona,cusuario',
+            'cpassword' => 'required',
+
+        ]);
         //verificando la existencia de datos
         if(!$request->exists('ncodtipousuario')){
             //si el dato verificado es nulo, se pondra por defecto = CLIENTE = 1
@@ -72,6 +84,14 @@ class UsuarioController extends Controller
     //función para actualizar la persona
     function update(Request $request){
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'ncodpersona' => 'required|exists:persona,ncodpersona',
+            'cnombre' => 'required|string',
+            'capellidopaterno' => 'required|string',
+            'capellidomaterno' => 'required|string',
+            'cdni' => 'required',
+        ]);
         //dato que se usa para buscar al usuario
         $usuario = User::where('ncodpersona',$data['ncodpersona'])->first();
         //datos a modificar
@@ -89,6 +109,11 @@ class UsuarioController extends Controller
     function getLoginUser(Request $request){
         //recuperando los datos enviados
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'cusuario' => 'required|exists:persona,cusuario',
+            'cpassword' => 'required'
+        ]);
         //buscando persona por su usuario, el usuario es unico
         $user = User::where('cusuario',$data['cusuario'])->first();
         //comprobando si existe, y si existe se compara su password

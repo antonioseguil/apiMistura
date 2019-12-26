@@ -11,9 +11,6 @@ use Illuminate\Http\Request;
 
 class StandController extends Controller
 {
-    //TODO * falta agregar las consultas
-    //TODO* FALTA FILTRAR EL INDEX PARA QUE DEVUELVA LOS DATOS DE ESTADO = a
-
     //FUNCIONES PARA DEVOLVER DATOS
     //función que devuelve todos los datos del stand
     function index(){
@@ -35,9 +32,9 @@ class StandController extends Controller
         $data = $request->json()->all();
         //validando datos
         $this->validate($request,[
-            'ncodevento' => 'required',
-            'ncodnegocio' => 'required',
-            'ncodseccionstand' => 'required',
+            'ncodevento' => 'required|exists:evento|integer',
+            'ncodnegocio' => 'required|exists:negocio|integer',
+            'ncodseccionstand' => 'required:exists:seccionstand|integer',
             'cnumerosstand' => 'required',
             'clongitud' => 'required',
             'clatitud' => 'required',
@@ -59,7 +56,7 @@ class StandController extends Controller
     function update(Request $request){
         $data = $request->json()->all();
         $this->validate($request,[
-            'ncodstands' => 'required',
+            'ncodstand' => 'required|exists:stand',
             'cnumerosstand' => 'required',
             'clongitud' => 'required',
             'clatitud' => 'required',

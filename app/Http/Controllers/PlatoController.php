@@ -19,7 +19,7 @@ class PlatoController extends Controller
     function create(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodtipoplato' => 'required',
+            'ncodtipoplato' => 'required|exists:tipoplato',
             'cnombreplato' => 'required',
             'cdescresena' => 'required',
             'curlimagen' => 'required',
@@ -37,8 +37,8 @@ class PlatoController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodplato' => 'required',
-            'ncodtipoplato' => 'required',
+            'ncodplato' => 'required|exists:plato',
+            'ncodtipoplato' => 'required|exists:tipoplato',
             'cnombreplato' => 'required',
             'cdescresena' => 'required',
             'curlimagen' => 'required',

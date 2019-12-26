@@ -20,7 +20,7 @@ class ReservaController extends Controller
     function create(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodpersona' => 'required',
+            'ncodpersona' => 'required|exists:persona',
         ]);
         $data = $request->json()->all();
         //INSTANCIA PARA LA FECHA
@@ -37,7 +37,7 @@ class ReservaController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodreserva' => 'required',
+            'ncodreserva' => 'required|exists:reserva',
             'ncantidadtotal' => 'required',
         ]);
         $data = $request->json()->all();
@@ -54,15 +54,9 @@ class ReservaController extends Controller
      * E = ENTREGADO
      * C = CANCELADO
      * */
-    function reservaStatusEntregado($codreserva){
+    function reservaStatus($codreserva,$estatus){
         $reserva = Reserva::where('ncodreserva',$codreserva)->first();
-        $reserva->cestado = 'E';
-        return response()->json(Utilitarios::messageOK($reserva),200);
-    }
-
-    function reservaStatusCancelado($codreserva){
-        $reserva = Reserva::where('ncodreserva',$codreserva)->first();
-        $reserva->cestado = 'C';
+        $reserva->cestado = strtoupper($estatus);
         return response()->json(Utilitarios::messageOK($reserva),200);
     }
 

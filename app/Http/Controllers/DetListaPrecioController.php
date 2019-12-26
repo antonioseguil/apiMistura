@@ -22,6 +22,12 @@ class DetListaPrecioController extends Controller
     function create(Request $request){
         //recuperamos los datos json enviados
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'ncodlistaprecio' => 'required|exists:listaprecio,ncodlistaprecio|integer',
+            'ncodplato' => 'required|exists:plato,ncodplato|integer',
+            'cprecio' => 'required',
+        ]);
         $create = DetListaPrecio::create([
             'ncodlistaprecio' => $data['ncodlistaprecio'],
             'ncodplato' => $data['ncodplato'],
@@ -52,6 +58,13 @@ class DetListaPrecioController extends Controller
     //función para actualizar un nuevo detalle
     function update(Request $request){
         $data = $request->json()->all();
+        //validando datos
+        $this->validate($request,[
+            'ncoddetlistaprecio' => 'required|exists:detlistaprecio,ncoddetlistaprecio|integer',
+            'ncodlistaprecio' => 'required|exists:listaprecio,ncodlistaprecio|integer',
+            'ncodplato' => 'required|exists:plato,ncodplato|integer',
+            'cprecio' => 'required',
+        ]);
         $detlistaprecio = DetListaPrecio::where('ncoddetlistaprecio',$data['ncoddetlistaprecio'])->first();
         $detlistaprecio->ncodlistaprecio = $data['ncodlistaprecio'];
         $detlistaprecio->ncodplato = $data['ncodplato'];

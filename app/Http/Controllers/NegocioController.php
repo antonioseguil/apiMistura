@@ -35,7 +35,7 @@ class NegocioController extends Controller
             'crazonsocial' => 'required',
             'cnombredescripcion' => 'required',
             'cdirecion' => 'required',
-            'cruc' => 'required'
+            'cruc' => 'required|unique:negocio'
         ]);
         //creamos el negocio
         $create = Negocio::create([
@@ -53,7 +53,7 @@ class NegocioController extends Controller
         $data = $request->json()->all();
         //validamos datos
         $this->validate($request,[
-            'ncodnegocio' => 'required',
+            'ncodnegocio' => 'required|exists:negocio',
             'crazonsocial' => 'required',
             'cnombredescripcion' => 'required',
             'cdirecion' => 'required'
@@ -68,7 +68,6 @@ class NegocioController extends Controller
     }
     // -- la función para agregar un usuario al negocio esta en un controlador aparte...
 
-    //TODO* FALTA FUNCTION PARA CAMBIAR EL ESTADO DE UN NEGOCIO
 
     //función para cambiar el estado del negocio
     /*

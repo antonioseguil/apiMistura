@@ -35,7 +35,7 @@ class SeccionStandController extends Controller
     function update(Request $request){
         //validación de datos
         $this->validate($request,[
-            'ncodseccionstand' => 'required',
+            'ncodseccionstand' => 'required|exists:seccionstand',
             'cseccion' => 'required',
             'cdescripcion' => 'required',
         ]);
