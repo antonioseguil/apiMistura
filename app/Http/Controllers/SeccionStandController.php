@@ -46,4 +46,6 @@ class SeccionStandController extends Controller
         $seccionStand->save();
         return response()->json(Utilitarios::messageOKU($seccionStand),200);
     }
+
+    //Cambio de estado de la sección
 }

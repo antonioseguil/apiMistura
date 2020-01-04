@@ -95,6 +95,10 @@ class EventoController extends Controller
         return response()->json(Utilitarios::messageOKU($evento),200);
     }
 
+    /*
+     * FUNCIONES PARA EL DETALLE DE SECCION Y EVENTO
+     */
+
     //función para agregar las secciones a los eventos
     function setSeccionEvento(Request $request){
         //validación de datos
@@ -128,6 +132,15 @@ class EventoController extends Controller
         }
         return response()->json(Utilitarios::messageMoreData($returnData,count($returnData)),200);
     }
+
+    //Función para la actualización
+    function updateCantidadStand(){
+
+    }
+
+    /*
+     * FUNCIONES PARA LA BUSQUEDA DE EVENTOS
+     */
 
     //funcion para buscar todos los eventos que contegan una sección, ademas de traer el plato mas barato.
     function  setEventoSeccion($ncodseccion){

@@ -34,7 +34,7 @@ class NegocioController extends Controller
         $this->validate($request,[
             'crazonsocial' => 'required',
             'cnombredescripcion' => 'required',
-            'cdirecion' => 'required',
+            'cdireccion' => 'required',
             'cruc' => 'required|unique:negocio'
         ]);
         //creamos el negocio

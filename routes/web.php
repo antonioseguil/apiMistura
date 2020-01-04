@@ -47,7 +47,7 @@ $router->group(['middleware'=>['json','notNull']],function () use ($router){
 //TODO * entorno para usuario validados,
 
 //grupo de rutas para WEB, validando el api_token y que sea json
-$router->group(['middleware' => ['json']],function () use ($router){
+$router->group(['middleware' => ['json','auth']],function () use ($router){
 
     //CRUD de la tabla USUARIO
     $router->put('/update/usuario',['uses'=>'UsuarioController@update']);
@@ -94,7 +94,7 @@ $router->group(['middleware' => ['json']],function () use ($router){
      /***************************/
 
     //Traer una lista de los permisos
-    //$router->get('/lista/permiso',['uses'=>'PermisoController@index']);
+    $router->get('/lista/permiso',['uses'=>'PermisoController@index']);
 
     // ------------------------------------------------
 
@@ -306,9 +306,9 @@ $router->group(['middleware' => ['json']],function () use ($router){
  * $router->get('/tipoplato/sp',['uses'=>'TipoPlatoController@spPrueba']);
  */
 
-$router->group(['middleware'=>['json','auth']],function () use ($router){
+/*$router->group(['middleware'=>['json','auth']],function () use ($router){
     $router->get('/lista/permiso',['uses'=>'PermisoController@index']);
-});
+});*/
 
 
 
