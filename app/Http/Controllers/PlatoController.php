@@ -56,8 +56,22 @@ class PlatoController extends Controller
 
     //función que devuelve los platos segun el evento y la seccion del evento
     function  setEventoSeccion($codevento,$codseccion){
-        $data = DB::select("call sp_getPlatosSeccionEvento(?,?)",[$codevento,$codseccion]);
-        return response()->json($data,200);
+        //consultado al DB
+        $plato = DB::select("call sp_getPlatosSeccionEvento(?,?)",[$codevento,$codseccion]);
+        //agregando la segunda consulta a los datos
+        /*$data = array(
+            '' => ,
+            '' => ,
+            '' => ,
+            '' => ,
+            '' => ,
+            '' => ,
+            '' => ,
+            '' => ,
+            '' => ,
+            'detalle' => DB::select("call sp_getDetallePlato(?,?)",[$codplato,$codlistaprecio]),
+        );*/
+        return response()->json($plato,200);
     }
 
     //función para traer el detalle del plato
