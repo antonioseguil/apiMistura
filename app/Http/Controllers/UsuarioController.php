@@ -111,7 +111,7 @@ class UsuarioController extends Controller
         $data = $request->json()->all();
         //validando datos
         $this->validate($request,[
-            'cusuario' => 'required|exists:persona,cusuario',
+            'cusuario' => 'required',
             'cpassword' => 'required'
         ]);
         //buscando persona por su usuario, el usuario es unico
@@ -144,7 +144,7 @@ class UsuarioController extends Controller
             //agregando respuesta de error
             $responseData = array("rpta" => 0,"error" => "not content","message" => "revise su usuario y contraseña",
                 "datos" => []);
-            return response()->json($responseData,406);
+            return response()->json($responseData,200);
         }
     }
 

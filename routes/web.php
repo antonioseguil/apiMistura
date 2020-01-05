@@ -29,7 +29,7 @@ $router->get('/prueba', function (\Illuminate\Http\Request $request) use ($route
 //TODO * ENTORNO DE PRUEBA PARA LOGUEO Y REGISTRO DE USUARIO
 //TODO * ARREGLANDO API REST, NO SE VA UTILIZAR LOS MIDDLEWARE POR EL MOMENTO
 //se esta usando los permisos de tipo json y que no sea nulo lo datos enviados
-$router->group(['middleware'=>['json','notNull']],function () use ($router){
+$router->group(['middleware'=>['json']],function () use ($router){
 
     //funcion anonima para INGRESO DE USUARIO(PERSONAS)
     $router->post('/usuario/login',['uses' => 'UsuarioController@getLoginUser']);
@@ -211,7 +211,7 @@ $router->group(['middleware' => ['json','auth']],function () use ($router){
     //TODO * LISTA DE TODOS LOS PLATOS SEGUN EVENTO Y SECCION DEL EVENTO
     $router->get('/lista/platos/{codevento}/{ncodseccion}',['uses'=>'PlatoController@setEventoSeccion']);
     //busqueda de detalle de un plato
-    $router->get('/detalle/plato/{codplato}/{codlistaprecio}',['uses'=>'PlatoController@getDetallePlato']);
+    //$router->get('/detalle/plato/{codplato}/{codlistaprecio}',['uses'=>'PlatoController@getDetallePlato']);
     //lista de todos los platos segun seccion en orden asc
     $router->get('/all/platos/{codseccion}/asc',['uses'=>'PlatoController@getAllPlatosAsc']);
     //-----------------------------------------------------------
@@ -249,7 +249,7 @@ $router->group(['middleware' => ['json','auth']],function () use ($router){
     /***************************************************/
 
     //función para ver las reservas de un cliente
-    $router->get('/reserva/cliente/{codcliente}',['uses'=>'ResevaController@reservasCliente']);
+    $router->get('/reserva/cliente/{codcliente}',['uses'=>'ReservaController@reservasCliente']);
     //función para ver los detalles de una reserva
     $router->get('/reserva/detalle/{codreserva}',['uses'=>'DetReservaController@detalleReserva']);
 

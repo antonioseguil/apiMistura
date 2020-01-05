@@ -80,9 +80,9 @@ class DetReservaController extends Controller
     }
 
     //función para ver las el detalle de una reservas
-    function detalleReserva($codreserva){
+    /*function detalleReserva($codreserva){
         $data = DB::select('call sp_getDetReserva(?)', [$codreserva]);
         return response()->json(Utilitarios::messageOK($data),200);
-    }
+    }*/
 
 }

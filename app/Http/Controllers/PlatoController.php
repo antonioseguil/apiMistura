@@ -57,32 +57,44 @@ class PlatoController extends Controller
     //función que devuelve los platos segun el evento y la seccion del evento
     function  setEventoSeccion($codevento,$codseccion){
         //consultado al DB
-        $plato = DB::select("call sp_getPlatosSeccionEvento(?,?)",[$codevento,$codseccion]);
+        $platos = DB::select("call sp_getPlatosSeccionEvento(?,?)",[$codevento,$codseccion]);
+        //array de datos
+        $data = array();
         //agregando la segunda consulta a los datos
-        /*$data = array(
-            '' => ,
-            '' => ,
-            '' => ,
-            '' => ,
-            '' => ,
-            '' => ,
-            '' => ,
-            '' => ,
-            '' => ,
-            'detalle' => DB::select("call sp_getDetallePlato(?,?)",[$codplato,$codlistaprecio]),
-        );*/
-        return response()->json($plato,200);
-    }
-
-    //función para traer el detalle del plato
-    function getDetallePlato($codplato,$codlistaprecio){
-        $data = DB::select("call sp_getDetallePlato(?,?)",[$codplato,$codlistaprecio]);
-        return response()->json(Utilitarios::messageOK($data),200);
+        foreach ($platos as $plato) {
+            $d = array(
+                "ncodplato" => $plato->ncodplato,
+                "ncodlistaprecio" => $plato->ncodlistaprecio,
+                "cnombreplato" => $plato->cnombreplato,
+                "cdescresena" => $plato->cdescresena,
+                "curlimagen" => $plato->curlimagen,
+                "cprecio" => $plato->cprecio,
+                "detalle" => DB::select("call sp_getDetallePlato(?,?)",[$plato->ncodplato,$plato->ncodlistaprecio]),
+            );
+            array_push($data,$d);
+        }
+        return response()->json($data,200);
     }
 
     //function para traer todos los platos en un order ascendente segun la seccion enviada
     function getAllPlatosAsc($codseccion){
-        $data = DB::select("call sp_getPlatos(?)",[$codseccion]);
-        return response()->json(Utilitarios::messageOK($data),200);
+        //consultado al DB
+        $platos = DB::select("call sp_getPlatos(?)",[$codseccion]);
+        //array de datos
+        $data = array();
+        //agregando la segunda consulta a los datos
+        foreach ($platos as $plato) {
+            $d = array(
+                "ncodplato" => $plato->ncodplato,
+                "ncodlistaprecio" => $plato->ncodlistaprecio,
+                "cnombreplato" => $plato->cnombreplato,
+                "cdescresena" => $plato->cdescresena,
+                "curlimagen" => $plato->curlimagen,
+                "cprecio" => $plato->cprecio,
+                "detalle" => DB::select("call sp_getDetallePlato(?,?)",[$plato->ncodplato,$plato->ncodlistaprecio]),
+            );
+            array_push($data,$d);
+        }
+        return response()->json($data,200);
     }
 }

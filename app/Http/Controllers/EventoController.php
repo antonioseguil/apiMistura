@@ -15,24 +15,27 @@ class EventoController extends Controller
     //FUNCION QUE DEVUELVEN DATOS
 
     //Función para regresar todos lo datos de la tabla
-    function index(){
-        $data = Evento::all();//->where();
-        return response()->json($data,200);
+    function index()
+    {
+        $data = Evento::all();
+        return response()->json($data, 200);
     }
 
     //Función para regresar todos los eventos segun su estado
-    function getEventoStatus($status){
-        $data = Evento::where('cestado',strtoupper($status))->get();
-        return response()->json(Utilitarios::messageOK($data),200);
+    function getEventoStatus($status)
+    {
+        $data = Evento::where('cestado', strtoupper($status))->get();
+        return response()->json(Utilitarios::messageOK($data), 200);
     }
 
     //----------------------------------------------------
     //FUNCION PARA CREAR UN NUEVO EVENTO
-    function create(Request $request){
+    function create(Request $request)
+    {
         //recuperando datos
         $data = $request->json()->all();
         //validando datos
-        $this->validate($request,[
+        $this->validate($request, [
             'ncodpersona' => 'required|exists:persona,ncodpersona|integer',
             'cnombreevento' => 'required',
             'cnombredescripcion' => 'required',
@@ -58,13 +61,14 @@ class EventoController extends Controller
             'clongitud' => $data['clongitud'],
             'clatitud' => $data['clatitud']
         ]);
-        return response()->json(Utilitarios::messageOKC($create),201);
+        return response()->json(Utilitarios::messageOKC($create), 201);
     }
 
     //función para actualizar un evento
-    function update(Request $request){
+    function update(Request $request)
+    {
         //validando datos
-        $this->validate($request,[
+        $this->validate($request, [
             'ncodevento' => 'required|exists:evento,ncodevento|integer',
             'cnombreevento' => 'required',
             'cnombredescripcion' => 'required',
@@ -78,7 +82,7 @@ class EventoController extends Controller
         $data = $request->json()->all();
         //buscando los datos que se van a modificar
         //el termino "first" indica que solo agarra el primero
-        $evento = Evento::where('ncodevento',$data['ncodevento'])->first();
+        $evento = Evento::where('ncodevento', $data['ncodevento'])->first();
         //actualizando los datos
         $evento->cnombreevento = $data['cnombreevento'];
         $evento->cnombredescripcion = $data['cnombredescripcion'];
@@ -92,7 +96,7 @@ class EventoController extends Controller
         //guardando los datos cambiados
         $evento->save();
         //datos que se van a retornar
-        return response()->json(Utilitarios::messageOKU($evento),200);
+        return response()->json(Utilitarios::messageOKU($evento), 200);
     }
 
     /*
@@ -100,9 +104,10 @@ class EventoController extends Controller
      */
 
     //función para agregar las secciones a los eventos
-    function setSeccionEvento(Request $request){
+    function setSeccionEvento(Request $request)
+    {
         //validación de datos
-        $this->validate($request,[
+        $this->validate($request, [
             'ncodseccionstand' => 'required|exists:seccionstand|integer',
             'ncodevento' => 'required|exists:evento|integer',
             'ncantidadstand' => 'required|integer'
@@ -114,28 +119,29 @@ class EventoController extends Controller
             'ncodevento' => $data['ncodevento'],
             'ncantidadstand' => $data['ncantidadstand']
         ]);
-        return response()->json(Utilitarios::messageMoreData($create),200);
+        return response()->json(Utilitarios::messageMoreData($create), 200);
     }
 
     //Función para agregar muchas secciones, para un evento
-    function setMoreSeccionEvento(Request $request){
+    function setMoreSeccionEvento(Request $request)
+    {
         $datos = $request->json()->all();
         //variable que contendra lo creado
         $returnData = array();
-        foreach ($datos as $data){
+        foreach ($datos as $data) {
             $create = EventoSeccion::create([
                 'ncodseccionstand' => $data['ncodseccionstand'],
                 'ncodevento' => $data['ncodevento'],
                 'ncantidadstand' => $data['ncantidadstand']
             ]);
-            array_push($returnData,$create);
+            array_push($returnData, $create);
         }
-        return response()->json(Utilitarios::messageMoreData($returnData,count($returnData)),200);
+        return response()->json(Utilitarios::messageMoreData($returnData, count($returnData)), 200);
     }
 
     //Función para la actualización
-    function updateCantidadStand(){
-
+    function updateCantidadStand()
+    {
     }
 
     /*
@@ -143,50 +149,56 @@ class EventoController extends Controller
      */
 
     //funcion para buscar todos los eventos que contegan una sección, ademas de traer el plato mas barato.
-    function  setEventoSeccion($ncodseccion){
-            //creacion de variable que contendra los datos
-            $returnData = array();
-            //creaacion de lista de codigo
-            $listaCodigo = array();
-            //lista de plato
-            $prueba = null;
-            //recuperando lista de evento
-            $dataEvento = DB::select("call sp_getEventoSeccion(?)",[$ncodseccion]);
+    function  setEventoSeccion($ncodseccion)
+    {
+        //creacion de variable que contendra los datos
+        $returnData = array();
+        //creaacion de lista de codigo
+        $listaCodigo = array();
+        //lista de plato
+        $prueba = null;
+        //recuperando lista de evento
+        $dataEvento = DB::select("call sp_getEventoSeccion(?)", [$ncodseccion]);
 
-            //recuperamos los codigos de evento
-            foreach($dataEvento as $codigo){
-                array_push($listaCodigo,$codigo->ncodevento);
-            }
-
-            foreach($dataEvento as $evento){
-
-                $prueba = array("ncodevento" => $evento->ncodevento,
-                    "cnombreevento" => $evento->cnombreevento,
-                    "cnombredescripcion" => $evento->cnombredescripcion,
-                    "dfechainicio" => $evento->dfechainicio,
-                    "dfechafinal" => $evento->dfechafinal,
-                    "dhorainicio" => $evento->dhorainicio,
-                    "dhorafinal" => $evento->dhorafinal,
-                    "cdireccion" => $evento->cdireccion,
-                    "clongitud" => $evento->clongitud,
-                    "clatitud" => $evento->clatitud,
-                    "objPlato" => DB::select("call sp_getStandPrecioM(?,?)",[$evento->ncodevento,$ncodseccion]));
-                array_push($returnData,$prueba);
-            }
-            return response()->json($returnData,200);
+        //recuperamos los codigos de evento
+        foreach ($dataEvento as $codigo) {
+            array_push($listaCodigo, $codigo->ncodevento);
         }
+
+        foreach ($dataEvento as $evento) {
+
+            $prueba = array(
+                "ncodevento" => $evento->ncodevento,
+                "cnombreevento" => $evento->cnombreevento,
+                "cnombredescripcion" => $evento->cnombredescripcion,
+                "dfechainicio" => $evento->dfechainicio,
+                "dfechafinal" => $evento->dfechafinal,
+                "dhorainicio" => $evento->dhorainicio,
+                "dhorafinal" => $evento->dhorafinal,
+                "cdireccion" => $evento->cdireccion,
+                "clongitud" => $evento->clongitud,
+                "clatitud" => $evento->clatitud,
+                "objPlato" => DB::select("call sp_getStandPrecioM(?,?)", [$evento->ncodevento, $ncodseccion])
+            );
+            $precio = $prueba['objPlato'][0]->precio != null;
+            $precio ? array_push($returnData, $prueba) : "error" ;
+        }
+        return response()->json($returnData, 200);
+    }
 
 
     //funcion para ver las secciones que tiene un evento
-    function  setSecciones($codevento){
-        $data = DB::select("call sp_getSeccionEvento(?)",[$codevento]);
-        return response()->json($data,200);
+    function  setSecciones($codevento)
+    {
+        $data = DB::select("call sp_getSeccionEvento(?)", [$codevento]);
+        return response()->json($data, 200);
     }
 
     //function para ver las seccion que tiene un evento de un usuario  en especifico que creo el evento
-    function  getSeccionesPersona($codpersona){
-        $data = DB::select("call sp_getSeccionEventoPersona(?)",[$codpersona]);
-        return response()->json(Utilitarios::messageOK($data),200);
+    function  getSeccionesPersona($codpersona)
+    {
+        $data = DB::select("call sp_getSeccionEventoPersona(?)", [$codpersona]);
+        return response()->json(Utilitarios::messageOK($data), 200);
     }
 
     //función para cambiar el estado de los eventos
@@ -196,10 +208,11 @@ class EventoController extends Controller
      * T = TERMINADO
      * E = ESPERA(POR SI AUN NO EMPIEZA EL EVENTO)
      * */
-    function eventoTerminar($codevento){
-        $evento = Evento::where('ncodevento',$codevento)->first();
+    function eventoTerminar($codevento)
+    {
+        $evento = Evento::where('ncodevento', $codevento)->first();
         $evento->cestado = 'T';
         $evento->save();
-        return response()->json(Utilitarios::messageOK($evento),200);
+        return response()->json(Utilitarios::messageOK($evento), 200);
     }
 }
