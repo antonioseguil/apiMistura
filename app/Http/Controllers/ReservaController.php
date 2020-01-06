@@ -88,4 +88,30 @@ class ReservaController extends Controller
         }
         return response()->json($data,200);
     }
+
+    //función para la saber las reservas exitosas 
+    function reservasClienteFiltrado($codcliente,$valor){
+        //recogemos los datos de la consulta
+        $reservas = DB::select('call sp_getReservaClienteFiltrado(?,?)', [$codcliente,$valor]);
+        //array donde vamos a guardar la data
+        $data = array();
+        //recorremos las reservas
+        foreach ($reservas as $reserva) {
+            $d = array(
+                "ncodreserva" => "000". $reserva->ncodreserva,
+                "ncodpersona" => $reserva->ncodpersona,
+                "ncantidadtotal" => $reserva->ncantidadtotal,
+                "cestado" => $reserva->cestado,
+                "dfechareserva" => $reserva->dfechareserva,
+                "cnombreevento" => $reserva->cnombreevento,
+                "cdireccion" => $reserva->cdireccion,
+                "clatitud" => $reserva->clatitud,
+                "clongitud" => $reserva->clongitud,
+                "cnombreplato" => $reserva->cnombreplato,
+                "detalle" => DB::select('call sp_getDetReserva(?)', [$reserva->ncodreserva])
+            );
+            array_push($data,$d);
+        }
+        return response()->json($data,200);
+    }
 }

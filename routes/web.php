@@ -250,8 +250,8 @@ $router->group(['middleware' => ['json','auth']],function () use ($router){
 
     //función para ver las reservas de un cliente
     $router->get('/reserva/cliente/{codcliente}',['uses'=>'ReservaController@reservasCliente']);
-    //función para ver los detalles de una reserva
-    $router->get('/reserva/detalle/{codreserva}',['uses'=>'DetReservaController@detalleReserva']);
+    //función para ver los reservas de un cliente, ya sea por fecha o por nombre
+    $router->get('/reserva/cliente/{codreserva}/{valor}',['uses'=>'DetReservaController@reservasClienteFiltrado']);
 
 
 
