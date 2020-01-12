@@ -10,5 +10,5 @@ class Reserva extends Model
 {
     protected $table = "reserva";
     protected $primaryKey = "ncodreserva";
-    protected $fillable = ['ncodpersona','ncantidadtotal','dfechareserva','cestado'];
+    protected $fillable = ['ncodpersona','ncantidadtotal','dfechareserva','dfecharecojo','cestado'];
 }
