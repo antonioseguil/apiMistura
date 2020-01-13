@@ -19,7 +19,12 @@ class CreateTablePlato extends Migration
             $table->string('cnombreplato');
             $table->string('cdescresena');
             $table->string('curlimagen');
-
+            //agregando foreigne key de personas
+            $table->bigInteger('ncodpersona');
+            //agregando privacidad
+            $table->boolean('privacidad');
+            //agregando llave foranea
+            $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');
             $table->foreign('ncodtipoplato')->references('ncodtipoplato')->on('tipoplato');
             $table->timestamps();
         });

@@ -17,6 +17,13 @@ class CreateTableSeccionstand extends Migration
             $table->bigInteger('ncodseccionstand',true);
             $table->string('cseccion');
             $table->string('cdescripcion');
+            //agregando foreigne key de personas
+            $table->bigInteger('ncodpersona');
+            //agregando privacidad
+            $table->boolean('privacidad');
+            //agregando llave foranea
+            $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');
+            //=================================
             $table->timestamps();
         });
     }

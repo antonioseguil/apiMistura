@@ -8,6 +8,7 @@ namespace App\Http\Controllers;
 use App\Stand;
 use App\Utilitarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class StandController extends Controller
 {
@@ -22,6 +23,15 @@ class StandController extends Controller
     function getStandStatus($status){
         $data = Stand::where('cestado',strtoupper($status))->get();
         return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    //Función para delvolver datos para combo
+    function getDataStandCombo($codevento,$codseccion){
+        $data = DB::select("SELECT s.ncodstand,s.cnumerosstand, n.crazonsocial FROM stand s
+                            INNER JOIN negocio n 
+                            ON s.ncodnegocio = n.ncodnegocio
+                            WHERE ncodevento=$codevento AND ncodseccionstand = $codseccion");
+        return response()->json(Utilitarios::messageOK($data));
     }
 
     //-----------------------------------------------------------

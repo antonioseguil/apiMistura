@@ -21,6 +21,12 @@ class EventoController extends Controller
         return response()->json($data, 200);
     }
 
+    //Función para retornar los dato para un combo
+    function getDataComboEvento(){
+        $data = DB::select('SELECT ncodevento,cnombreevento FROM evento');
+        return response()->json(Utilitarios::messageOK($data));
+    }
+
     //Función para regresar todos los eventos segun su estado
     function getEventoStatus($status)
     {
@@ -139,9 +145,24 @@ class EventoController extends Controller
         return response()->json(Utilitarios::messageMoreData($returnData, count($returnData)), 200);
     }
 
-    //Función para la actualización
-    function updateCantidadStand()
+    //Función para actualizar la cantidad de stand de una seccion de un evento
+    function updateCantidadStand(Request $request)
     {
+        //recogiendo los datos
+        $datos = $request->json()->all();
+        //validación de datos
+        $this->validate($request, [
+            'ncodevento' => 'required|exists:evento|integer',
+            'ncodseccionstand' => 'required|exists:seccionstand|integer',
+            'ncantidadstand' => 'required|integer'
+        ]);
+        //buscamos el detalle
+        $detalle = EventoSeccion::where('ncodevento', $datos['ncodevento'])->where('ncodseccionstand', $datos['ncodseccionstand'])->first();
+        //actualizamos los nuevos cambios
+        $detalle->ncantidadstand = $datos['ncantidadstand'];
+        $detalle->save();
+
+        return response()->json(Utilitarios::messageOKU($detalle));
     }
 
     /*
@@ -181,7 +202,7 @@ class EventoController extends Controller
                 "objPlato" => DB::select("call sp_getStandPrecioM(?,?)", [$evento->ncodevento, $ncodseccion])
             );
             $precio = $prueba['objPlato'][0]->precio != null;
-            $precio ? array_push($returnData, $prueba) : "error" ;
+            $precio ? array_push($returnData, $prueba) : "error";
         }
         return response()->json($returnData, 200);
     }
@@ -204,9 +225,10 @@ class EventoController extends Controller
     //función para cambiar el estado de los eventos
     /*
      * ESTADO DEL EVENTO
-     * P = EN PROCESO O CURSO
-     * T = TERMINADO
-     * E = ESPERA(POR SI AUN NO EMPIEZA EL EVENTO)
+     * A = ACTIVO
+     * D = DESACTIVADO
+     * I = INICIADO
+     * F = FINALIZADO
      * */
     function eventoTerminar($codevento)
     {

@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class VentaController extends Controller
 {
 
-    /*function index(){
+    function index(){
         $data = Venta::all();
         return response()->json($data,200);
     }
@@ -36,5 +36,5 @@ class VentaController extends Controller
         $venta->dfechareserva = $data['dfechareserva'];
         $venta->save();
         return response()->json($venta,200);
-    }*/
+    }
 }

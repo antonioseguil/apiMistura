@@ -11,5 +11,10 @@ class TipoPlato extends Model
     protected $table = "tipoplato";
     protected $primaryKey = "ncodtipoplato";
 
-    protected $fillable = ['ncodtipoplato','cnombretipoplato'];
+    protected $fillable = [
+        'ncodtipoplato',
+        'cnombretipoplato',
+        'codpersona', 
+        'privacidad'
+    ];
 }

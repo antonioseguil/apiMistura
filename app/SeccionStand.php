@@ -11,5 +11,11 @@ class SeccionStand extends Model
     protected $table = "seccionstand";
     protected $primaryKey = "ncodseccionstand";
 
-    protected $fillable = ['ncodseccionstand','cseccion','cdescripcion'];
+    protected $fillable = [
+        'ncodseccionstand',
+        'cseccion',
+        'codPersona',
+        'privacidad',
+        'cdescripcion'
+    ];
 }

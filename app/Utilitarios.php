@@ -37,4 +37,16 @@ class Utilitarios
         return $returnData;
     }
 
+    //función para retornar mensaje de ok para logueo
+    public static function messageOKlogin($dataReponse = array()){
+        $returnData = array('rpta' => '1', 'status'=> true ,'msg' => 'Verificación correcta','obj' => $dataReponse);
+        return $returnData;
+    }
+
+    //función para retornar mensaje de error para logueo
+    public static function messageERRORlogin($dataReponse = array()){
+        $returnData = array('rpta' => '0', 'status' => false ,'msg' => 'Verificación incorrecta, por favor revise sus credenciales','obj' => $dataReponse);
+        return $returnData;
+    }
+
 }

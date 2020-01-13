@@ -11,6 +11,8 @@ use Illuminate\Http\Request;
 class NegocioController extends Controller
 {
 
+    //TODO preguntar sobre la privacidad en negocio, funcionalidad
+    
     //FUNCIONES QUE DEVUELVEN DATOS
 
     //función para devolver todos los datos de la tabla
@@ -26,6 +28,9 @@ class NegocioController extends Controller
     }
 
     //------------------------------------------------------------
+
+    //FUNCIONES CRUD PARA LA TABLA NEGOCIO
+
     //Función que crea un nuevo negocio
     function create(Request $request){
         //se recuperan los datos
@@ -35,14 +40,16 @@ class NegocioController extends Controller
             'crazonsocial' => 'required',
             'cnombredescripcion' => 'required',
             'cdireccion' => 'required',
-            'cruc' => 'required|unique:negocio'
+            'cruc' => 'required|unique:negocio',
+            'privacidad' => 'required',
         ]);
         //creamos el negocio
         $create = Negocio::create([
             'crazonsocial' => $data['crazonsocial'],
             'cnombredescripcion' => $data['cnombredescripcion'],
             'cdireccion' => $data['cdireccion'],
-            'cruc' => $data['cruc']
+            'privacidad' => $data['privacidad'],
+            'cruc' => $data['cruc'],
         ]);
         return response()->json(Utilitarios::messageOKC($create),201);
     }

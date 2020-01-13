@@ -21,6 +21,7 @@ class CreateTableNegocio extends Migration
             $table->string('cnombredescripcion');
             $table->string('cdireccion');
             $table->string('cruc',11);
+            $table->boolean('privacidad');
             //TODO* A = "ACTIVO", "D" = "DESABILITADO"
             $table->string('cestado',1)->default("A");
             $table->timestamps();

@@ -14,8 +14,14 @@ class CreateTableTipoplato extends Migration
     public function up()
     {
         Schema::create('tipoplato', function (Blueprint $table) {
-            $table->bigInteger('ncodtipoplato',true);
+            $table->bigInteger('ncodtipoplato', true);
             $table->string('cnombretipoplato');
+            //agregando foreigne key de personas
+            $table->bigInteger('ncodpersona');
+            //agregando privacidad
+            $table->boolean('privacidad');
+            //agregando llave foranea
+            $table->foreign('ncodpersona')->references('ncodpersona')->on('persona');
             $table->timestamps();
         });
     }
