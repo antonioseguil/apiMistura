@@ -11,4 +11,5 @@ class DetReserva extends Model
     protected $table = "detreserva";
     protected $primaryKey = "ncoddetreserva";
     protected $fillable = ['ncoddetlistaprecio','ncodreserva','ncantidad'];
+    protected $hidden = ['created_at', 'updated_at'];
 }

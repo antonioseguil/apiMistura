@@ -13,4 +13,6 @@ class Stand extends Model
 
     protected $fillable = ['ncodstand','ncodevento','ncodnegocio','ncodseccionstand',
                            'cnumerosstand','ccalificacion','clongitud','clatitud','cestado'];
+                           
+    protected $hidden = ['created_at', 'updated_at'];
 }

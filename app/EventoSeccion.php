@@ -11,4 +11,5 @@ class EventoSeccion extends Model
     protected $table = "eventoseccion";
     protected $primaryKey = "ncodeventoseccion";
     protected $fillable = ['ncodeventoseccion','ncodseccionstand','ncodevento','ncantidadstand','cestado'];
+    protected $hidden = ['created_at', 'updated_at'];
 }

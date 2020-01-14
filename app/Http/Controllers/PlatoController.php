@@ -25,15 +25,21 @@ class PlatoController extends Controller
         return response()->json($data, 200);
     }
 
-
-
     //función para traer datos de una persona y publicos
     function getPlatoPersonaPublic($codpersona)
     {
         $data = Plato::where('ncodpersona', $codpersona)->orWhere('privacidad', '1')->get();
         return response()->json(Utilitarios::messageOK($data));
     }
-     
+
+    //función para traer datos de una persona y publicos para combo
+    function getPlatoPersonaPublicCombo($codpersona)
+    {
+        $slq = "SELECT ncodplato, cnombreplato FROM plato WHERE ncodpersona = $codpersona AND privacidad = 1 ";
+        $data = DB::select($slq);
+        return response()->json(Utilitarios::messageOK($data));
+    }
+
     //FUNCIONES CRUD PARA LA TABLA PLATO
 
     //funciones para crear un plato
@@ -95,6 +101,7 @@ class PlatoController extends Controller
         foreach ($platos as $plato) {
             $d = array(
                 "ncodplato" => $plato->ncodplato,
+                "ncodstand" => $plato->ncodstand,
                 "ncodlistaprecio" => $plato->ncodlistaprecio,
                 "cnombreplato" => $plato->cnombreplato,
                 "cdescresena" => $plato->cdescresena,
@@ -118,6 +125,7 @@ class PlatoController extends Controller
         foreach ($platos as $plato) {
             $d = array(
                 "ncodplato" => $plato->ncodplato,
+                "ncodstand" => $plato->ncodstand,
                 "ncodlistaprecio" => $plato->ncodlistaprecio,
                 "cnombreplato" => $plato->cnombreplato,
                 "cdescresena" => $plato->cdescresena,

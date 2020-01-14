@@ -10,4 +10,5 @@ class Permiso extends Model
     protected $fillable = [
         'ncodpermiso','cnombrepermiso'
     ];
+    protected $hidden = ['created_at', 'updated_at'];
 }

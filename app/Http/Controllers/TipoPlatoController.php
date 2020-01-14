@@ -7,6 +7,7 @@ namespace App\Http\Controllers;
 use App\TipoPlato;
 use App\Utilitarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TipoPlatoController extends Controller
 {
@@ -28,6 +29,13 @@ class TipoPlatoController extends Controller
     //funcion para devolver los tipo de platos, de la persona que ha creado y los que estan en estado publico
     function getPlatoPersonaPublic($codpersona){
         $data = TipoPlato::where('ncodpersona',$codpersona)->orWhere('privacidad','1')->get();
+        return response()->json(Utilitarios::messageOK($data));
+    }
+
+    //funcion para devolver los tipo de platos, de la persona que ha creado y los que estan en estado publico
+    function getPlatoPersonaPublicCombo($codpersona){
+        $sql = "SELECT ncodtipoplato,cnombretipoplato FROM tipoplato WHERE ncodpersona=$codpersona AND privacidad = 1";
+        $data = DB::select($sql);
         return response()->json(Utilitarios::messageOK($data));
     }
 

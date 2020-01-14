@@ -144,16 +144,17 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
     /**********************************/
 
-    //trear los eventos
+    //trear los eventos segun codigo de persona
     $router->get('/lista/evento', ['uses' => 'EventoController@index']);
+    // traer datos de evento para combo
+    $router->get('/combo/evento/{codpersona}', ['uses' => 'EventoController@getEventoPersonaCombo']);
     //traer eventos segun el estado del evento
     $router->get('/lista/evento/status/{status}', ['uses' => 'EventoController@getEventoStatus']);
-    // TODO EVENTO BUSQUEDA DE EVENTO POR ID DE SECCION
+    //BUSQUEDA DE EVENTO POR ID DE SECCION
     $router->get('/lista/evento/{ncodseccion}', ['uses' => 'EventoController@setEventoSeccion']);
-    // TODO BUSQUEDA DE SECCIONES DE LOS EVENTOS
+    //BUSQUEDA DE SECCIONES DE LOS EVENTOS
     $router->get('/lista/evento/seccion/{codevento}', ['uses' => 'EventoController@setSecciones']);
-    // traer datos de evento para combo
-    $router->get('/lista/evento/combo', ['uses' => 'EventoController@getDataComboEvento']);
+    
 
     //---------------------------------------------
 
@@ -166,13 +167,13 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     /**********************************/
 
     //lista de seccion de stand
-    $router->get('/lista/seccionstand', ['uses' => 'SeccionStandController@index']);
-    //lista de seccion de stand con codigo de persona y esado publico
     $router->get('/lista/seccionstand/{codpersona}', ['uses' => 'SeccionStandController@getSeccionesPersonaPublic']);
+    //lista de seccion de stand con codigo de persona y esado publico
+    $router->get('/combo/seccionstand/{codpersona}', ['uses' => 'SeccionStandController@getSeccionCombo']);
 
     //----------------------------------------------
 
-    //CRUD DE LA TABLA  STAND
+    //CRUD DE LA TABLA STAND
     //crear un stand
     $router->post('/stand', ['uses' => 'StandController@create']);
     //actualizar un stand
@@ -184,12 +185,16 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
     //lista de stand
     $router->get('/lista/stand', ['uses' => 'StandController@index']);
+    //lista de stand por negocio
+    $router->get('/negocio/stand/{codnegocio}', ['uses' => 'StandController@getStandNegocio']);
+    //lista de stand para combo
+    $router->get('/combo/stand/{codevento}/{codseccion}', ['uses' => 'StandController@getStandCombo']);
     //lista de stand segun su status status
     $router->get('/lista/stand/{status}', ['uses' => 'StandController@getStandStatus']);
 
     //-----------------------------------------------------------
 
-    //CRUD de tabla TIPOPLATO
+    //CRUD de tabla TIPO PLATO
     //crear tipo plato
     $router->post('/tipoplato', ['uses' => 'TipoPlatoController@create']);
     //actualizar tipo plato
@@ -197,16 +202,17 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
     /******************/
 
-    //traer tipo platos
-    $router->get('/lista/tipoplato', ['uses' => 'TipoPlatoController@index']);
     //traer tipo de platos de una persona y estados publicos
     $router->get('/lista/tipoplato/{codpersona}', ['uses' => 'TipoPlatoController@getPlatoPersonaPublic']);
+    //traer tipo de platos de una persona y estados publicos pero para listar un combo o select
+    $router->get('/combo/tipoplato/{codpersona}', ['uses' => 'TipoPlatoController@getPlatoPersonaPublicCombo']);
+
     //-----------------------------------------------------------
 
     //CRUD de tabla PLATO
     //creación plato
     $router->post('/plato', ['uses' => 'PlatoController@create']);
-    //actualizar tipo plato
+    //actualizar plato
     $router->put('/update/plato', ['uses' => 'PlatoController@update']);
 
     //Agregar lista de precio a un plato(uno solo)
@@ -216,16 +222,15 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
     /*******************************/
 
-    //lista de platos
-    $router->get('/lista/plato', ['uses' => 'PlatoController@index']);
     //lista de platos segun persona y privacidad
-    $router->get('/lista/plato/persona/{codpersona}', ['uses' => 'PlatoController@getPlatoPersonaPublic']);
-    //TODO * LISTA DE TODOS LOS PLATOS SEGUN EVENTO Y SECCION DEL EVENTO
+    $router->get('/lista/plato/{codpersona}', ['uses' => 'PlatoController@getPlatoPersonaPublic']);
+    //LISTA DE TODOS LOS PLATOS SEGUN EVENTO Y SECCION DEL EVENTO
     $router->get('/lista/platos/{codevento}/{ncodseccion}', ['uses' => 'PlatoController@setEventoSeccion']);
-    //busqueda de detalle de un plato
-    //$router->get('/detalle/plato/{codplato}/{codlistaprecio}',['uses'=>'PlatoController@getDetallePlato']);
     //lista de todos los platos segun seccion en orden asc
     $router->get('/all/platos/{codseccion}/asc', ['uses' => 'PlatoController@getAllPlatosAsc']);
+    //lista de platos segun persona y privacidad
+    $router->get('/combo/plato/{codpersona}', ['uses' => 'PlatoController@getPlatoPersonaPublicCombo']);
+
     //-----------------------------------------------------------
 
 
@@ -269,6 +274,10 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
 
     // -----------------------------------------------------------------------------
+
+    //CRUD de tabla VENTA
+    $router->post('/reserva/venta',['uses' => 'VentaController@create']);
+
     // -----------------------------------------------------------------------------
 
 

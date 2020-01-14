@@ -3,9 +3,10 @@
 
 namespace App\Http\Controllers;
 
-
+use App\Utilitarios;
 use App\Venta;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VentaController extends Controller
 {
@@ -16,25 +17,17 @@ class VentaController extends Controller
     }
 
     function create(Request $request){
+        //capturamos los valores enviados
         $data = $request->json()->all();
-        Venta::create([
-            'ncodreserva' => $data['ncodcliente'],
-            'cserie' => $data['cserie'],
-            'cnumero' => $data['cnumero'],
-            'dfechaemision' => $data['dfechaemision'],
-            'dhoraemision' => $data['dhoraemision'],
-            'estado' => $data['estado']
+        //validamos los valores
+        $this->validate($request,[
+            'ncodreserva' => 'required|exists:reserva,ncodreserva',
         ]);
-        return response()->json($data,201);
-    }
+        //insertamos valores
+        DB::select("call sp_venta(?)",[$data['ncodreserva']]);
+        //recuperamos el ultimo valor insertado
 
-    function update(Request $request){
-        $data = $request->json()->all();
-        $venta = Venta::where('ncodventa',$data['ncodventa'])->first();
-        $venta->ncodcliente = $data['ncodcliente'];
-        $venta->ncantidadtotal = $data['ncantidadtotal'];
-        $venta->dfechareserva = $data['dfechareserva'];
-        $venta->save();
-        return response()->json($venta,200);
+        $venta = Venta::all()->last();
+        return response()->json(Utilitarios::messageOKC($venta) ,201);
     }
 }

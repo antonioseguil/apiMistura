@@ -19,4 +19,5 @@ class Negocio extends Model
         'privacidad',
         'cestado'
     ];
+    protected $hidden = ['created_at', 'updated_at'];
 }

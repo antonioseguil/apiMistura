@@ -33,7 +33,7 @@ class SeccionStandController extends Controller
     }
 
     //función para trear las secciones de un evento, dato para combo
-    function getDataComboSeccion($codevento){
+    function getSeccionCombo($codevento){
         $data = DB::select("SELECT ss.ncodseccionstand, ss.cseccion FROM eventoseccion es 
                             INNER JOIN seccionstand ss 
                             ON es.ncodseccionstand = ss.ncodseccionstand

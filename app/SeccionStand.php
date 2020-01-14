@@ -18,4 +18,5 @@ class SeccionStand extends Model
         'privacidad',
         'cdescripcion'
     ];
+    protected $hidden = ['created_at', 'updated_at'];
 }

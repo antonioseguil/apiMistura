@@ -18,12 +18,19 @@ class EventoController extends Controller
     function index()
     {
         $data = Evento::all();
-        return response()->json($data, 200);
+        return response()->json(Utilitarios::messageOK($data), 200);
     }
 
     //Función para retornar los dato para un combo
-    function getDataComboEvento(){
-        $data = DB::select('SELECT ncodevento,cnombreevento FROM evento');
+    function getEventoPersona($codpersona){
+        $data = Evento::where('ncodpersona',$codpersona);
+        return response()->json(Utilitarios::messageOK($data));
+    }
+
+    //Función para retornar los dato para un combo
+    function getEventoPersonaCombo($codpersona){
+        $sql = "SELECT ncodevento,cnombreevento FROM evento WHERE ncodpersona = $codpersona";
+        $data = DB::select($sql);
         return response()->json(Utilitarios::messageOK($data));
     }
 

@@ -20,4 +20,6 @@ class Plato extends Model
         'codpersona',
         'privacidad'
     ];
+
+    protected $hidden = ['created_at', 'updated_at'];
 }

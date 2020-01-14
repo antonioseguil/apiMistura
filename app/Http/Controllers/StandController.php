@@ -16,7 +16,7 @@ class StandController extends Controller
     //función que devuelve todos los datos del stand
     function index(){
         $data = Stand::all();
-        return response()->json($data,200);
+        return response()->json(Utilitarios::messageOK($data),200);
     }
 
     //Función para regresar todos los STAND segun su estado
@@ -25,8 +25,14 @@ class StandController extends Controller
         return response()->json(Utilitarios::messageOK($data),200);
     }
 
+    //función que devuelve todos los datos del stand
+    function getStandNegocio($codnegocio){
+        $data = Stand::where('ncodnegocio',$codnegocio)->get();
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
     //Función para delvolver datos para combo
-    function getDataStandCombo($codevento,$codseccion){
+    function getStandCombo($codevento,$codseccion){
         $data = DB::select("SELECT s.ncodstand,s.cnumerosstand, n.crazonsocial FROM stand s
                             INNER JOIN negocio n 
                             ON s.ncodnegocio = n.ncodnegocio
