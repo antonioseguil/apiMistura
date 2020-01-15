@@ -21,12 +21,14 @@ class ReservaController extends Controller
         //validación de datos
         $this->validate($request,[
             'ncodpersona' => 'required|exists:persona',
+            'ncodstand' => 'required|exists:stand'
         ]);
         $data = $request->json()->all();
         //INSTANCIA PARA LA FECHA
         $time = new \DateTime();
         $create = Reserva::create([
             'ncodpersona' => $data['ncodpersona'],
+            'ncodstand' => $data['ncodstand'],
             'ncantidadtotal' => '0',
             'dfechareserva' => $time->format('Y-m-d')
         ]);
@@ -77,6 +79,7 @@ class ReservaController extends Controller
                 "ncantidadtotal" => $reserva->ncantidadtotal,
                 "cestado" => $reserva->cestado,
                 "dfechareserva" => $reserva->dfechareserva,
+                "dfecharecojo" => $reserva->dfecharecojo,
                 "cnombreevento" => $reserva->cnombreevento,
                 "cdireccion" => $reserva->cdireccion,
                 "clatitud" => $reserva->clatitud,
@@ -107,7 +110,6 @@ class ReservaController extends Controller
                 "cdireccion" => $reserva->cdireccion,
                 "clatitud" => $reserva->clatitud,
                 "clongitud" => $reserva->clongitud,
-                "cnombreplato" => $reserva->cnombreplato,
                 "detalle" => DB::select('call sp_getDetReserva(?)', [$reserva->ncodreserva])
             );
             array_push($data,$d);
@@ -134,7 +136,6 @@ class ReservaController extends Controller
                 "cdireccion" => $reserva->cdireccion,
                 "clatitud" => $reserva->clatitud,
                 "clongitud" => $reserva->clongitud,
-                "cnombreplato" => $reserva->cnombreplato,
                 "detalle" => DB::select('call sp_getDetReserva(?)', [$reserva->ncodreserva])
             );
             array_push($data,$d);

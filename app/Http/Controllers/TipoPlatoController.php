@@ -34,7 +34,7 @@ class TipoPlatoController extends Controller
 
     //funcion para devolver los tipo de platos, de la persona que ha creado y los que estan en estado publico
     function getPlatoPersonaPublicCombo($codpersona){
-        $sql = "SELECT ncodtipoplato,cnombretipoplato FROM tipoplato WHERE ncodpersona=$codpersona AND privacidad = 1";
+        $sql = "SELECT ncodtipoplato,cnombretipoplato FROM tipoplato WHERE ncodpersona=$codpersona OR privacidad = 1";
         $data = DB::select($sql);
         return response()->json(Utilitarios::messageOK($data));
     }
@@ -42,9 +42,9 @@ class TipoPlatoController extends Controller
     // FUNCIONES CRUD DE LA TABLA TIPO PLATO
     function create(Request $request){
         //validación de datos
-        $this->validate($request,[
+        $validate = $this->validate($request,[
             'cnombretipoplato' => 'required',
-            'codpersona' => 'required|exists:persona,ncodpersona',
+            'ncodpersona' => 'required|exists:persona,ncodpersona',
             'privacidad' => 'required',
         ]);
         //recuperamos datos
@@ -52,7 +52,7 @@ class TipoPlatoController extends Controller
         //creamos el nuevo dato en la bd y lo guardamos en un variable
         $create = TipoPlato::create([
             'cnombretipoplato' => $data['cnombretipoplato'],
-            'codpersona' => $data['codpersona'],
+            'ncodpersona' => $data['ncodpersona'],
             'privacidad' => $data['privacidad']
         ]);
         //retornando datos correpondientes

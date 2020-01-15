@@ -9,30 +9,35 @@ use App\Stand;
 use App\Utilitarios;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\Types\Array_;
 
 class StandController extends Controller
 {
     //FUNCIONES PARA DEVOLVER DATOS
     //función que devuelve todos los datos del stand
-    function index(){
+    function index()
+    {
         $data = Stand::all();
-        return response()->json(Utilitarios::messageOK($data),200);
+        return response()->json(Utilitarios::messageOK($data), 200);
     }
 
     //Función para regresar todos los STAND segun su estado
-    function getStandStatus($status){
-        $data = Stand::where('cestado',strtoupper($status))->get();
-        return response()->json(Utilitarios::messageOK($data),200);
+    function getStandStatus($status)
+    {
+        $data = Stand::where('cestado', strtoupper($status))->get();
+        return response()->json(Utilitarios::messageOK($data), 200);
     }
 
     //función que devuelve todos los datos del stand
-    function getStandNegocio($codnegocio){
-        $data = Stand::where('ncodnegocio',$codnegocio)->get();
-        return response()->json(Utilitarios::messageOK($data),200);
+    function getStandNegocio($codnegocio)
+    {
+        $data = Stand::where('ncodnegocio', $codnegocio)->get();
+        return response()->json(Utilitarios::messageOK($data), 200);
     }
 
     //Función para delvolver datos para combo
-    function getStandCombo($codevento,$codseccion){
+    function getStandCombo($codevento, $codseccion)
+    {
         $data = DB::select("SELECT s.ncodstand,s.cnumerosstand, n.crazonsocial FROM stand s
                             INNER JOIN negocio n 
                             ON s.ncodnegocio = n.ncodnegocio
@@ -40,14 +45,39 @@ class StandController extends Controller
         return response()->json(Utilitarios::messageOK($data));
     }
 
+    //Función para delvolver datos para la distribucioón de stand
+    function getStandEventoSeccion($codevento, $codseccion)
+    {
+        $cantidaEspacios = DB::select("SELECT ncantidadstand FROM eventoseccion WHERE ncodevento = $codevento AND ncodseccionstand = $codseccion");
+        $objStand = DB::select("call sp_getstandsSeccionEvento(?,?)", [$codevento, $codseccion]);
+        $data = array();
+        foreach ($objStand as $stand) {
+            $d = array(
+                "ncodstand" => $stand->ncodstand,
+                "ncodevento" => $stand->ncodevento,
+                "ncodseccionstand" => $stand->ncodseccionstand,
+                "ncodnegocio" => $stand->ncodnegocio,
+                "cnumerosstand" => $stand->cnumerosstand,
+                "cestado" => $stand->cestado,
+                "objnegocio" => DB::select("SELECT ncodnegocio,crazonsocial FROM negocio WHERE ncodnegocio = $stand->ncodnegocio ")
+            );
+            array_push($data, $d);
+        }
+        $dataReturn = array("cantidadstand" => $cantidaEspacios[0]->ncantidadstand, "stands" => $data);
+        return response()->json(Utilitarios::messageOK($dataReturn));
+    }
+
+    //Función de busqueda de stand 
+
     //-----------------------------------------------------------
 
     //función para agregar un nuevo stand, recibe dato json
-    function create(Request $request){
+    function create(Request $request)
+    {
         //recogiendo la data
         $data = $request->json()->all();
         //validando datos
-        $this->validate($request,[
+        $this->validate($request, [
             'ncodevento' => 'required|exists:evento|integer',
             'ncodnegocio' => 'required|exists:negocio|integer',
             'ncodseccionstand' => 'required:exists:seccionstand|integer',
@@ -65,36 +95,35 @@ class StandController extends Controller
             'clongitud' => $data['clongitud'],
             'clatitud' => $data['clatitud']
         ]);
-        return response()->json(Utilitarios::messageOKC($create),201);
+        return response()->json(Utilitarios::messageOKC($create), 201);
     }
 
     //función para actualizar
-    function update(Request $request){
+    function update(Request $request)
+    {
         $data = $request->json()->all();
-        $this->validate($request,[
+        $this->validate($request, [
             'ncodstand' => 'required|exists:stand',
-            'cnumerosstand' => 'required',
-            'clongitud' => 'required',
-            'clatitud' => 'required',
+            'ncodnegocio' => 'required|exists:negocio'
         ]);
-        $stand = Stand::where('ncodstand',$data['ncodstand'])->first();
-        $stand->cnumerosstand = $data['cnumerosstand'];
-        $stand->clongitud = $data['clongitud'];
-        $stand->clatitud = $data['clatitud'];
+        $stand = Stand::where('ncodstand', $data['ncodstand'])->first();
+        $stand->ncodnegocio = $data['ncodnegocio'];
+        $stand->cestado =  'N';
         $stand->save();
-        return response()->json(Utilitarios::messageOKU($stand),200);
+        return response()->json(Utilitarios::messageOKU($stand), 200);
     }
 
     //funcion para cambiar de estado al stand
     /*
      * ESTADOS DEL STAND
-     * A = ACTIVO, QUE ESTA FUNCIONANDO
-     * D = DESABILITADO
+     * D = DISPONIBLE
+     * N = NO DISPONIBLE
      * */
-    function standDelete($codstand){
-        $stand = Stand::where('ncodstand',$codstand)->first();
+    function standDelete($codstand)
+    {
+        $stand = Stand::where('ncodstand', $codstand)->first();
         $stand->cestado = 'D';
         $stand->save();
-        return response()->json(Utilitarios::messageOK($stand),200);
+        return response()->json(Utilitarios::messageOK($stand), 200);
     }
 }

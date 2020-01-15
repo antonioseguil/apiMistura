@@ -85,6 +85,8 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
     //traer lista de tipo de usuario
     $router->get('/lista/tipousuario', ['uses' => 'TipoUsuarioController@index']);
+    //traer lista de tipo de usuario para combo
+    $router->get('/combo/tipousuario', ['uses' => 'TipoUsuarioController@getTipoUsuarioCombo']);
 
 
     // ------------------------------------------------
@@ -113,7 +115,9 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     /********************************/
 
     //Trae una lista de los negocios
-    $router->get('/lista/negocio', ['uses' => 'NegocioController@index']);
+    $router->get('/lista/negocio/{codpersona}', ['uses' => 'NegocioController@getNegocioPersonaPublic']);
+    //Trae una lista de los negocios para combo
+    $router->get('/combo/negocio/{codpersona}', ['uses' => 'NegocioController@getNegocioPersonaPublicCombo']);
     //Trae una lista de los negocios segun su estatus
     $router->get('/lista/negocio/status/{status}', ['uses' => 'NegocioController@getNegocioStatus']);
 
@@ -167,6 +171,8 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     /**********************************/
 
     //lista de seccion de stand
+    $router->get('/lista/seccionstand', ['uses' => 'SeccionStandController@index']);
+    //lista de seccion de stand
     $router->get('/lista/seccionstand/{codpersona}', ['uses' => 'SeccionStandController@getSeccionesPersonaPublic']);
     //lista de seccion de stand con codigo de persona y esado publico
     $router->get('/combo/seccionstand/{codpersona}', ['uses' => 'SeccionStandController@getSeccionCombo']);
@@ -189,6 +195,8 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     $router->get('/negocio/stand/{codnegocio}', ['uses' => 'StandController@getStandNegocio']);
     //lista de stand para combo
     $router->get('/combo/stand/{codevento}/{codseccion}', ['uses' => 'StandController@getStandCombo']);
+    //lista de stand con detalle de negocio y cantidad
+    $router->get('/stand/detalle/{codevento}/{codseccion}', ['uses' => 'StandController@getStandEventoSeccion']);
     //lista de stand segun su status status
     $router->get('/lista/stand/{status}', ['uses' => 'StandController@getStandStatus']);
 
@@ -246,6 +254,10 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
     //traer la lista de platos
     $router->get('/lista/listaprecio', ['uses' => 'ListaPrecioController@index']);
+    //traer la lista de platos para combo
+    $router->get('/combo/listaprecio/{codstand}', ['uses' => 'ListaPrecioController@getListaComboStand']);
+    //traer la lista de platos de un stand 
+    $router->get('/listaprecio/platos/{codevento}/{codseccion}/{stand}', ['uses' => 'ListaPrecioController@getListaPlatosStandEvento']);
 
     //------------------------------------------------------------------------------------
 

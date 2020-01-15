@@ -159,8 +159,8 @@ class EventoController extends Controller
         $datos = $request->json()->all();
         //validación de datos
         $this->validate($request, [
-            'ncodevento' => 'required|exists:evento|integer',
-            'ncodseccionstand' => 'required|exists:seccionstand|integer',
+            'ncodevento' => 'required|exists:eventoseccion|integer',
+            'ncodseccionstand' => 'required|exists:eventoseccion|integer',
             'ncantidadstand' => 'required|integer'
         ]);
         //buscamos el detalle

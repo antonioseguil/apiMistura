@@ -7,15 +7,28 @@ namespace App\Http\Controllers;
 use App\ListaPrecio;
 use App\Utilitarios;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 class ListaPrecioController extends Controller
 {
 
-    function index(Request $request){
+    function index(){
         $data = ListaPrecio::all();
-        return response()->json($data,200);
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    function getListaComboStand($codstand){
+        $sql = "SELECT ncodlistaprecio, cnombrelista, cespecificaciones FROM listaprecio WHERE ncodstand = $codstand";
+        $data = DB::select($sql);
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    function getListaPlatosStandEvento($codevento,$codseccion,$stand){
+        $sql = "call sp_getlistaPrecioStandEvento(?,?,?)";
+        $data = DB::select($sql,[$codevento,$codseccion,$stand]);
+        return response()->json(Utilitarios::messageOK($data),200);
     }
 
     function create(Request $request){

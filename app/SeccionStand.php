@@ -14,7 +14,7 @@ class SeccionStand extends Model
     protected $fillable = [
         'ncodseccionstand',
         'cseccion',
-        'codPersona',
+        'ncodpersona',
         'privacidad',
         'cdescripcion'
     ];

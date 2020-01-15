@@ -12,10 +12,12 @@ class Negocio extends Model
     protected $primaryKey = "ncodnegocio";
 
     protected $fillable = [
+        'ncodnegocio',
         'crazonsocial',
         'cnombredescripcion',
         'cdireccion',
         'cruc',
+        'ncodpersona',
         'privacidad',
         'cestado'
     ];

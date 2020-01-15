@@ -14,7 +14,12 @@ class TipoUsuarioController extends Controller
 {
     function index(Request $request){
         $data = TipoUsuario::all();
-        return response()->json($data,200);
+        return response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    function getTipoUsuarioCombo(Request $request){
+        $data = DB::select("SELECT ncodtipousuario, ctipousuario FROM tipousuario");
+        return response()->json(Utilitarios::messageOK($data),200);
     }
 
     function create(Request $request){

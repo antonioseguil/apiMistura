@@ -35,7 +35,7 @@ class PlatoController extends Controller
     //función para traer datos de una persona y publicos para combo
     function getPlatoPersonaPublicCombo($codpersona)
     {
-        $slq = "SELECT ncodplato, cnombreplato FROM plato WHERE ncodpersona = $codpersona AND privacidad = 1 ";
+        $slq = "SELECT ncodplato, cnombreplato FROM plato WHERE ncodpersona = $codpersona OR privacidad = 1 ";
         $data = DB::select($slq);
         return response()->json(Utilitarios::messageOK($data));
     }
