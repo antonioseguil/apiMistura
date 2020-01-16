@@ -17,8 +17,8 @@ class Plato extends Model
         'cnombreplato',
         'cdescresena',
         'curlimagen',
-        'codpersona',
-        'privacidad'
+        'ncodpersona',
+        'privacidad',
     ];
 
     protected $hidden = ['created_at', 'updated_at'];

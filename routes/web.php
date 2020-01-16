@@ -167,6 +167,8 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     $router->post('/seccionstand', ['uses' => 'SeccionStandController@create']);
     //actualizar una seccion
     $router->put('/update/seccionstand', ['uses' => 'SeccionStandController@update']);
+    //actualizar el estado de una seccion de evento
+    $router->delete('/update/eventoseccion/{codevento}/{codseccion}/{estado}', ['uses' => 'SeccionStandController@setEstadoEventoSeccion']);
 
     /**********************************/
 
@@ -222,6 +224,8 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     $router->post('/plato', ['uses' => 'PlatoController@create']);
     //actualizar plato
     $router->put('/update/plato', ['uses' => 'PlatoController@update']);
+    //actualizar det de lista del palto
+    $router->put('/update/detlistaplato', ['uses' => 'DetListaPrecioController@update']);
 
     //Agregar lista de precio a un plato(uno solo)
     $router->post('/plato/lista', ['uses' => 'DetListaPrecioController@create']);

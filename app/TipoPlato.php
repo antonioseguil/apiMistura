@@ -14,8 +14,8 @@ class TipoPlato extends Model
     protected $fillable = [
         'ncodtipoplato',
         'cnombretipoplato',
-        'codpersona', 
-        'privacidad'
+        'ncodpersona', 
+        'privacidad',
     ];
 
     protected $hidden = ['created_at', 'updated_at'];

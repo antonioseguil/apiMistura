@@ -91,13 +91,17 @@ class NegocioController extends Controller
             'ncodnegocio' => 'required|exists:negocio',
             'crazonsocial' => 'required',
             'cnombredescripcion' => 'required',
-            'cdirecion' => 'required'
+            'cdirecion' => 'required',
+            'ncodpersona' => 'required|exists:persona,ncodpersona',
+            'privacidad' => 'required',
         ]);
         //actualizando los datos
         $negocio = Negocio::where('ncodnegocio', $data['ncodnegocio'])->first();
         $negocio->crazonsocial = $data['crazonsocial'];
         $negocio->cnombredescripcion = $data['cnombredescripcion'];
         $negocio->cdireccion = $data['cdireccion'];
+        $negocio->ncodpersona = $data['ncodpersona'];
+        $negocio->privacidad = $data['privacidad'];
         $negocio->save();
         return response()->json(Utilitarios::messageOKU($negocio), 200);
     }

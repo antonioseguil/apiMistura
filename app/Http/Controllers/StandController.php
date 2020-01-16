@@ -38,7 +38,7 @@ class StandController extends Controller
     //Función para delvolver datos para combo
     function getStandCombo($codevento, $codseccion)
     {
-        $data = DB::select("SELECT s.ncodstand,s.cnumerosstand, n.crazonsocial FROM stand s
+        $data = DB::select("SELECT s.ncodstand, n.ncodnegocio, s.cnumerosstand, n.crazonsocial FROM stand s
                             INNER JOIN negocio n 
                             ON s.ncodnegocio = n.ncodnegocio
                             WHERE ncodevento=$codevento AND ncodseccionstand = $codseccion");

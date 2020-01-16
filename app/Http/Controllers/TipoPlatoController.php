@@ -65,6 +65,7 @@ class TipoPlatoController extends Controller
         $this->validate($request,[
             'ncodtipoplato' => 'required|exists:tipoplato',
             'cnombretipoplato' => 'required',
+            'ncodpersona' => 'required|exists:persona,ncodpersona',
             'privacidad' => 'required',
         ]);
         $data = $request->json()->all();

@@ -3,7 +3,7 @@
 
 namespace App\Http\Controllers;
 
-
+use App\EventoSeccion;
 use App\SeccionStand;
 use App\Utilitarios;
 use Illuminate\Http\Request;
@@ -72,6 +72,7 @@ class SeccionStandController extends Controller
             'ncodseccionstand' => 'required|exists:seccionstand',
             'cseccion' => 'required',
             'cdescripcion' => 'required',
+            'ncodpersona' => 'required|exists:persona,ncodpersona',
             'privacidad' => 'required',
         ]);
 
@@ -79,10 +80,20 @@ class SeccionStandController extends Controller
         $seccionStand = SeccionStand::where('ncodseccionstand', $data['ncodseccionstand'])->first();
         $seccionStand->cseccion = $data['cseccion'];
         $seccionStand->cdescripcion = $data['cdescripcion'];
+        $seccionStand->ncodpersona = $data['ncodpersona'];
         $seccionStand->privacidad = $data['privacidad'];
         $seccionStand->save();
         return response()->json(Utilitarios::messageOKU($seccionStand), 200);
     }
 
     //Cambio de estado de la sección
+
+    function setEstadoEventoSeccion($codevento, $codseccion, $estado){
+        
+        $seccion = EventoSeccion::where('ncodevento',$codevento)->where('ncodseccionstand',$codseccion)->first();
+        $seccion->cestado = strtoupper($estado);
+        $seccion->save();
+
+        return response()->json(Utilitarios::messageOKU($seccion), 200);
+    }
 }

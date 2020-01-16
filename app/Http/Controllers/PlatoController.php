@@ -28,7 +28,12 @@ class PlatoController extends Controller
     //función para traer datos de una persona y publicos
     function getPlatoPersonaPublic($codpersona)
     {
-        $data = Plato::where('ncodpersona', $codpersona)->orWhere('privacidad', '1')->get();
+        // $data = Plato::where('ncodpersona', $codpersona)->orWhere('privacidad', '1')->get();
+        $data = DB::table('plato')
+                    ->join('tipoplato','plato.ncodtipoplato','=','tipoplato.ncodtipoplato')
+                    ->where('plato.ncodpersona', $codpersona)->orWhere('plato.privacidad', '1')
+                    ->select('plato.*','tipoplato.ncodtipoplato','tipoplato.cnombretipoplato')->get();
+                    
         return response()->json(Utilitarios::messageOK($data));
     }
 
@@ -76,6 +81,7 @@ class PlatoController extends Controller
             'cnombreplato' => 'required',
             'cdescresena' => 'required',
             'curlimagen' => 'required',
+            'ncodpersona' => 'required|exists:persona,ncodpersona',
             'privacidad' => 'required',
         ]);
         $data = $request->json()->all();
