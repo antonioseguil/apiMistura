@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Evento;
 use App\User;
+use App\UsuarioNegocio;
 use App\Utilitarios;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
@@ -82,6 +83,49 @@ class UsuarioController extends Controller
         }
         $registrado = User::where('cemail', $data['cemail'])->first();
         return response()->json(Utilitarios::messageOKC($registrado), 201);
+    }
+
+    //función para la creación de usuario para un evento
+    function createNegocio(Request $request)
+    {
+        //recogiendo los datos enviados por el request
+        $data = $request->json()->all();
+        //validando datos
+        $this->validate($request, [
+            'ncodpersona' => 'required|exists:persona',
+            'cnombre' => 'required|string',
+            'capellidopaterno' => 'required|string',
+            'capellidomaterno' => 'required|string',
+            'cdni' => 'required|unique:persona,cdni',
+            'cemail' => 'required|unique:persona,cemail',
+            'cimei_phone' => 'nullable',
+            'cusuario' => 'required|unique:persona,cusuario',
+            'cpassword' => 'required',
+            'ncodnegocio' => 'required|exists:negocio,ncodnegocio',
+            'ncodtipousuario' => 'required|exists:tipousuario,ncodtipousuario',
+        ]);
+
+        //si el dato verificado es nulo, se pondra por defecto = CLIENTE = 1
+        $user = User::create([
+            'ncodtipousuario' => $data['ncodtipousuario'],
+            'cnombre' => $data['cnombre'],
+            'capellidopaterno' => $data['capellidopaterno'],
+            'capellidomaterno' => $data['capellidomaterno'],
+            'cdni' => $data['cdni'],
+            'cemail' => $data['cemail'],
+            'api_token' => Str::random(60),
+            'imei_phone' => $data['cimei_phone'],
+            'cusuario' => $data['cusuario'],
+            'cpassword' => Hash::make($data['cpassword']),
+        ]);
+
+        $negociouser = UsuarioNegocio::create([
+            'ncodpersona' => $user->ncodpersona,
+            'ncodpersonacreate' => $data['ncodpersona'],
+            'ncodnegocio' => $data['ncodnegocio'],
+        ]);
+
+        return response()->json(Utilitarios::messageOKC($user), 201);
     }
 
     //función para actualizar la persona
@@ -201,9 +245,9 @@ class UsuarioController extends Controller
     {
         //buscamos persona        
         $persona = User::where('ncodpersona', $codigoPersona)->first();
-        if($persona->ckeypersona == $key){
+        if ($persona->ckeypersona == $key) {
             return response()->json(Utilitarios::messageOKlogin($persona), 200);
-        }else{
+        } else {
             return response()->json(Utilitarios::messageERRORlogin($persona), 200);
         }
     }

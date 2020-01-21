@@ -10,6 +10,6 @@ class UsuarioNegocio extends Model
 {
     protected $table = "usuario_negocio";
     protected $primaryKey = "ncodusuarionegocio";
-    protected $fillable = ['ncodpersona','ncodnegocio','cestado'];
+    protected $fillable = ['ncodpersona','ncodnegocio','ncodpersonacreate','cestado'];
 
 }

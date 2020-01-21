@@ -90,6 +90,7 @@ class PlatoController extends Controller
         $plato->cnombreplato = $data['cnombreplato'];
         $plato->cdescresena = $data['cdescresena'];
         $plato->curlimagen = $data['curlimagen'];
+        $plato->ncodpersona = $data['ncodpersona'];
         $plato->privacidad = $data['privacidad'];
         $plato->save();
         return response()->json(Utilitarios::messageOKU($plato), 200);

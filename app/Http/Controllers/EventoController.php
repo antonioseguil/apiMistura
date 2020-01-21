@@ -159,13 +159,16 @@ class EventoController extends Controller
         $datos = $request->json()->all();
         //validación de datos
         $this->validate($request, [
+            'ncodeventoseccion' => 'required|exists:eventoseccion',
             'ncodevento' => 'required|exists:eventoseccion|integer',
             'ncodseccionstand' => 'required|exists:eventoseccion|integer',
             'ncantidadstand' => 'required|integer'
         ]);
         //buscamos el detalle
-        $detalle = EventoSeccion::where('ncodevento', $datos['ncodevento'])->where('ncodseccionstand', $datos['ncodseccionstand'])->first();
+        $detalle = EventoSeccion::where('ncodeventoseccion', $datos['ncodeventoseccion'])->first();
         //actualizamos los nuevos cambios
+        $detalle->ncodevento = $datos['ncodevento'];
+        $detalle->ncodseccionstand = $datos['ncodseccionstand'];
         $detalle->ncantidadstand = $datos['ncantidadstand'];
         $detalle->save();
 
@@ -237,11 +240,26 @@ class EventoController extends Controller
      * I = INICIADO
      * F = FINALIZADO
      * */
-    function eventoTerminar($codevento)
+    function eventoTerminar($codevento,$status)
     {
         $evento = Evento::where('ncodevento', $codevento)->first();
-        $evento->cestado = 'T';
+        $evento->cestado = strtoupper($status);
         $evento->save();
         return response()->json(Utilitarios::messageOK($evento), 200);
     }
+
+    // ==============================================
+    // ======================REPORTES================
+
+    function reporteEvento($codevento){
+        $data = DB::select("call reporteEvento(?)" ,[$codevento]);
+        return \response()->json(Utilitarios::messageOK($data),200);
+    }
+
+    
+    function reporteEventoSeccion($codevento,$codseccion){
+        $data = DB::select("call reporteEventoSeccion(?,?)" ,[$codevento,$codseccion]);
+        return \response()->json(Utilitarios::messageOK($data),200);
+    }
+
 }

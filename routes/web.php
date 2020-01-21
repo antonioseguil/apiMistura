@@ -49,7 +49,10 @@ $router->group(['middleware' => ['json']], function () use ($router) {
 //grupo de rutas para WEB, validando el api_token y que sea json
 $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
 
-    //CRUD de la tabla USUARIO
+    //CRUD de la tabla USUARIO, USUARIO NEGOCIO
+    //Agregar usuario al negocio
+    $router->post('/usuario/negocio', ['uses' => 'UsuarioController@createNegocio']);
+    //Actualizar los datos de un usuario
     $router->put('/update/usuario', ['uses' => 'UsuarioController@update']);
     //cambio de ckey del usuario
     $router->put('/update/key/{codigoPersona}/{key}', ['uses' => 'UsuarioController@ckeyUpdate']);
@@ -120,13 +123,10 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     $router->get('/combo/negocio/{codpersona}', ['uses' => 'NegocioController@getNegocioPersonaPublicCombo']);
     //Trae una lista de los negocios segun su estatus
     $router->get('/lista/negocio/status/{status}', ['uses' => 'NegocioController@getNegocioStatus']);
-
-    //------------------------------------------------
-
-    //CRUD PARA LA TABLA USUARIO NEGOCIO
-    //Agregar usuario al negocio
-    $router->post('/negocio/usuario/add', ['uses' => 'UsuarioNegocioController@create']);
-    //TODO * Falta agregar el cambio de estado al negocio
+    //Trae una lista de los usuario que tiene le negocio
+    $router->get('/lista/usuario/negocio/{codpersona}', ['uses' => 'NegocioController@getUsuarioNegocio']);
+    
+    
 
     // ----------------------------------------------------------------
 
@@ -138,7 +138,7 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     //actualizar un cantidad de un stand de la seccion de un evento
     $router->put('/update/seccion/evento/stand', ['uses' => 'EventoController@updateCantidadStand']);
     // 'eliminar' un evento
-    $router->delete('/status/evento/{codevento}', ['uses' => 'EventoController@eventoTerminar']);
+    $router->delete('/status/evento/{codevento}/{status}', ['uses' => 'EventoController@eventoTerminar']);
 
     //METODOS PARA AGREGAR LAS SECCIONES A LOS EVENTOS
     //Para agregar una seccion, sola una
@@ -159,6 +159,11 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     //BUSQUEDA DE SECCIONES DE LOS EVENTOS
     $router->get('/lista/evento/seccion/{codevento}', ['uses' => 'EventoController@setSecciones']);
     
+    //REPORTE DE EVENTOS
+    //por evento
+    $router->get('/reporte/evento/{codevento}', ['uses' => 'EventoController@reporteEvento']);
+    //por evento
+    $router->get('/reporte/evento/{codevento}/{codseccion}', ['uses' => 'EventoController@reporteEventoSeccion']);
 
     //---------------------------------------------
 
@@ -201,6 +206,10 @@ $router->group(['middleware' => ['json', 'auth']], function () use ($router) {
     $router->get('/stand/detalle/{codevento}/{codseccion}', ['uses' => 'StandController@getStandEventoSeccion']);
     //lista de stand segun su status status
     $router->get('/lista/stand/{status}', ['uses' => 'StandController@getStandStatus']);
+
+    //REPORTE DE STAND
+    //por stand
+    $router->get('/reporte/stand/{codevento}/{codseccion}/{codstand}', ['uses' => 'StandController@reporteStand']);
 
     //-----------------------------------------------------------
 

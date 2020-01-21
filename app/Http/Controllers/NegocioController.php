@@ -91,10 +91,12 @@ class NegocioController extends Controller
             'ncodnegocio' => 'required|exists:negocio',
             'crazonsocial' => 'required',
             'cnombredescripcion' => 'required',
-            'cdirecion' => 'required',
+            'cdireccion' => 'required',
             'ncodpersona' => 'required|exists:persona,ncodpersona',
             'privacidad' => 'required',
+            'cruc' => 'required|max:11'
         ]);
+
         //actualizando los datos
         $negocio = Negocio::where('ncodnegocio', $data['ncodnegocio'])->first();
         $negocio->crazonsocial = $data['crazonsocial'];
@@ -102,10 +104,17 @@ class NegocioController extends Controller
         $negocio->cdireccion = $data['cdireccion'];
         $negocio->ncodpersona = $data['ncodpersona'];
         $negocio->privacidad = $data['privacidad'];
+        $negocio->cruc = $data['cruc'];
         $negocio->save();
         return response()->json(Utilitarios::messageOKU($negocio), 200);
     }
-    // -- la función para agregar un usuario al negocio esta en un controlador aparte...
+    // -- la función para ver las usuarios que tiene agregado un negocio
+
+    function getUsuarioNegocio($codpersona)
+    {
+        $user = DB::select("call sp_getUsuarioNegocio(?)",[$codpersona]);
+        return response()->json(Utilitarios::messageOK($user), 200);
+    }
 
 
     //función para cambiar el estado del negocio

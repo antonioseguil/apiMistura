@@ -126,4 +126,13 @@ class StandController extends Controller
         $stand->save();
         return response()->json(Utilitarios::messageOK($stand), 200);
     }
+
+    // ==============================================
+    // ======================REPORTES================
+
+    function reporteStand($codevento,$codseccion,$codstand){
+        $data = DB::select("call reporteStand(?,?,?)",[$codevento,$codseccion,$codstand]);
+        return \response()->json(Utilitarios::messageOK($data),200);
+    }
+
 }
